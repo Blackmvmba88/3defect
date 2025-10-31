@@ -17,7 +17,10 @@ A 3D modeling system based on basic geometric shapes, using Blender as an artist
 - **🔧 Mechanical Components**: Wheels, chassis, frames, and body parts
 - **🎯 Physics Simulation**: Gravity, forces, velocity, and energy calculations
 - **🎬 Blender Integration**: Export models directly to Blender for visualization
+- **📸 Photorealistic Rendering**: Generate high-quality rendered images automatically
 - **🌍 Real-world Physics**: Simulate movement with Earth's gravitational forces
+
+> 📸 **[Ver ejemplo de foto renderizada / See rendered photo example](docs/EXAMPLE_RENDER.md)** - ¡Mira el resultado del sistema de renderizado!
 
 ## 🚀 Quick Start
 
@@ -58,6 +61,22 @@ bike = Motorcycle(bike_type="sport", color=(0.1, 0.3, 0.9))
 bike.simulate_movement(distance=10.0)
 print(f"New position: {bike.position}")
 ```
+
+### Render to Photorealistic Image
+
+```python
+from defect3d.vehicles.components import Wheel
+from defect3d.blender_integration import BlenderRenderer
+
+# Create wheel with tire and rim
+wheel = Wheel(radius=0.35, width=0.25)
+
+# Render to high-quality image
+renderer = BlenderRenderer()
+renderer.render(wheel, "wheel.png", resolution=(1920, 1080), samples=128)
+```
+
+**📸 [See the rendered result / Ver el resultado renderizado →](docs/EXAMPLE_RENDER.md)**
 
 ## 🌍 Language Support / Soporte de Idiomas
 

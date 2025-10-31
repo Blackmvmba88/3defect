@@ -15,6 +15,9 @@ Un sistema de modelado 3D para crear vehículos y sistemas mecánicos con detecc
 - **🔧 Componentes Mecánicos**: Ruedas, chasis, bastidores y carrocerías
 - **🎯 Simulación Física**: Gravedad, fuerzas, velocidad y cálculos de energía
 - **🎬 Integración con Blender**: Exporta modelos directamente a Blender para visualización
+- **📸 Renderizado Fotorrealista**: Genera imágenes renderizadas de alta calidad automáticamente
+
+> 📸 **[¡Mira el ejemplo de foto renderizada aquí!](docs/EXAMPLE_RENDER.md)** - See the rendered photo example!
 
 ## 🚀 Inicio Rápido
 
@@ -60,6 +63,22 @@ moto = Motorcycle(bike_type="sport", color=(0.1, 0.3, 0.9))
 moto.simulate_movement(distance=10.0)
 print(f"Nueva posición: {moto.position}")
 ```
+
+### Renderizar a Imagen Fotorrealista
+
+```python
+from defect3d.vehicles.components import Wheel
+from defect3d.blender_integration import BlenderRenderer
+
+# Crear llanta con rin
+llanta = Wheel(radius=0.35, width=0.25)
+
+# Renderizar a imagen de alta calidad
+renderer = BlenderRenderer()
+renderer.render(llanta, "llanta.png", resolution=(1920, 1080), samples=128)
+```
+
+**📸 [¡Mira aquí la foto renderizada! / See the rendered photo here →](docs/EXAMPLE_RENDER.md)**
 
 ## 🌍 Sistema de Idiomas
 
