@@ -1,6 +1,8 @@
 """
+Implementación de vehículo tipo coche.
 Car vehicle implementation.
 
+Este módulo proporciona un modelo completo de coche con ruedas, motor, chasis y carrocería.
 This module provides a complete car model with wheels, engine, chassis, and body.
 """
 
@@ -8,17 +10,20 @@ import math
 from typing import Tuple, Optional
 from ..core.composite import CompositePart
 from .components import Wheel, Engine, Chassis, Body
+from ..i18n import _, get_language
 
 
 class Car(CompositePart):
     """
+    Un modelo completo de coche.
     A complete car model.
     
+    Esta clase crea un coche completo con todos los componentes necesarios:
     This class creates a full car with all necessary components:
-    - 4 wheels
-    - Engine
-    - Chassis
-    - Body
+    - 4 ruedas / wheels
+    - Motor / Engine
+    - Chasis / Chassis
+    - Carrocería / Body
     """
     
     def __init__(self, 
@@ -26,12 +31,13 @@ class Car(CompositePart):
                  position: Tuple[float, float, float] = (0, 0, 0),
                  color: Optional[Tuple[float, float, float]] = None):
         """
+        Crear un coche.
         Create a car.
         
         Args:
-            car_type: Type of car (sedan, sports, suv)
-            position: Position in 3D space
-            color: RGB color tuple (0-1 range)
+            car_type: Tipo de coche (sedan, sports, suv) / Type of car (sedan, sports, suv)
+            position: Posición en espacio 3D / Position in 3D space
+            color: Tupla de color RGB (rango 0-1) / RGB color tuple (0-1 range)
         """
         super().__init__(name=f"Car_{car_type}")
         self.car_type = car_type
@@ -101,28 +107,49 @@ class Car(CompositePart):
         self.set_property("engine_power", self.engine.get_property("power", 200))
         
     def get_specifications(self) -> dict:
-        """Get car specifications."""
-        return {
-            "type": self.car_type,
-            "dimensions": {
-                "length": self.get_property("length"),
-                "width": self.get_property("width"),
-                "height": self.get_property("height"),
-            },
-            "wheels": self.get_property("wheel_count"),
-            "engine": {
-                "cylinders": self.engine.get_property("cylinders"),
-                "power": self.engine.get_property("power"),
-            },
-            "parts_count": self.get_part_count(),
-        }
+        """
+        Obtener especificaciones del coche.
+        Get car specifications.
+        """
+        lang = get_language()
+        if lang == 'es':
+            return {
+                "tipo": self.car_type,
+                "dimensiones": {
+                    "longitud": self.get_property("length"),
+                    "ancho": self.get_property("width"),
+                    "altura": self.get_property("height"),
+                },
+                "ruedas": self.get_property("wheel_count"),
+                "motor": {
+                    "cilindros": self.engine.get_property("cylinders"),
+                    "potencia": self.engine.get_property("power"),
+                },
+                "total_partes": self.get_part_count(),
+            }
+        else:
+            return {
+                "type": self.car_type,
+                "dimensions": {
+                    "length": self.get_property("length"),
+                    "width": self.get_property("width"),
+                    "height": self.get_property("height"),
+                },
+                "wheels": self.get_property("wheel_count"),
+                "engine": {
+                    "cylinders": self.engine.get_property("cylinders"),
+                    "power": self.engine.get_property("power"),
+                },
+                "parts_count": self.get_part_count(),
+            }
     
     def simulate_movement(self, distance: float, direction: Tuple[float, float, float] = (1, 0, 0)):
         """
+        Simular movimiento del coche.
         Simulate car movement.
         
         Args:
-            distance: Distance to move
+            distance: Distancia a mover / Distance to move
             direction: Direction vector (normalized)
         """
         import numpy as np

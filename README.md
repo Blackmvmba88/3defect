@@ -1,11 +1,14 @@
 # 3defect
 
-Un sistema de modelado 3D para crear vehículos y sistemas mecánicos.
+Un sistema de modelado 3D para crear vehículos y sistemas mecánicos con **detección automática de idioma**.
 
-A 3D modeling system based on basic geometric shapes, using Blender as an artistic communication interface.
+A 3D modeling system based on basic geometric shapes, using Blender as an artistic communication interface with **automatic language detection**.
+
+> 🌍 **¡Ahora en Español! / Now in Spanish!** - El sistema detecta automáticamente tu idioma y se adapta completamente. [Ver README en Español](README_ES.md)
 
 ## ✨ Features
 
+- **🌍 Automatic Language Detection**: Detects your system language and adapts completely (Spanish/English)
 - **🎨 3D Shape Primitives**: Cube, Sphere, Cylinder, Cone, Torus
 - **🏗️ Composite Parts**: Build complex mechanical assemblies from simple shapes
 - **🚗 Vehicle Framework**: Pre-built car models (sedan, sports, SUV)
@@ -56,15 +59,58 @@ bike.simulate_movement(distance=10.0)
 print(f"New position: {bike.position}")
 ```
 
-## 📚 Examples
+## 🌍 Language Support / Soporte de Idiomas
+
+The system **automatically detects your system language** and adapts all outputs, messages, and specifications accordingly.
+
+**El sistema detecta automáticamente el idioma de tu sistema** y adapta todas las salidas, mensajes y especificaciones.
+
+### Automatic Detection / Detección Automática
+
+```python
+from defect3d import Car
+
+# System automatically detects language
+# El sistema detecta automáticamente el idioma
+car = Car(car_type="sedan")
+specs = car.get_specifications()
+
+# Spanish system shows / Sistema en español muestra:
+# {'tipo': 'sedan', 'dimensiones': {...}, 'motor': {...}}
+
+# English system shows / Sistema en inglés muestra:
+# {'type': 'sedan', 'dimensions': {...}, 'engine': {...}}
+```
+
+### Manual Language Control / Control Manual del Idioma
+
+```python
+from defect3d.i18n import set_language
+
+# Force Spanish / Forzar español
+set_language('es')
+
+# Force English / Forzar inglés
+set_language('en')
+```
+
+### Environment Variable / Variable de Entorno
+
+```bash
+# Set via environment / Establecer mediante variable
+export DEFECT3D_LANG=es  # Spanish / Español
+export DEFECT3D_LANG=en  # English / Inglés
+```
+
+## 📚 Examples / Ejemplos
 
 Run the included examples:
 
 ```bash
-# Create a car and export to Blender
+# Create a car and export to Blender (auto-detects language)
 python examples/create_car.py
 
-# Create a motorcycle
+# Create a motorcycle (auto-detects language)
 python examples/create_motorcycle.py
 
 # Physics simulation demo
@@ -72,6 +118,9 @@ python examples/physics_simulation.py
 
 # Build a custom vehicle
 python examples/custom_vehicle.py
+
+# Complete example in Spanish / Ejemplo completo en español
+python examples/ejemplo_español.py
 ```
 
 ## 🎯 What You Can Build

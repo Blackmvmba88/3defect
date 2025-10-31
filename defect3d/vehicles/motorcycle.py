@@ -1,6 +1,8 @@
 """
+Implementación de vehículo tipo motocicleta.
 Motorcycle vehicle implementation.
 
+Este módulo proporciona un modelo completo de motocicleta con ruedas, motor, bastidor y carrocería.
 This module provides a complete motorcycle model with wheels, engine, frame, and body.
 """
 
@@ -9,6 +11,7 @@ from typing import Tuple, Optional
 from ..core.composite import CompositePart
 from ..core.shapes import Cylinder, Cube
 from .components import Wheel, Engine
+from ..i18n import _, get_language
 
 
 class Motorcycle(CompositePart):
@@ -146,21 +149,41 @@ class Motorcycle(CompositePart):
         self.add_part(handlebar)
         
     def get_specifications(self) -> dict:
-        """Get motorcycle specifications."""
-        return {
-            "type": self.bike_type,
-            "dimensions": {
-                "length": self.get_property("length"),
-                "width": self.get_property("width"),
-                "seat_height": self.get_property("seat_height"),
-            },
-            "wheels": self.get_property("wheel_count"),
-            "engine": {
-                "cylinders": self.engine.get_property("cylinders"),
-                "power": self.engine.get_property("power"),
-            },
-            "parts_count": self.get_part_count(),
-        }
+        """
+        Obtener especificaciones de la motocicleta.
+        Get motorcycle specifications.
+        """
+        lang = get_language()
+        if lang == 'es':
+            return {
+                "tipo": self.bike_type,
+                "dimensiones": {
+                    "longitud": self.get_property("length"),
+                    "ancho": self.get_property("width"),
+                    "altura_asiento": self.get_property("seat_height"),
+                },
+                "ruedas": self.get_property("wheel_count"),
+                "motor": {
+                    "cilindros": self.engine.get_property("cylinders"),
+                    "potencia": self.engine.get_property("power"),
+                },
+                "total_partes": self.get_part_count(),
+            }
+        else:
+            return {
+                "type": self.bike_type,
+                "dimensions": {
+                    "length": self.get_property("length"),
+                    "width": self.get_property("width"),
+                    "seat_height": self.get_property("seat_height"),
+                },
+                "wheels": self.get_property("wheel_count"),
+                "engine": {
+                    "cylinders": self.engine.get_property("cylinders"),
+                    "power": self.engine.get_property("power"),
+                },
+                "parts_count": self.get_part_count(),
+            }
     
     def simulate_movement(self, distance: float, direction: Tuple[float, float, float] = (1, 0, 0)):
         """
