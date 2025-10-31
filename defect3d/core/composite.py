@@ -110,10 +110,14 @@ class CompositePart:
         
     def to_dict(self) -> dict:
         """Convert composite to dictionary representation."""
+        # Handle both numpy arrays and tuples
+        pos = self.position.tolist() if hasattr(self.position, 'tolist') else list(self.position)
+        rot = self.rotation.tolist() if hasattr(self.rotation, 'tolist') else list(self.rotation)
+        
         return {
             "name": self.name,
-            "position": self.position.tolist(),
-            "rotation": self.rotation.tolist(),
+            "position": pos,
+            "rotation": rot,
             "properties": self.properties,
             "parts": [part.to_dict() for part in self.parts],
             "connections": [
