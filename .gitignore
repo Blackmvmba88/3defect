@@ -44,6 +44,8 @@ examples/*.json
 !examples/create_*.py
 !examples/physics_simulation.py
 !examples/custom_vehicle.py
+!examples/ejemplo_*.py
+!examples/showcase.py
 
 # Blender files
 *.blend
