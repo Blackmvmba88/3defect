@@ -149,7 +149,8 @@ class BlenderExporter:
         
         # Apply rotation (convert degrees to radians)
         if any(shape.rotation != 0):
-            rot_rad = tuple(float(r) * 3.14159 / 180.0 for r in shape.rotation)
+            import math
+            rot_rad = tuple(float(r) * math.pi / 180.0 for r in shape.rotation)
             lines.append(f"obj_{obj_id}.rotation_euler = {rot_rad}")
         
         # Apply scale

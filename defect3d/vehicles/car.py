@@ -4,6 +4,7 @@ Car vehicle implementation.
 This module provides a complete car model with wheels, engine, chassis, and body.
 """
 
+import math
 from typing import Tuple, Optional
 from ..core.composite import CompositePart
 from .components import Wheel, Engine, Chassis, Body
@@ -34,7 +35,8 @@ class Car(CompositePart):
         """
         super().__init__(name=f"Car_{car_type}")
         self.car_type = car_type
-        self.position = position
+        # Use parent class position
+        self.position[:] = position
         
         # Set dimensions based on car type
         if car_type == "sedan":
@@ -132,6 +134,6 @@ class Car(CompositePart):
         
         # Simulate wheel rotation (simple)
         if self.wheels:
-            wheel_rotation = (distance / (2 * 3.14159 * self.wheels[0].radius)) * 360
+            wheel_rotation = (distance / (2 * math.pi * self.wheels[0].radius)) * 360
             for wheel in self.wheels:
                 wheel.rotate(0, wheel_rotation, 0)

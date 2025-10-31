@@ -4,6 +4,7 @@ Motorcycle vehicle implementation.
 This module provides a complete motorcycle model with wheels, engine, frame, and body.
 """
 
+import math
 from typing import Tuple, Optional
 from ..core.composite import CompositePart
 from ..core.shapes import Cylinder, Cube
@@ -35,7 +36,8 @@ class Motorcycle(CompositePart):
         """
         super().__init__(name=f"Motorcycle_{bike_type}")
         self.bike_type = bike_type
-        self.position = position
+        # Use parent class position
+        self.position[:] = position
         
         # Set dimensions based on bike type
         if bike_type == "sport":
@@ -177,6 +179,6 @@ class Motorcycle(CompositePart):
         
         # Simulate wheel rotation
         if self.wheels:
-            wheel_rotation = (distance / (2 * 3.14159 * self.wheels[0].radius)) * 360
+            wheel_rotation = (distance / (2 * math.pi * self.wheels[0].radius)) * 360
             for wheel in self.wheels:
                 wheel.rotate(0, wheel_rotation, 0)
