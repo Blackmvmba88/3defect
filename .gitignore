@@ -41,11 +41,13 @@ htmlcov/
 # Examples output
 examples/*.py
 examples/*.json
+examples/*.png
 !examples/create_*.py
 !examples/physics_simulation.py
 !examples/custom_vehicle.py
 !examples/ejemplo_*.py
 !examples/showcase.py
+!examples/renderizar_*.py
 
 # Blender files
 *.blend
