@@ -1,0 +1,8 @@
+# Core dependencies for 3D modeling and Blender integration
+bpy>=3.6.0  # Blender Python API
+numpy>=1.24.0
+mathutils>=3.3.0
+
+# Optional dependencies for enhanced functionality
+scipy>=1.10.0  # For physics calculations
+matplotlib>=3.7.0  # For visualization and debugging
