@@ -202,7 +202,8 @@ class Translator:
         if lang == 'es':
             # Translate template keys
             for key, value in kwargs.items():
-                if isinstance(value, str) and value in self._translations['es']:
+                if isinstance(value,
+                              str) and value in self._translations['es']:
                     kwargs[key] = self._translations['es'][value]
 
         return template.format(**kwargs)

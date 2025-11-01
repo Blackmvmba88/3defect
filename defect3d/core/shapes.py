@@ -122,8 +122,10 @@ class Cylinder(Shape3D):
     def get_bounds(self) -> Tuple[np.ndarray, np.ndarray]:
         scaled_radius = self.radius * self.scale[0]
         half_height = (self.height * self.scale[2]) / 2
-        min_bounds = self.position - np.array([scaled_radius, scaled_radius, half_height])
-        max_bounds = self.position + np.array([scaled_radius, scaled_radius, half_height])
+        min_bounds = self.position - \
+            np.array([scaled_radius, scaled_radius, half_height])
+        max_bounds = self.position + \
+            np.array([scaled_radius, scaled_radius, half_height])
         return min_bounds, max_bounds
 
 
@@ -147,15 +149,21 @@ class Cone(Shape3D):
     def get_bounds(self) -> Tuple[np.ndarray, np.ndarray]:
         scaled_radius = self.radius * self.scale[0]
         scaled_height = self.height * self.scale[2]
-        min_bounds = self.position + np.array([-scaled_radius, -scaled_radius, 0])
-        max_bounds = self.position + np.array([scaled_radius, scaled_radius, scaled_height])
+        min_bounds = self.position + \
+            np.array([-scaled_radius, -scaled_radius, 0])
+        max_bounds = self.position + \
+            np.array([scaled_radius, scaled_radius, scaled_height])
         return min_bounds, max_bounds
 
 
 class Torus(Shape3D):
     """A torus (donut) primitive - useful for wheels."""
 
-    def __init__(self, major_radius: float = 1.0, minor_radius: float = 0.25, **kwargs):
+    def __init__(
+            self,
+            major_radius: float = 1.0,
+            minor_radius: float = 0.25,
+            **kwargs):
         """
         Create a torus.
 

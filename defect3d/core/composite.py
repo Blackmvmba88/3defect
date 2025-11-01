@@ -32,7 +32,10 @@ class CompositePart:
         self.connections: List[Dict] = []  # For mechanical connections
         self.properties: Dict = {}  # Custom properties (mass, material, etc.)
 
-    def add_part(self, part: Shape3D, relative_position: Optional[tuple] = None):
+    def add_part(
+            self,
+            part: Shape3D,
+            relative_position: Optional[tuple] = None):
         """
         Add a part to this composite.
 
@@ -59,11 +62,16 @@ class CompositePart:
     def rotate(self, rx: float, ry: float, rz: float):
         """Rotate the entire composite part."""
         self.rotation += np.array([rx, ry, rz])
-        # TODO: Implement proper rotation of child parts around composite center
+        # TODO: Implement proper rotation of child parts around composite
+        # center
         for part in self.parts:
             part.rotate(rx, ry, rz)
 
-    def connect(self, part1: Shape3D, part2: Shape3D, connection_type: str = "fixed"):
+    def connect(
+            self,
+            part1: Shape3D,
+            part2: Shape3D,
+            connection_type: str = "fixed"):
         """
         Define a connection between two parts.
 
@@ -111,8 +119,12 @@ class CompositePart:
     def to_dict(self) -> dict:
         """Convert composite to dictionary representation."""
         # Handle both numpy arrays and tuples
-        pos = self.position.tolist() if hasattr(self.position, 'tolist') else list(self.position)
-        rot = self.rotation.tolist() if hasattr(self.rotation, 'tolist') else list(self.rotation)
+        pos = self.position.tolist() if hasattr(
+            self.position, 'tolist') else list(
+            self.position)
+        rot = self.rotation.tolist() if hasattr(
+            self.rotation, 'tolist') else list(
+            self.rotation)
 
         return {
             "name": self.name,

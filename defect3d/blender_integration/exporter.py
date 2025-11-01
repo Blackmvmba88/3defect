@@ -99,7 +99,12 @@ class BlenderExporter:
 
         return lines
 
-    def _process_composite(self, composite, lines: List[str], counter: int, level: int = 0):
+    def _process_composite(
+            self,
+            composite,
+            lines: List[str],
+            counter: int,
+            level: int = 0):
         """Process a composite part recursively."""
         from ..core.shapes import Shape3D
         from ..core.composite import CompositePart
@@ -107,9 +112,12 @@ class BlenderExporter:
         for i, part in enumerate(composite.parts):
             if isinstance(part, CompositePart):
                 lines.append(f"# Nested Composite: {part.name}")
-                self._process_composite(part, lines, f"{counter}_{i}", level + 1)
+                self._process_composite(
+                    part, lines, f"{counter}_{i}", level + 1)
             elif isinstance(part, Shape3D):
-                lines.extend(self._convert_shape(part, f"{counter}_{level}_{i}"))
+                lines.extend(
+                    self._convert_shape(
+                        part, f"{counter}_{level}_{i}"))
 
     def _convert_shape(self, shape, obj_id: str) -> List[str]:
         """Convert a shape to Blender creation code."""
@@ -122,23 +130,52 @@ class BlenderExporter:
 
         # Create the primitive
         if shape_type == "Cube":
-            lines.append(f"bpy.ops.mesh.primitive_cube_add(size={float(shape.size)}, "
-                        f"location={to_tuple(shape.position)})")
+            lines.append(
+                f"bpy.ops.mesh.primitive_cube_add(size={
+                    float(
+                        shape.size)}, " f"location={
+                    to_tuple(
+                        shape.position)})")
         elif shape_type == "Sphere":
-            lines.append(f"bpy.ops.mesh.primitive_uv_sphere_add(radius={float(shape.radius)}, "
-                        f"location={to_tuple(shape.position)})")
+            lines.append(
+                f"bpy.ops.mesh.primitive_uv_sphere_add(radius={
+                    float(
+                        shape.radius)}, " f"location={
+                    to_tuple(
+                        shape.position)})")
         elif shape_type == "Cylinder":
-            lines.append(f"bpy.ops.mesh.primitive_cylinder_add(radius={float(shape.radius)}, "
-                        f"depth={float(shape.height)}, location={to_tuple(shape.position)})")
+            lines.append(
+                f"bpy.ops.mesh.primitive_cylinder_add(radius={
+                    float(
+                        shape.radius)}, " f"depth={
+                    float(
+                        shape.height)}, location={
+                    to_tuple(
+                        shape.position)})")
         elif shape_type == "Cone":
-            lines.append(f"bpy.ops.mesh.primitive_cone_add(radius1={float(shape.radius)}, "
-                        f"depth={float(shape.height)}, location={to_tuple(shape.position)})")
+            lines.append(
+                f"bpy.ops.mesh.primitive_cone_add(radius1={
+                    float(
+                        shape.radius)}, " f"depth={
+                    float(
+                        shape.height)}, location={
+                    to_tuple(
+                        shape.position)})")
         elif shape_type == "Torus":
-            lines.append(f"bpy.ops.mesh.primitive_torus_add(major_radius={float(shape.major_radius)}, "
-                        f"minor_radius={float(shape.minor_radius)}, location={to_tuple(shape.position)})")
+            lines.append(
+                f"bpy.ops.mesh.primitive_torus_add(major_radius={
+                    float(
+                        shape.major_radius)}, " f"minor_radius={
+                    float(
+                        shape.minor_radius)}, location={
+                    to_tuple(
+                        shape.position)})")
         else:
             # Default to cube
-            lines.append(f"bpy.ops.mesh.primitive_cube_add(location={to_tuple(shape.position)})")
+            lines.append(
+                f"bpy.ops.mesh.primitive_cube_add(location={
+                    to_tuple(
+                        shape.position)})")
 
         lines.append(f"obj_{obj_id} = bpy.context.object")
         lines.append(f"obj_{obj_id}.name = '{shape.name}_{obj_id}'")
@@ -155,7 +192,8 @@ class BlenderExporter:
 
         # Apply material/color
         color = shape.material.get("color", (0.8, 0.8, 0.8, 1.0))
-        lines.append(f"mat_{obj_id} = create_material('Material_{obj_id}', {color})")
+        lines.append(
+            f"mat_{obj_id} = create_material('Material_{obj_id}', {color})")
         lines.append(f"obj_{obj_id}.data.materials.append(mat_{obj_id})")
         lines.append("")
 
@@ -189,8 +227,8 @@ class BlenderExporter:
 
 
 def export_to_blender(objects: Union[object, List[object]],
-                     output_file: str = "blender_export.py",
-                     also_json: bool = False) -> BlenderExporter:
+                      output_file: str = "blender_export.py",
+                      also_json: bool = False) -> BlenderExporter:
     """
     Quick export function for objects to Blender.
 

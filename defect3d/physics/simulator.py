@@ -80,7 +80,8 @@ class PhysicsSimulator:
 
         for obj_data in self.objects:
             # Calculate net force
-            net_force = np.sum(obj_data['forces'], axis=0) if obj_data['forces'] else np.array([0.0, 0.0, 0.0])
+            net_force = np.sum(
+                obj_data['forces'], axis=0) if obj_data['forces'] else np.array([0.0, 0.0, 0.0])
 
             # F = ma, so a = F/m
             obj_data['acceleration'] = net_force / obj_data['mass']
@@ -90,14 +91,18 @@ class PhysicsSimulator:
 
             # Update position: p = p0 + v*dt
             displacement = obj_data['velocity'] * dt
-            obj_data['object'].translate(displacement[0], displacement[1], displacement[2])
+            obj_data['object'].translate(
+                displacement[0], displacement[1], displacement[2])
 
             # Clear forces for next step
             obj_data['forces'] = []
 
         self.time += dt
 
-    def simulate(self, duration: float, apply_gravity: bool = True) -> List[dict]:
+    def simulate(
+            self,
+            duration: float,
+            apply_gravity: bool = True) -> List[dict]:
         """
         Run the simulation for a given duration.
 
@@ -153,7 +158,10 @@ class PhysicsSimulator:
             return 0.5 * obj_data['mass'] * speed_squared
         return 0.0
 
-    def get_potential_energy(self, obj_index: int, reference_height: float = 0.0) -> float:
+    def get_potential_energy(
+            self,
+            obj_index: int,
+            reference_height: float = 0.0) -> float:
         """
         Calculate gravitational potential energy.
 
@@ -179,8 +187,8 @@ class PhysicsSimulator:
 
 
 def simulate_motion(obj, initial_velocity: Tuple[float, float, float],
-                   duration: float = 2.0, mass: float = 1.0,
-                   apply_gravity: bool = True) -> List[dict]:
+                    duration: float = 2.0, mass: float = 1.0,
+                    apply_gravity: bool = True) -> List[dict]:
     """
     Convenience function to simulate an object's motion.
 

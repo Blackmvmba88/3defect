@@ -61,11 +61,14 @@ class Car(CompositePart):
         # Create chassis
         chassis_pos = (position[0], position[1], position[2] + wheel_radius)
         self.chassis = Chassis(length=length, width=width, height=0.3,
-                              position=chassis_pos)
+                               position=chassis_pos)
         self.add_part(self.chassis)
 
         # Create engine
-        engine_pos = (position[0] + length * 0.3, position[1], chassis_pos[2] + 0.3)
+        engine_pos = (
+            position[0] + length * 0.3,
+            position[1],
+            chassis_pos[2] + 0.3)
         cylinders = 4 if car_type == "sedan" else 6 if car_type == "sports" else 6
         self.engine = Engine(cylinders=cylinders, position=engine_pos)
         self.add_part(self.engine)
@@ -73,15 +76,19 @@ class Car(CompositePart):
         # Create wheels
         self.wheels = []
         wheel_positions = [
-            (position[0] + length * 0.3, position[1] + width * 0.45, position[2] + wheel_radius * 0.5),   # Front right
-            (position[0] + length * 0.3, position[1] - width * 0.45, position[2] + wheel_radius * 0.5),   # Front left
-            (position[0] - length * 0.3, position[1] + width * 0.45, position[2] + wheel_radius * 0.5),   # Rear right
-            (position[0] - length * 0.3, position[1] - width * 0.45, position[2] + wheel_radius * 0.5),   # Rear left
+            (position[0] + length * 0.3, position[1] + width * 0.45,
+             position[2] + wheel_radius * 0.5),   # Front right
+            (position[0] + length * 0.3, position[1] - width *
+             0.45, position[2] + wheel_radius * 0.5),   # Front left
+            (position[0] - length * 0.3, position[1] + width *
+             0.45, position[2] + wheel_radius * 0.5),   # Rear right
+            (position[0] - length * 0.3, position[1] - width *
+             0.45, position[2] + wheel_radius * 0.5),   # Rear left
         ]
 
         for i, wheel_pos in enumerate(wheel_positions):
             wheel = Wheel(radius=wheel_radius, width=0.25, position=wheel_pos)
-            wheel.name = f"Wheel_{i+1}"
+            wheel.name = f"Wheel_{i + 1}"
             self.wheels.append(wheel)
             self.add_part(wheel)
 
@@ -104,7 +111,11 @@ class Car(CompositePart):
         self.set_property("width", width)
         self.set_property("height", height)
         self.set_property("wheel_count", 4)
-        self.set_property("engine_power", self.engine.get_property("power", 200))
+        self.set_property(
+            "engine_power",
+            self.engine.get_property(
+                "power",
+                200))
 
     def get_specifications(self) -> dict:
         """
@@ -143,7 +154,8 @@ class Car(CompositePart):
                 "parts_count": self.get_part_count(),
             }
 
-    def simulate_movement(self, distance: float, direction: Tuple[float, float, float] = (1, 0, 0)):
+    def simulate_movement(self, distance: float,
+                          direction: Tuple[float, float, float] = (1, 0, 0)):
         """
         Simular movimiento del coche.
         Simulate car movement.
@@ -161,6 +173,7 @@ class Car(CompositePart):
 
         # Simulate wheel rotation (simple)
         if self.wheels:
-            wheel_rotation = (distance / (2 * math.pi * self.wheels[0].radius)) * 360
+            wheel_rotation = (
+                distance / (2 * math.pi * self.wheels[0].radius)) * 360
             for wheel in self.wheels:
                 wheel.rotate(0, wheel_rotation, 0)

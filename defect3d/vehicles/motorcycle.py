@@ -57,7 +57,12 @@ class Motorcycle(CompositePart):
             wheel_radius = 0.32
 
         # Create frame
-        frame_pos = (position[0], position[1], position[2] + wheel_radius + 0.2)
+        frame_pos = (
+            position[0],
+            position[1],
+            position[2] +
+            wheel_radius +
+            0.2)
         self._create_frame(frame_pos, length, width)
 
         # Create engine
@@ -73,13 +78,15 @@ class Motorcycle(CompositePart):
         # Create wheels
         self.wheels = []
         wheel_positions = [
-            (position[0] + length * 0.4, position[1], position[2] + wheel_radius * 0.5),   # Front wheel
-            (position[0] - length * 0.4, position[1], position[2] + wheel_radius * 0.5),   # Rear wheel
+            (position[0] + length * 0.4, position[1],
+             position[2] + wheel_radius * 0.5),   # Front wheel
+            (position[0] - length * 0.4, position[1],
+             position[2] + wheel_radius * 0.5),   # Rear wheel
         ]
 
         for i, wheel_pos in enumerate(wheel_positions):
             wheel = Wheel(radius=wheel_radius, width=0.12, position=wheel_pos)
-            wheel.name = f"Wheel_{i+1}"
+            wheel.name = f"Wheel_{i + 1}"
             self.wheels.append(wheel)
             self.add_part(wheel)
 
@@ -92,14 +99,18 @@ class Motorcycle(CompositePart):
         self.set_property("width", width)
         self.set_property("seat_height", seat_height)
         self.set_property("wheel_count", 2)
-        self.set_property("engine_power", self.engine.get_property("power", 150))
+        self.set_property(
+            "engine_power",
+            self.engine.get_property(
+                "power",
+                150))
 
     def _create_frame(self, position: Tuple[float, float, float],
-                     length: float, width: float):
+                      length: float, width: float):
         """Create the motorcycle frame."""
         # Main frame tube
         main_frame = Cylinder(radius=0.03, height=length * 0.8,
-                             position=position, rotation=(0, 90, 0))
+                              position=position, rotation=(0, 90, 0))
         main_frame.name = "MainFrame"
         main_frame.set_color(0.2, 0.2, 0.2)  # Dark gray
         self.add_part(main_frame)
@@ -114,8 +125,8 @@ class Motorcycle(CompositePart):
         self.add_part(subframe)
 
     def _create_body(self, position: Tuple[float, float, float],
-                    length: float, width: float, seat_height: float,
-                    color: Optional[Tuple[float, float, float]]):
+                     length: float, width: float, seat_height: float,
+                     color: Optional[Tuple[float, float, float]]):
         """Create the motorcycle body and fuel tank."""
         # Fuel tank
         tank = Cube(size=0.4, position=(position[0] + length * 0.1,
@@ -140,10 +151,10 @@ class Motorcycle(CompositePart):
 
         # Handlebars
         handlebar = Cylinder(radius=0.02, height=0.6,
-                            position=(position[0] + length * 0.35,
-                                    position[1],
-                                    position[2] + 0.5),
-                            rotation=(0, 90, 0))
+                             position=(position[0] + length * 0.35,
+                                       position[1],
+                                       position[2] + 0.5),
+                             rotation=(0, 90, 0))
         handlebar.name = "Handlebar"
         handlebar.set_color(0.3, 0.3, 0.3)
         self.add_part(handlebar)
@@ -185,7 +196,8 @@ class Motorcycle(CompositePart):
                 "parts_count": self.get_part_count(),
             }
 
-    def simulate_movement(self, distance: float, direction: Tuple[float, float, float] = (1, 0, 0)):
+    def simulate_movement(self, distance: float,
+                          direction: Tuple[float, float, float] = (1, 0, 0)):
         """
         Simulate motorcycle movement.
 
@@ -202,6 +214,7 @@ class Motorcycle(CompositePart):
 
         # Simulate wheel rotation
         if self.wheels:
-            wheel_rotation = (distance / (2 * math.pi * self.wheels[0].radius)) * 360
+            wheel_rotation = (
+                distance / (2 * math.pi * self.wheels[0].radius)) * 360
             for wheel in self.wheels:
                 wheel.rotate(0, wheel_rotation, 0)

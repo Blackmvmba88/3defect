@@ -28,14 +28,14 @@ class Wheel(CompositePart):
 
         # Tire (outer cylinder)
         tire = Cylinder(radius=radius, height=width,
-                       position=position, rotation=(0, 90, 0))
+                        position=position, rotation=(0, 90, 0))
         tire.name = "Tire"
         tire.set_color(0.1, 0.1, 0.1)  # Black rubber
         self.add_part(tire)
 
         # Rim (inner cylinder)
         rim = Cylinder(radius=radius * 0.7, height=width * 0.8,
-                      position=position, rotation=(0, 90, 0))
+                       position=position, rotation=(0, 90, 0))
         rim.name = "Rim"
         rim.set_color(0.7, 0.7, 0.8)  # Metallic
         self.add_part(rim)
@@ -68,22 +68,37 @@ class Engine(CompositePart):
 
         # Cylinder heads
         for i in range(cylinders):
-            offset = (i - cylinders/2) * 0.15
-            cylinder = Cylinder(radius=0.08, height=0.3,
-                              position=(position[0] + offset, position[1], position[2] + 0.4))
-            cylinder.name = f"Cylinder_{i+1}"
+            offset = (i - cylinders / 2) * 0.15
+            cylinder = Cylinder(
+                radius=0.08,
+                height=0.3,
+                position=(
+                    position[0] +
+                    offset,
+                    position[1],
+                    position[2] +
+                    0.4))
+            cylinder.name = f"Cylinder_{i + 1}"
             cylinder.set_color(0.4, 0.4, 0.4)
             self.add_part(cylinder)
 
         self.set_property("cylinders", cylinders)
-        self.set_property("power", cylinders * 50)  # Simplified power calculation
+        # Simplified power calculation
+        self.set_property("power", cylinders * 50)
 
 
 class Chassis(CompositePart):
     """A vehicle chassis/frame."""
 
-    def __init__(self, length: float = 2.0, width: float = 1.0, height: float = 0.2,
-                 position: Tuple[float, float, float] = (0, 0, 0)):
+    def __init__(self,
+                 length: float = 2.0,
+                 width: float = 1.0,
+                 height: float = 0.2,
+                 position: Tuple[float,
+                                 float,
+                                 float] = (0,
+                                           0,
+                                           0)):
         """
         Create a chassis.
 
@@ -106,8 +121,8 @@ class Chassis(CompositePart):
         rail_height = height * 2
         for side in [-1, 1]:
             rail = Cube(size=0.1, position=(position[0],
-                                           position[1] + side * width * 0.4,
-                                           position[2]))
+                                            position[1] + side * width * 0.4,
+                                            position[2]))
             rail.set_scale(length * 0.9, 0.1, rail_height)
             rail.name = f"Rail_{side}"
             rail.set_color(0.3, 0.3, 0.3)
@@ -141,7 +156,13 @@ class Body(CompositePart):
             self.add_part(lower)
 
             # Cabin
-            cabin = Cube(size=1.0, position=(position[0], position[1], position[2] + 0.6))
+            cabin = Cube(
+                size=1.0,
+                position=(
+                    position[0],
+                    position[1],
+                    position[2] +
+                    0.6))
             cabin.set_scale(1.2, 1.0, 0.6)
             cabin.name = "Cabin"
             cabin.set_color(0.7, 0.7, 0.8)  # Windows
@@ -155,7 +176,13 @@ class Body(CompositePart):
             lower.set_color(0.9, 0.7, 0.1)  # Yellow
             self.add_part(lower)
 
-            cabin = Cube(size=1.0, position=(position[0], position[1], position[2] + 0.4))
+            cabin = Cube(
+                size=1.0,
+                position=(
+                    position[0],
+                    position[1],
+                    position[2] +
+                    0.4))
             cabin.set_scale(1.0, 1.1, 0.4)
             cabin.name = "Cabin"
             cabin.set_color(0.2, 0.2, 0.2)

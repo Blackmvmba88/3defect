@@ -48,9 +48,9 @@ class BlenderRenderer:
         for path in possible_paths:
             try:
                 result = subprocess.run([path, '--version'],
-                                      capture_output=True,
-                                      timeout=5,
-                                      text=True)
+                                        capture_output=True,
+                                        timeout=5,
+                                        text=True)
                 if result.returncode == 0:
                     return path
             except (subprocess.SubprocessError, FileNotFoundError):
@@ -181,11 +181,11 @@ print(f"Renderizado guardado en / Render saved to: {{output_path}}")
         return base_script + render_setup
 
     def render(self, objects, output_path: str,
-              resolution: Tuple[int, int] = (1920, 1080),
-              samples: int = 128,
-              camera_distance: float = 5.0,
-              camera_angle: Tuple[float, float, float] = (60, 0, 45),
-              save_blend: bool = True) -> bool:
+               resolution: Tuple[int, int] = (1920, 1080),
+               samples: int = 128,
+               camera_distance: float = 5.0,
+               camera_angle: Tuple[float, float, float] = (60, 0, 45),
+               save_blend: bool = True) -> bool:
         """
         Renderiza objetos y guarda la imagen.
         Renders objects and saves the image.
@@ -205,8 +205,7 @@ print(f"Renderizado guardado en / Render saved to: {{output_path}}")
         if not self.blender_path:
             raise RuntimeError(
                 "Blender no encontrado. Instala Blender o proporciona la ruta.\n"
-                "Blender not found. Install Blender or provide the path."
-            )
+                "Blender not found. Install Blender or provide the path.")
 
         # Ensure output directory exists
         output_dir = os.path.dirname(output_path)
