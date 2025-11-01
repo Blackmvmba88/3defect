@@ -222,6 +222,27 @@ El sistema es completamente bilingüe (español/inglés) con:
 - ✅ Configuración manual del idioma
 - ✅ Variable de entorno para control
 
+## 🔧 Calidad de Código y Validación
+
+Este proyecto incluye una herramienta completa de validación y reparación para mantener alta calidad de código.
+
+### Validación Rápida
+```bash
+# Verificar calidad del código
+python validate_and_fix.py --check-only
+
+# Reparar problemas automáticamente
+python validate_and_fix.py --fix
+```
+
+### Estado Actual
+- ✅ 0 Errores de sintaxis
+- ✅ 0 Problemas de estilo (flake8)
+- ✅ 9.87/10 puntuación pylint (¡Excelente!)
+- ✅ 0 Problemas de seguridad
+
+**📚 Para guía detallada:** Ver [VALIDATION.md](VALIDATION.md) y [QUICKSTART_VALIDATION.md](QUICKSTART_VALIDATION.md)
+
 ## 🤝 Contribuir
 
 Las contribuciones son bienvenidas! Siéntete libre de:
@@ -231,6 +252,7 @@ Las contribuciones son bienvenidas! Siéntete libre de:
 - Enviar pull requests
 - Mejorar documentación
 - Añadir más traducciones
+- Ejecutar `python validate_and_fix.py --fix` antes de hacer commit
 
 ## 🎉 Agradecimientos
 

@@ -18,18 +18,18 @@ class BlenderRenderer:
     Renderizador que genera imágenes usando Blender en segundo plano.
     Renderer that generates images using Blender in the background.
     """
-    
+
     def __init__(self, blender_path: Optional[str] = None):
         """
         Inicializa el renderizador.
         Initialize the renderer.
-        
+
         Args:
             blender_path: Ruta al ejecutable de Blender. Si es None, intenta encontrarlo automáticamente.
                          Path to Blender executable. If None, tries to find it automatically.
         """
         self.blender_path = blender_path or self._find_blender()
-        
+
     def _find_blender(self) -> Optional[str]:
         """
         Intenta encontrar Blender en el sistema.
@@ -44,20 +44,20 @@ class BlenderRenderer:
             'C:\\Program Files\\Blender Foundation\\Blender 3.6\\blender.exe',
             'C:\\Program Files\\Blender Foundation\\Blender 4.0\\blender.exe',
         ]
-        
+
         for path in possible_paths:
             try:
-                result = subprocess.run([path, '--version'], 
-                                      capture_output=True, 
-                                      timeout=5,
-                                      text=True)
+                result = subprocess.run([path, '--version'],
+                                        capture_output=True,
+                                        timeout=5,
+                                        text=True)
                 if result.returncode == 0:
                     return path
             except (subprocess.SubprocessError, FileNotFoundError):
                 continue
-        
+
         return None
-    
+
     def generate_render_script(self, objects, output_path: str,
                                resolution: Tuple[int, int] = (1920, 1080),
                                samples: int = 128,
@@ -66,7 +66,7 @@ class BlenderRenderer:
         """
         Genera un script de Blender que incluye renderizado.
         Generates a Blender script that includes rendering.
-        
+
         Args:
             objects: Objetos a renderizar / Objects to render
             output_path: Ruta donde guardar la imagen / Path to save the image
@@ -74,7 +74,7 @@ class BlenderRenderer:
             samples: Número de muestras de renderizado / Number of render samples
             camera_distance: Distancia de la cámara / Camera distance
             camera_angle: Ángulos de la cámara (elevación, azimut, rotación) / Camera angles
-            
+
         Returns:
             Script de Blender / Blender script
         """
@@ -85,9 +85,9 @@ class BlenderRenderer:
                 exporter.add_object(obj)
         else:
             exporter.add_object(objects)
-        
+
         base_script = exporter.generate_blender_script()
-        
+
         # Add rendering setup
         render_setup = f"""
 
@@ -177,19 +177,19 @@ bpy.ops.render.render(write_still=True)
 
 print(f"Renderizado guardado en / Render saved to: {{output_path}}")
 """
-        
+
         return base_script + render_setup
-    
+
     def render(self, objects, output_path: str,
-              resolution: Tuple[int, int] = (1920, 1080),
-              samples: int = 128,
-              camera_distance: float = 5.0,
-              camera_angle: Tuple[float, float, float] = (60, 0, 45),
-              save_blend: bool = True) -> bool:
+               resolution: Tuple[int, int] = (1920, 1080),
+               samples: int = 128,
+               camera_distance: float = 5.0,
+               camera_angle: Tuple[float, float, float] = (60, 0, 45),
+               save_blend: bool = True) -> bool:
         """
         Renderiza objetos y guarda la imagen.
         Renders objects and saves the image.
-        
+
         Args:
             objects: Objetos a renderizar / Objects to render
             output_path: Ruta de salida para la imagen / Output path for the image
@@ -198,37 +198,36 @@ print(f"Renderizado guardado en / Render saved to: {{output_path}}")
             camera_distance: Distancia de cámara / Camera distance
             camera_angle: Ángulos de cámara / Camera angles
             save_blend: Guardar archivo .blend / Save .blend file
-            
+
         Returns:
             True si tuvo éxito / True if successful
         """
         if not self.blender_path:
             raise RuntimeError(
                 "Blender no encontrado. Instala Blender o proporciona la ruta.\n"
-                "Blender not found. Install Blender or provide the path."
-            )
-        
+                "Blender not found. Install Blender or provide the path.")
+
         # Ensure output directory exists
         output_dir = os.path.dirname(output_path)
         if output_dir and not os.path.exists(output_dir):
             os.makedirs(output_dir)
-        
+
         # Generate script
         script = self.generate_render_script(
-            objects, output_path, resolution, samples, 
+            objects, output_path, resolution, samples,
             camera_distance, camera_angle
         )
-        
+
         # Save script to temporary file
         with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
             script_path = f.name
             f.write(script)
-        
+
         # Optionally save blend file
         blend_path = None
         if save_blend:
             blend_path = output_path.rsplit('.', 1)[0] + '.blend'
-        
+
         try:
             # Run Blender in background
             cmd = [
@@ -236,26 +235,26 @@ print(f"Renderizado guardado en / Render saved to: {{output_path}}")
                 '--background',
                 '--python', script_path
             ]
-            
+
             if blend_path:
                 cmd.extend(['--render-output', output_path])
-            
+
             result = subprocess.run(
                 cmd,
                 capture_output=True,
                 text=True,
                 timeout=300  # 5 minutes timeout
             )
-            
+
             # Clean up script file
             os.unlink(script_path)
-            
+
             if result.returncode == 0:
                 return True
             else:
                 print(f"Error de renderizado / Render error:\n{result.stderr}")
                 return False
-                
+
         except subprocess.TimeoutExpired:
             print("Timeout de renderizado / Render timeout")
             os.unlink(script_path)
@@ -274,14 +273,14 @@ def render_to_image(objects, output_path: str,
     """
     Función de conveniencia para renderizar objetos rápidamente.
     Convenience function to quickly render objects.
-    
+
     Args:
         objects: Objeto(s) a renderizar / Object(s) to render
         output_path: Ruta de salida / Output path
         resolution: Resolución / Resolution
         samples: Muestras / Samples
         blender_path: Ruta a Blender / Path to Blender
-        
+
     Returns:
         True si tuvo éxito / True if successful
     """
