@@ -22,18 +22,18 @@ from defect3d.i18n import get_language
 
 def main():
     lang = get_language()
-    
+
     if lang == 'es':
         print("Creando una motocicleta deportiva...")
     else:
         print("Creating a sport motorcycle...")
-    
+
     # Create a sport motorcycle
     sport_bike = Motorcycle(bike_type="sport", position=(0, 0, 0), color=(0.1, 0.1, 0.9))
-    
+
     # Get specifications
     specs = sport_bike.get_specifications()
-    
+
     if lang == 'es':
         print(f"\nEspecificaciones de la Motocicleta:")
         print(f"  Tipo: {specs['tipo']}")
@@ -42,15 +42,15 @@ def main():
         print(f"  Ruedas: {specs['ruedas']}")
         print(f"  Motor: {specs['motor']['cilindros']} cilindros, {specs['motor']['potencia']} HP")
         print(f"  Partes totales: {specs['total_partes']}")
-        
+
         print("\nSimulando movimiento...")
         sport_bike.simulate_movement(distance=10.0, direction=(1, 0, 0))
         print(f"  Nueva posición: {sport_bike.position}")
-        
+
         print("\nExportando a Blender...")
         output_file = os.path.join(os.path.dirname(__file__), "motorcycle_export.py")
         export_to_blender(sport_bike, output_file, also_json=True)
-        
+
         print(f"\n¡Hecho! Para visualizar en Blender:")
         print(f"  1. Abrir Blender")
         print(f"  2. Ir a la pestaña de Scripting")
@@ -64,15 +64,15 @@ def main():
         print(f"  Wheels: {specs['wheels']}")
         print(f"  Engine: {specs['engine']['cylinders']} cylinders, {specs['engine']['power']} HP")
         print(f"  Total parts: {specs['parts_count']}")
-        
+
         print("\nSimulating movement...")
         sport_bike.simulate_movement(distance=10.0, direction=(1, 0, 0))
         print(f"  New position: {sport_bike.position}")
-        
+
         print("\nExporting to Blender...")
         output_file = os.path.join(os.path.dirname(__file__), "motorcycle_export.py")
         export_to_blender(sport_bike, output_file, also_json=True)
-        
+
         print(f"\nDone! To visualize in Blender:")
         print(f"  1. Open Blender")
         print(f"  2. Go to Scripting tab")

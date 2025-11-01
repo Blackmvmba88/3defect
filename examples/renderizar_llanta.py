@@ -33,28 +33,28 @@ def crear_llanta_personalizada():
     print("EJERCICIO 1: CREAR LLANTA CON RIN")
     print("=" * 70)
     print()
-    
+
     print("1. Creando llanta con rin...")
     print("   - Radio: 0.35m (35cm)")
     print("   - Ancho: 0.25m (25cm)")
     print()
-    
+
     # Crear la llanta
     llanta = Wheel(radius=0.35, width=0.25, position=(0, 0, 0))
-    
+
     print("2. Componentes de la llanta:")
     print(f"   ✓ Tire (Llanta): Color negro, goma")
     print(f"   ✓ Rim (Rin): Color metálico plateado")
     print(f"   ✓ Total de partes: {llanta.get_part_count()}")
     print()
-    
+
     # Información técnica
     print("3. Especificaciones técnicas:")
     print(f"   • Radio exterior: {llanta.radius:.2f}m")
     print(f"   • Ancho: {llanta.width:.2f}m")
     print(f"   • Diámetro total: {llanta.radius * 2:.2f}m")
     print()
-    
+
     return llanta
 
 
@@ -64,11 +64,11 @@ def exportar_para_blender(llanta):
     Exports the wheel to a Blender file.
     """
     print("4. Exportando modelo a Blender...")
-    
+
     # Guardar el script de Blender
     output_file = os.path.join(os.path.dirname(__file__), "llanta_export.py")
     export_to_blender(llanta, output_file, also_json=True)
-    
+
     print(f"   ✓ Script guardado: {output_file}")
     print(f"   ✓ Datos JSON guardados: {output_file.replace('.py', '.json')}")
     print()
@@ -83,7 +83,7 @@ def generar_instrucciones_renderizado():
     print("INSTRUCCIONES PARA OBTENER LA IMAGEN RENDERIZADA")
     print("=" * 70)
     print()
-    
+
     print("MÉTODO 1: Usando Blender GUI (Interfaz Gráfica)")
     print("-" * 70)
     print("1. Abrir Blender")
@@ -97,7 +97,7 @@ def generar_instrucciones_renderizado():
     print("7. Ir a 'Image' > 'Save As' para guardar la imagen")
     print("   Guardar como: llanta_renderizada.png")
     print()
-    
+
     print("MÉTODO 2: Usando Blender desde línea de comandos")
     print("-" * 70)
     print("Ejecuta este comando en la terminal:")
@@ -106,7 +106,7 @@ def generar_instrucciones_renderizado():
     print()
     print("Esto creará automáticamente 'llanta.png' con la imagen renderizada.")
     print()
-    
+
     print("MÉTODO 3: Renderizado automático (si tienes Blender instalado)")
     print("-" * 70)
     print("Ejecuta el siguiente script Python:")
@@ -115,7 +115,7 @@ def generar_instrucciones_renderizado():
     print()
     print("Este script generará automáticamente la imagen renderizada.")
     print()
-    
+
     print("=" * 70)
     print("RESULTADO ESPERADO")
     print("=" * 70)
@@ -128,7 +128,7 @@ def generar_instrucciones_renderizado():
     print("  • Fondo gris neutro con plano de suelo")
     print("  • Resolución: 1920x1080 (Full HD)")
     print()
-    
+
     print("NOTAS IMPORTANTES:")
     print("  ⚠ Blender debe estar instalado en tu sistema")
     print("  ⚠ El renderizado puede tomar 1-5 minutos dependiendo de tu hardware")
@@ -161,20 +161,20 @@ from defect3d.blender_integration import BlenderRenderer
 def main():
     print("Renderizando llanta automáticamente...")
     print()
-    
+
     # Crear la llanta
     llanta = Wheel(radius=0.35, width=0.25, position=(0, 0, 0))
-    
+
     # Crear renderizador
     renderer = BlenderRenderer()
-    
+
     # Configurar salida
     output_path = os.path.join(os.path.dirname(__file__), "llanta_renderizada.png")
-    
+
     print(f"Generando imagen renderizada en: {output_path}")
     print("Esto puede tomar unos minutos...")
     print()
-    
+
     # Renderizar con configuración de alta calidad
     success = renderer.render(
         llanta,
@@ -184,7 +184,7 @@ def main():
         camera_distance=1.5,  # Más cerca para ver detalles
         camera_angle=(45, 0, 30)  # Ángulo óptimo para la llanta
     )
-    
+
     if success:
         print("✓ ¡Renderizado completado exitosamente!")
         print(f"✓ Imagen guardada en: {output_path}")
@@ -197,11 +197,11 @@ def main():
 if __name__ == "__main__":
     main()
 '''
-    
+
     script_path = os.path.join(os.path.dirname(__file__), "renderizar_llanta_auto.py")
     with open(script_path, 'w', encoding='utf-8') as f:
         f.write(script_content)
-    
+
     print(f"✓ Script de renderizado automático creado: {script_path}")
     print()
 
@@ -209,19 +209,19 @@ if __name__ == "__main__":
 def main():
     """Función principal."""
     print()
-    
+
     # Crear la llanta
     llanta = crear_llanta_personalizada()
-    
+
     # Exportar para Blender
     exportar_para_blender(llanta)
-    
+
     # Crear script de renderizado automático
     crear_script_renderizado_automatico()
-    
+
     # Mostrar instrucciones
     generar_instrucciones_renderizado()
-    
+
     print("=" * 70)
     print("EJERCICIO COMPLETADO")
     print("=" * 70)
