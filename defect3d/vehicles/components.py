@@ -26,18 +26,18 @@ class Wheel(CompositePart):
         self.radius = radius
         self.width = width
 
-        # Tire (outer cylinder)
+        # Llanta (cilindro exterior) / Tire (outer cylinder)
         tire = Cylinder(radius=radius, height=width,
                         position=position, rotation=(0, 90, 0))
         tire.name = "Tire"
-        tire.set_color(0.1, 0.1, 0.1)  # Black rubber
+        tire.set_color(0.1, 0.1, 0.1)  # Caucho negro / Black rubber
         self.add_part(tire)
 
-        # Rim (inner cylinder)
+        # Rin (cilindro interior) / Rim (inner cylinder)
         rim = Cylinder(radius=radius * 0.7, height=width * 0.8,
                        position=position, rotation=(0, 90, 0))
         rim.name = "Rim"
-        rim.set_color(0.7, 0.7, 0.8)  # Metallic
+        rim.set_color(0.7, 0.7, 0.8)  # Metálico / Metallic
         self.add_part(rim)
 
         self.set_property("radius", radius)
@@ -59,14 +59,14 @@ class Engine(CompositePart):
         super().__init__(name="Engine")
         self.cylinders = cylinders
 
-        # Engine block (main body)
+        # Bloque del motor (cuerpo principal) / Engine block (main body)
         block = Cube(size=0.5, position=position)
         block.name = "EngineBlock"
-        block.set_color(0.3, 0.3, 0.3)  # Dark gray
+        block.set_color(0.3, 0.3, 0.3)  # Gris oscuro / Dark gray
         block.set_scale(1.2, 0.8, 0.6)
         self.add_part(block)
 
-        # Cylinder heads
+        # Cabezas de cilindros / Cylinder heads
         for i in range(cylinders):
             offset = (i - cylinders / 2) * 0.15
             cylinder = Cylinder(
@@ -83,7 +83,7 @@ class Engine(CompositePart):
             self.add_part(cylinder)
 
         self.set_property("cylinders", cylinders)
-        # Simplified power calculation
+        # Cálculo simplificado de potencia / Simplified power calculation
         self.set_property("power", cylinders * 50)
 
 
@@ -110,14 +110,14 @@ class Chassis(CompositePart):
         """
         super().__init__(name="Chassis")
 
-        # Main chassis body
+        # Cuerpo principal del chasis / Main chassis body
         body = Cube(size=1.0, position=position)
         body.name = "ChassisBody"
         body.set_scale(length, width, height)
-        body.set_color(0.5, 0.5, 0.6)  # Light gray metal
+        body.set_color(0.5, 0.5, 0.6)  # Metal gris claro / Light gray metal
         self.add_part(body)
 
-        # Frame rails
+        # Rieles del bastidor / Frame rails
         rail_height = height * 2
         for side in [-1, 1]:
             rail = Cube(size=0.1, position=(position[0],
@@ -148,14 +148,14 @@ class Body(CompositePart):
         super().__init__(name=f"Body_{style}")
 
         if style == "sedan":
-            # Lower body
+            # Carrocería inferior / Lower body
             lower = Cube(size=1.0, position=position)
             lower.set_scale(2.0, 1.2, 0.5)
             lower.name = "LowerBody"
-            lower.set_color(0.8, 0.2, 0.2)  # Red
+            lower.set_color(0.8, 0.2, 0.2)  # Rojo / Red
             self.add_part(lower)
 
-            # Cabin
+            # Cabina / Cabin
             cabin = Cube(
                 size=1.0,
                 position=(
@@ -165,15 +165,15 @@ class Body(CompositePart):
                     0.6))
             cabin.set_scale(1.2, 1.0, 0.6)
             cabin.name = "Cabin"
-            cabin.set_color(0.7, 0.7, 0.8)  # Windows
+            cabin.set_color(0.7, 0.7, 0.8)  # Ventanas / Windows
             self.add_part(cabin)
 
         elif style == "sports":
-            # Sleeker, lower profile
+            # Perfil más bajo y elegante / Sleeker, lower profile
             lower = Cube(size=1.0, position=position)
             lower.set_scale(2.2, 1.3, 0.4)
             lower.name = "LowerBody"
-            lower.set_color(0.9, 0.7, 0.1)  # Yellow
+            lower.set_color(0.9, 0.7, 0.1)  # Amarillo / Yellow
             self.add_part(lower)
 
             cabin = Cube(

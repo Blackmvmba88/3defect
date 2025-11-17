@@ -27,7 +27,7 @@ class Shape3D:
         self.rotation = np.array(rotation, dtype=float)
         self.scale = np.array(scale, dtype=float)
         self.name = ""
-        self.material = {"color": (0.8, 0.8, 0.8, 1.0)}  # Default gray
+        self.material = {"color": (0.8, 0.8, 0.8, 1.0)}  # Gris por defecto / Default gray
 
     def translate(self, dx: float, dy: float, dz: float):
         """Move the shape by the given offset."""
@@ -47,7 +47,7 @@ class Shape3D:
 
     def get_bounds(self) -> Tuple[np.ndarray, np.ndarray]:
         """Get the bounding box of the shape."""
-        # Default implementation, override in subclasses
+        # Implementación por defecto, sobrescribir en subclases / Default implementation, override in subclasses
         return self.position - self.scale, self.position + self.scale
 
     def to_dict(self) -> dict:

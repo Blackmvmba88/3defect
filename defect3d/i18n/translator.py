@@ -28,24 +28,24 @@ class Translator:
         if self._current_language:
             return self._current_language
 
-        # Check environment variable first
+        # Revisar variable de entorno primero / Check environment variable first
         env_lang = os.environ.get('DEFECT3D_LANG')
         if env_lang in ['es', 'en']:
             self._current_language = env_lang
             return env_lang
 
-        # Detect from system locale
+        # Detectar desde la configuración regional del sistema / Detect from system locale
         try:
             system_locale = locale.getlocale()[0]
             if system_locale:
-                # Check if Spanish
+                # Verificar si es español / Check if Spanish
                 if system_locale.startswith('es'):
                     self._current_language = 'es'
                     return 'es'
         except (ValueError, TypeError):
             pass
 
-        # Default to English
+        # Por defecto inglés / Default to English
         self._current_language = 'en'
         return 'en'
 
@@ -53,21 +53,21 @@ class Translator:
         """Carga las traducciones. Loads translations."""
         return {
             'es': {
-                # Core system
+                # Sistema central / Core system
                 'position': 'posición',
                 'rotation': 'rotación',
                 'scale': 'escala',
                 'color': 'color',
                 'material': 'material',
 
-                # Shapes
+                # Formas / Shapes
                 'cube': 'cubo',
                 'sphere': 'esfera',
                 'cylinder': 'cilindro',
                 'cone': 'cono',
                 'torus': 'toroide',
 
-                # Vehicle parts
+                # Partes de vehículos / Vehicle parts
                 'wheel': 'rueda',
                 'tire': 'llanta',
                 'rim': 'rin',
@@ -79,7 +79,7 @@ class Translator:
                 'seat': 'asiento',
                 'handlebar': 'manubrio',
 
-                # Vehicle types
+                # Tipos de vehículos / Vehicle types
                 'car': 'coche',
                 'motorcycle': 'motocicleta',
                 'sedan': 'sedán',
@@ -89,7 +89,7 @@ class Translator:
                 'cruiser': 'crucero',
                 'touring': 'turismo',
 
-                # Properties
+                # Propiedades / Properties
                 'type': 'tipo',
                 'dimensions': 'dimensiones',
                 'length': 'longitud',
@@ -107,7 +107,7 @@ class Translator:
                 'kinetic': 'cinética',
                 'potential': 'potencial',
 
-                # Actions
+                # Acciones / Actions
                 'create': 'crear',
                 'creating': 'creando',
                 'export': 'exportar',
@@ -118,7 +118,7 @@ class Translator:
                 'rotate': 'rotar',
                 'translate': 'trasladar',
 
-                # Messages
+                # Mensajes / Messages
                 'specifications': 'especificaciones',
                 'total_parts': 'partes totales',
                 'new_position': 'nueva posición',
@@ -129,14 +129,14 @@ class Translator:
                 'complete': 'completo',
                 'ready': 'listo',
 
-                # Instructions
+                # Instrucciones / Instructions
                 'to_visualize': 'Para visualizar en Blender',
                 'open_blender': 'Abrir Blender',
                 'go_to_scripting': 'Ir a la pestaña de Scripting',
                 'open_file': 'Abrir el archivo',
                 'run_script': 'Ejecutar el script',
 
-                # Physics
+                # Física / Physics
                 'initial_position': 'posición inicial',
                 'final_position': 'posición final',
                 'initial_velocity': 'velocidad inicial',
@@ -145,13 +145,13 @@ class Translator:
                 'physics': 'física',
                 'steps': 'pasos',
 
-                # Errors and warnings
+                # Errores y advertencias / Errors and warnings
                 'error': 'error',
                 'warning': 'advertencia',
                 'not_found': 'no encontrado',
                 'invalid': 'inválido',
             },
-            'en': {}  # English uses the original keys
+            'en': {}  # Inglés usa las claves originales / English uses the original keys
         }
 
     def set_language(self, lang: str):
@@ -200,7 +200,7 @@ class Translator:
         lang = self.get_language()
 
         if lang == 'es':
-            # Translate template keys
+            # Traducir claves de plantilla / Translate template keys
             for key, value in kwargs.items():
                 if isinstance(value,
                               str) and value in self._translations['es']:

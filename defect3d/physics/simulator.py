@@ -30,7 +30,7 @@ class PhysicsSimulator:
         self.gravity = np.array(gravity)
         self.objects = []
         self.time = 0.0
-        self.dt = 0.016  # ~60 FPS
+        self.dt = 0.016  # ~60 FPS / frames por segundo
 
     def add_object(self, obj, mass: float = 1.0,
                    velocity: Tuple[float, float, float] = (0, 0, 0)):
@@ -79,22 +79,22 @@ class PhysicsSimulator:
             dt = self.dt
 
         for obj_data in self.objects:
-            # Calculate net force
+            # Calcular fuerza neta / Calculate net force
             net_force = np.sum(
                 obj_data['forces'], axis=0) if obj_data['forces'] else np.array([0.0, 0.0, 0.0])
 
-            # F = ma, so a = F/m
+            # F = ma, entonces a = F/m / F = ma, so a = F/m
             obj_data['acceleration'] = net_force / obj_data['mass']
 
-            # Update velocity: v = v0 + a*dt
+            # Actualizar velocidad: v = v0 + a*dt / Update velocity: v = v0 + a*dt
             obj_data['velocity'] += obj_data['acceleration'] * dt
 
-            # Update position: p = p0 + v*dt
+            # Actualizar posición: p = p0 + v*dt / Update position: p = p0 + v*dt
             displacement = obj_data['velocity'] * dt
             obj_data['object'].translate(
                 displacement[0], displacement[1], displacement[2])
 
-            # Clear forces for next step
+            # Limpiar fuerzas para el siguiente paso / Clear forces for next step
             obj_data['forces'] = []
 
         self.time += dt
@@ -117,15 +117,15 @@ class PhysicsSimulator:
         num_steps = int(duration / self.dt)
 
         for _ in range(num_steps):
-            # Apply gravity if enabled
+            # Aplicar gravedad si está habilitada / Apply gravity if enabled
             if apply_gravity:
                 for i in range(len(self.objects)):
                     self.apply_gravity(i)
 
-            # Step the simulation
+            # Avanzar la simulación / Step the simulation
             self.step()
 
-            # Record state
+            # Registrar estado / Record state
             state = {
                 'time': self.time,
                 'objects': [
@@ -175,7 +175,7 @@ class PhysicsSimulator:
         if 0 <= obj_index < len(self.objects):
             obj_data = self.objects[obj_index]
             height = obj_data['object'].position[2] - reference_height
-            # PE = mgh (using magnitude of gravity)
+            # EP = mgh (usando magnitud de gravedad) / PE = mgh (using magnitude of gravity)
             g = np.linalg.norm(self.gravity)
             return obj_data['mass'] * g * height
         return 0.0
