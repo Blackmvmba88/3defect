@@ -209,7 +209,7 @@ class Translator:
         return template.format(**kwargs)
 
 
-# Global translator instance
+# Instancia global del traductor / Global translator instance
 _translator = Translator()
 
 
