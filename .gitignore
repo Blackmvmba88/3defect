@@ -48,6 +48,9 @@ examples/*.png
 !examples/ejemplo_*.py
 !examples/showcase.py
 !examples/renderizar_*.py
+!examples/json_serialization.py
+!examples/transformations_demo.py
+!examples/validate_phases.py
 
 # Blender files
 *.blend
