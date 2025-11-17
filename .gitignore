@@ -50,6 +50,7 @@ examples/*.png
 !examples/renderizar_*.py
 !examples/json_serialization.py
 !examples/transformations_demo.py
+!examples/validate_phases.py
 
 # Blender files
 *.blend
