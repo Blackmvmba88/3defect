@@ -4,6 +4,14 @@
 
 **3defect** is a Python-based 3D modeling system designed for creating vehicles and mechanical systems. It provides an intuitive API for building complex 3D objects from simple geometric primitives and includes integration with Blender for visualization.
 
+## 📚 Documentation Index
+
+- **[API Reference](API_REFERENCE.md)** - Complete API documentation for all modules
+- **[Phase Guide](../PHASES.md)** - Detailed phased architecture implementation
+- **[Language Support](LANGUAGE_SUPPORT.md)** - Internationalization guide
+- **[Rendering Guide](RENDERING.md)** - Blender integration and rendering
+- **[Usage Guide](../USAGE.md)** - Comprehensive usage examples
+
 ## Features
 
 - **Basic 3D Shapes**: Cube, Sphere, Cylinder, Cone, Torus
