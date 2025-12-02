@@ -1,12 +1,12 @@
 """
 Common vehicle components.
 
-This module provides reusable vehicle parts like wheels, engines, chassis, etc.
+This module re-exports components from the mechanics module for backward compatibility.
+New code should import from defect3d.mechanics directly.
 """
 
-from typing import Tuple
-from ..core.composite import CompositePart
-from ..core.shapes import Cylinder, Cube
+# Import from mechanics module
+from ..mechanics import Wheel, Engine, Chassis, Body
 
 
 class Wheel(CompositePart):
