@@ -36,11 +36,11 @@ class BlenderExporter:
             "import bpy",
             "import math",
             "",
-            "# Clear existing objects",
+            "# Limpiar objetos existentes / Clear existing objects",
             "bpy.ops.object.select_all(action='SELECT')",
             "bpy.ops.object.delete()",
             "",
-            "# Helper function to create materials",
+            "# Función auxiliar para crear materiales / Helper function to create materials",
             "def create_material(name, color):",
             "    mat = bpy.data.materials.new(name=name)",
             "    mat.use_nodes = True",
@@ -56,23 +56,23 @@ class BlenderExporter:
             script_lines.extend(self._convert_object(obj, obj_counter))
             obj_counter += 1
 
-        # Add camera and lighting
+        # Añadir cámara e iluminación / Add camera and lighting
         script_lines.extend([
             "",
-            "# Add camera",
+            "# Añadir cámara / Add camera",
             "bpy.ops.object.camera_add(location=(10, -10, 8))",
             "camera = bpy.context.object",
             "camera.rotation_euler = (1.1, 0, 0.8)",
             "",
-            "# Set camera as active",
+            "# Establecer cámara como activa / Set camera as active",
             "bpy.context.scene.camera = camera",
             "",
-            "# Add sun light",
+            "# Añadir luz solar / Add sun light",
             "bpy.ops.object.light_add(type='SUN', location=(5, 5, 10))",
             "light = bpy.context.object",
             "light.data.energy = 2.0",
             "",
-            "# Set viewport shading to solid",
+            "# Establecer sombreado del viewport en sólido / Set viewport shading to solid",
             "for area in bpy.context.screen.areas:",
             "    if area.type == 'VIEW_3D':",
             "        for space in area.spaces:",
@@ -91,8 +91,8 @@ class BlenderExporter:
         lines = []
 
         if isinstance(obj, CompositePart):
-            lines.append(f"# Composite: {obj.name}")
-            # Recursively process all parts, including nested composites
+            lines.append(f"# Compuesto / Composite: {obj.name}")
+            # Procesar todas las partes recursivamente, incluyendo compuestos anidados / Recursively process all parts, including nested composites
             self._process_composite(obj, lines, counter)
         elif isinstance(obj, Shape3D):
             lines.extend(self._convert_shape(obj, str(counter)))
@@ -111,7 +111,7 @@ class BlenderExporter:
 
         for i, part in enumerate(composite.parts):
             if isinstance(part, CompositePart):
-                lines.append(f"# Nested Composite: {part.name}")
+                lines.append(f"# Compuesto anidado / Nested Composite: {part.name}")
                 self._process_composite(
                     part, lines, f"{counter}_{i}", level + 1)
             elif isinstance(part, Shape3D):
@@ -124,11 +124,11 @@ class BlenderExporter:
         lines = []
         shape_type = type(shape).__name__
 
-        # Helper to convert numpy values to Python floats
+        # Función auxiliar para convertir valores numpy a floats de Python / Helper to convert numpy values to Python floats
         def to_tuple(arr):
             return tuple(float(x) for x in arr)
 
-        # Create the primitive
+        # Crear la primitiva / Create the primitive
         if shape_type == "Cube":
             lines.append(
                 f"bpy.ops.mesh.primitive_cube_add(size={
@@ -171,7 +171,7 @@ class BlenderExporter:
                     to_tuple(
                         shape.position)})")
         else:
-            # Default to cube
+            # Por defecto usar cubo / Default to cube
             lines.append(
                 f"bpy.ops.mesh.primitive_cube_add(location={
                     to_tuple(
@@ -180,17 +180,17 @@ class BlenderExporter:
         lines.append(f"obj_{obj_id} = bpy.context.object")
         lines.append(f"obj_{obj_id}.name = '{shape.name}_{obj_id}'")
 
-        # Apply rotation (convert degrees to radians)
+        # Aplicar rotación (convertir grados a radianes) / Apply rotation (convert degrees to radians)
         if any(shape.rotation != 0):
             import math
             rot_rad = tuple(float(r) * math.pi / 180.0 for r in shape.rotation)
             lines.append(f"obj_{obj_id}.rotation_euler = {rot_rad}")
 
-        # Apply scale
+        # Aplicar escala / Apply scale
         if any(shape.scale != 1):
             lines.append(f"obj_{obj_id}.scale = {to_tuple(shape.scale)}")
 
-        # Apply material/color
+        # Aplicar material/color / Apply material/color
         color = shape.material.get("color", (0.8, 0.8, 0.8, 1.0))
         lines.append(
             f"mat_{obj_id} = create_material('Material_{obj_id}', {color})")

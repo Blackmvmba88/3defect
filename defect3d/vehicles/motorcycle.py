@@ -39,10 +39,10 @@ class Motorcycle(CompositePart):
         """
         super().__init__(name=f"Motorcycle_{bike_type}")
         self.bike_type = bike_type
-        # Use parent class position
+        # Usar la posición de la clase padre / Use parent class position
         self.position[:] = position
 
-        # Set dimensions based on bike type
+        # Establecer dimensiones según el tipo de moto / Set dimensions based on bike type
         if bike_type == "sport":
             length, width, seat_height = 2.0, 0.7, 0.8
             wheel_radius = 0.32
@@ -56,7 +56,7 @@ class Motorcycle(CompositePart):
             length, width, seat_height = 2.0, 0.7, 0.8
             wheel_radius = 0.32
 
-        # Create frame
+        # Crear bastidor / Create frame
         frame_pos = (
             position[0],
             position[1],
@@ -65,23 +65,23 @@ class Motorcycle(CompositePart):
             0.2)
         self._create_frame(frame_pos, length, width)
 
-        # Create engine
+        # Crear motor / Create engine
         engine_pos = (position[0], position[1], frame_pos[2])
         cylinders = 2 if bike_type == "cruiser" else 4
         self.engine = Engine(cylinders=cylinders, position=engine_pos)
         self.engine.name = "MotorcycleEngine"
-        # Scale down engine for motorcycle
+        # Reducir tamaño del motor para motocicleta / Scale down engine for motorcycle
         for part in self.engine.parts:
             part.set_scale(0.6, 0.6, 0.6)
         self.add_part(self.engine)
 
-        # Create wheels
+        # Crear ruedas / Create wheels
         self.wheels = []
         wheel_positions = [
             (position[0] + length * 0.4, position[1],
-             position[2] + wheel_radius * 0.5),   # Front wheel
+             position[2] + wheel_radius * 0.5),   # Rueda delantera / Front wheel
             (position[0] - length * 0.4, position[1],
-             position[2] + wheel_radius * 0.5),   # Rear wheel
+             position[2] + wheel_radius * 0.5),   # Rueda trasera / Rear wheel
         ]
 
         for i, wheel_pos in enumerate(wheel_positions):
@@ -90,10 +90,10 @@ class Motorcycle(CompositePart):
             self.wheels.append(wheel)
             self.add_part(wheel)
 
-        # Create fuel tank and body
+        # Crear tanque de combustible y carrocería / Create fuel tank and body
         self._create_body(frame_pos, length, width, seat_height, color)
 
-        # Set properties
+        # Establecer propiedades / Set properties
         self.set_property("type", bike_type)
         self.set_property("length", length)
         self.set_property("width", width)
@@ -108,14 +108,14 @@ class Motorcycle(CompositePart):
     def _create_frame(self, position: Tuple[float, float, float],
                       length: float, width: float):
         """Create the motorcycle frame."""
-        # Main frame tube
+        # Tubo principal del bastidor / Main frame tube
         main_frame = Cylinder(radius=0.03, height=length * 0.8,
                               position=position, rotation=(0, 90, 0))
         main_frame.name = "MainFrame"
-        main_frame.set_color(0.2, 0.2, 0.2)  # Dark gray
+        main_frame.set_color(0.2, 0.2, 0.2)  # Gris oscuro / Dark gray
         self.add_part(main_frame)
 
-        # Subframe
+        # Subbastidor / Subframe
         subframe = Cube(size=0.05, position=(position[0] - length * 0.2,
                                              position[1],
                                              position[2] + 0.2))
@@ -128,7 +128,7 @@ class Motorcycle(CompositePart):
                      length: float, width: float, seat_height: float,
                      color: Optional[Tuple[float, float, float]]):
         """Create the motorcycle body and fuel tank."""
-        # Fuel tank
+        # Tanque de combustible / Fuel tank
         tank = Cube(size=0.4, position=(position[0] + length * 0.1,
                                         position[1],
                                         position[2] + 0.3))
@@ -137,19 +137,19 @@ class Motorcycle(CompositePart):
         if color:
             tank.set_color(color[0], color[1], color[2])
         else:
-            tank.set_color(0.1, 0.3, 0.8)  # Blue
+            tank.set_color(0.1, 0.3, 0.8)  # Azul / Blue
         self.add_part(tank)
 
-        # Seat
+        # Asiento / Seat
         seat = Cube(size=0.3, position=(position[0] - length * 0.15,
                                         position[1],
                                         position[2] + 0.3))
         seat.set_scale(0.6, 0.4, 0.2)
         seat.name = "Seat"
-        seat.set_color(0.1, 0.1, 0.1)  # Black
+        seat.set_color(0.1, 0.1, 0.1)  # Negro / Black
         self.add_part(seat)
 
-        # Handlebars
+        # Manubrio / Handlebars
         handlebar = Cylinder(radius=0.02, height=0.6,
                              position=(position[0] + length * 0.35,
                                        position[1],
@@ -207,12 +207,12 @@ class Motorcycle(CompositePart):
         """
         import numpy as np
         dir_vector = np.array(direction)
-        dir_vector = dir_vector / np.linalg.norm(dir_vector)  # Normalize
+        dir_vector = dir_vector / np.linalg.norm(dir_vector)  # Normalizar / Normalize
 
         movement = dir_vector * distance
         self.translate(movement[0], movement[1], movement[2])
 
-        # Simulate wheel rotation
+        # Simular rotación de ruedas / Simulate wheel rotation
         if self.wheels:
             wheel_rotation = (
                 distance / (2 * math.pi * self.wheels[0].radius)) * 360

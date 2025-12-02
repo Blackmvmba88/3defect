@@ -35,9 +35,9 @@ class BlenderRenderer:
         Intenta encontrar Blender en el sistema.
         Tries to find Blender on the system.
         """
-        # Common Blender locations
+        # Ubicaciones comunes de Blender / Common Blender locations
         possible_paths = [
-            'blender',  # System PATH
+            'blender',  # PATH del sistema / System PATH
             '/usr/bin/blender',
             '/usr/local/bin/blender',
             'C:\\Program Files\\Blender Foundation\\Blender\\blender.exe',
@@ -78,7 +78,7 @@ class BlenderRenderer:
         Returns:
             Script de Blender / Blender script
         """
-        # Create base script using exporter
+        # Crear script base usando el exportador / Create base script using exporter
         exporter = BlenderExporter()
         if isinstance(objects, list):
             for obj in objects:
@@ -88,7 +88,7 @@ class BlenderRenderer:
 
         base_script = exporter.generate_blender_script()
 
-        # Add rendering setup
+        # Añadir configuración de renderizado / Add rendering setup
         render_setup = f"""
 
 # Configuración de renderizado / Render setup
@@ -207,29 +207,29 @@ print(f"Renderizado guardado en / Render saved to: {{output_path}}")
                 "Blender no encontrado. Instala Blender o proporciona la ruta.\n"
                 "Blender not found. Install Blender or provide the path.")
 
-        # Ensure output directory exists
+        # Asegurar que el directorio de salida existe / Ensure output directory exists
         output_dir = os.path.dirname(output_path)
         if output_dir and not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
-        # Generate script
+        # Generar script / Generate script
         script = self.generate_render_script(
             objects, output_path, resolution, samples,
             camera_distance, camera_angle
         )
 
-        # Save script to temporary file
+        # Guardar script en archivo temporal / Save script to temporary file
         with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
             script_path = f.name
             f.write(script)
 
-        # Optionally save blend file
+        # Opcionalmente guardar archivo blend / Optionally save blend file
         blend_path = None
         if save_blend:
             blend_path = output_path.rsplit('.', 1)[0] + '.blend'
 
         try:
-            # Run Blender in background
+            # Ejecutar Blender en segundo plano / Run Blender in background
             cmd = [
                 self.blender_path,
                 '--background',
@@ -243,10 +243,10 @@ print(f"Renderizado guardado en / Render saved to: {{output_path}}")
                 cmd,
                 capture_output=True,
                 text=True,
-                timeout=300  # 5 minutes timeout
+                timeout=300  # Tiempo de espera de 5 minutos / 5 minutes timeout
             )
 
-            # Clean up script file
+            # Limpiar archivo de script / Clean up script file
             os.unlink(script_path)
 
             if result.returncode == 0:

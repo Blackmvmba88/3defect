@@ -29,8 +29,8 @@ class CompositePart:
         self.parts: List[Shape3D] = []
         self.position = np.array([0.0, 0.0, 0.0])
         self.rotation = np.array([0.0, 0.0, 0.0])
-        self.connections: List[Dict] = []  # For mechanical connections
-        self.properties: Dict = {}  # Custom properties (mass, material, etc.)
+        self.connections: List[Dict] = []  # Para conexiones mecánicas / For mechanical connections
+        self.properties: Dict = {}  # Propiedades personalizadas (masa, material, etc.) / Custom properties (mass, material, etc.)
 
     def add_part(
             self,
@@ -62,8 +62,8 @@ class CompositePart:
     def rotate(self, rx: float, ry: float, rz: float):
         """Rotate the entire composite part."""
         self.rotation += np.array([rx, ry, rz])
-        # TODO: Implement proper rotation of child parts around composite
-        # center
+        # TODO: Implementar rotación adecuada de partes hijas alrededor del centro compuesto
+        # TODO: Implement proper rotation of child parts around composite center
         for part in self.parts:
             part.rotate(rx, ry, rz)
 
@@ -118,7 +118,7 @@ class CompositePart:
 
     def to_dict(self) -> dict:
         """Convert composite to dictionary representation."""
-        # Handle both numpy arrays and tuples
+        # Manejar tanto arrays numpy como tuplas / Handle both numpy arrays and tuples
         pos = self.position.tolist() if hasattr(
             self.position, 'tolist') else list(
             self.position)

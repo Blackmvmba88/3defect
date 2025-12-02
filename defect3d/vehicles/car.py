@@ -41,10 +41,10 @@ class Car(CompositePart):
         """
         super().__init__(name=f"Car_{car_type}")
         self.car_type = car_type
-        # Use parent class position
+        # Usar la posición de la clase padre / Use parent class position
         self.position[:] = position
 
-        # Set dimensions based on car type
+        # Establecer dimensiones según el tipo de coche / Set dimensions based on car type
         if car_type == "sedan":
             length, width, height = 4.5, 1.8, 1.5
             wheel_radius = 0.35
@@ -58,13 +58,13 @@ class Car(CompositePart):
             length, width, height = 4.5, 1.8, 1.5
             wheel_radius = 0.35
 
-        # Create chassis
+        # Crear chasis / Create chassis
         chassis_pos = (position[0], position[1], position[2] + wheel_radius)
         self.chassis = Chassis(length=length, width=width, height=0.3,
                                position=chassis_pos)
         self.add_part(self.chassis)
 
-        # Create engine
+        # Crear motor / Create engine
         engine_pos = (
             position[0] + length * 0.3,
             position[1],
@@ -73,17 +73,17 @@ class Car(CompositePart):
         self.engine = Engine(cylinders=cylinders, position=engine_pos)
         self.add_part(self.engine)
 
-        # Create wheels
+        # Crear ruedas / Create wheels
         self.wheels = []
         wheel_positions = [
             (position[0] + length * 0.3, position[1] + width * 0.45,
-             position[2] + wheel_radius * 0.5),   # Front right
+             position[2] + wheel_radius * 0.5),   # Delantera derecha / Front right
             (position[0] + length * 0.3, position[1] - width *
-             0.45, position[2] + wheel_radius * 0.5),   # Front left
+             0.45, position[2] + wheel_radius * 0.5),   # Delantera izquierda / Front left
             (position[0] - length * 0.3, position[1] + width *
-             0.45, position[2] + wheel_radius * 0.5),   # Rear right
+             0.45, position[2] + wheel_radius * 0.5),   # Trasera derecha / Rear right
             (position[0] - length * 0.3, position[1] - width *
-             0.45, position[2] + wheel_radius * 0.5),   # Rear left
+             0.45, position[2] + wheel_radius * 0.5),   # Trasera izquierda / Rear left
         ]
 
         for i, wheel_pos in enumerate(wheel_positions):
@@ -92,12 +92,12 @@ class Car(CompositePart):
             self.wheels.append(wheel)
             self.add_part(wheel)
 
-        # Create body
+        # Crear carrocería / Create body
         body_pos = (position[0], position[1], chassis_pos[2] + 0.5)
         body_style = car_type if car_type in ["sedan", "sports"] else "sedan"
         self.body = Body(style=body_style, position=body_pos)
 
-        # Apply custom color if provided
+        # Aplicar color personalizado si se proporciona / Apply custom color if provided
         if color:
             for part in self.body.parts:
                 if "Body" in part.name:
@@ -105,7 +105,7 @@ class Car(CompositePart):
 
         self.add_part(self.body)
 
-        # Set properties
+        # Establecer propiedades / Set properties
         self.set_property("type", car_type)
         self.set_property("length", length)
         self.set_property("width", width)
@@ -166,12 +166,12 @@ class Car(CompositePart):
         """
         import numpy as np
         dir_vector = np.array(direction)
-        dir_vector = dir_vector / np.linalg.norm(dir_vector)  # Normalize
+        dir_vector = dir_vector / np.linalg.norm(dir_vector)  # Normalizar / Normalize
 
         movement = dir_vector * distance
         self.translate(movement[0], movement[1], movement[2])
 
-        # Simulate wheel rotation (simple)
+        # Simular rotación de ruedas (simple) / Simulate wheel rotation (simple)
         if self.wheels:
             wheel_rotation = (
                 distance / (2 * math.pi * self.wheels[0].radius)) * 360
