@@ -10,6 +10,9 @@ from typing import Tuple, List
 from ..core.composite import CompositePart
 from ..core.shapes import Sphere, Cylinder
 
+# Constantes / Constants
+HEXAGON_SPACING_FACTOR = 1.5  # Factor de espaciado entre hexágonos / Spacing factor between hexagons
+
 
 class ReactiveSkin:
     """
@@ -47,7 +50,7 @@ class ReactiveSkin:
         skin = CompositePart(name="reactive_skin")
         
         # Calcular distribución de hexágonos / Calculate hexagon distribution
-        rows = int(self.height / (self.hexagon_size * 1.5))
+        rows = int(self.height / (self.hexagon_size * HEXAGON_SPACING_FACTOR))
         
         for row in range(rows):
             row_panels = self._create_hexagon_row(row, rows, photosynthetic)
@@ -72,7 +75,7 @@ class ReactiveSkin:
         row_comp = CompositePart(name=f"hexagon_row_{row}")
         
         # Calcular altura y radio / Calculate height and radius
-        y = row * self.hexagon_size * 1.5
+        y = row * self.hexagon_size * HEXAGON_SPACING_FACTOR
         progress = row / total_rows
         current_radius = self.base_radius * (1.0 - progress * 0.3)
         

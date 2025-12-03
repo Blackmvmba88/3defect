@@ -39,7 +39,8 @@ class MeshExporter:
         
         # Simplificación: extraer posiciones de las partes
         # Simplification: extract positions from parts
-        def extract_parts(part, offset=0):
+        def extract_parts(part):
+            """Recursively extract geometry from part and its sub-parts"""
             nonlocal vertices, faces, normals
             
             if hasattr(part, 'position'):
@@ -51,13 +52,11 @@ class MeshExporter:
                 # parts es una lista / parts is a list
                 if isinstance(part.parts, list):
                     for sub_part in part.parts:
-                        offset = extract_parts(sub_part, offset)
+                        extract_parts(sub_part)
                 # o un diccionario / or a dictionary
                 elif isinstance(part.parts, dict):
                     for sub_part in part.parts.values():
-                        offset = extract_parts(sub_part, offset)
-                    
-            return len(vertices)
+                        extract_parts(sub_part)
             
         extract_parts(self.mesh)
         

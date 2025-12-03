@@ -258,7 +258,7 @@ class BiomimeticMesh:
             from ..i18n import get_language
             lang = get_language()
             lang_code = 'es' if lang == 'es' else 'en'
-        except:
+        except (ImportError, ModuleNotFoundError):
             lang_code = 'en'
         
         specs = {

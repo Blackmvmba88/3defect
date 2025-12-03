@@ -10,6 +10,9 @@ from typing import List, Tuple
 from ..core.composite import CompositePart
 from ..core.shapes import Cylinder, Sphere
 
+# Constantes / Constants
+CONNECTION_LEVEL_HEIGHT = 10  # metros / meters - Altura entre niveles de conexión / Height between connection levels
+
 
 class VentilationSystem:
     """
@@ -49,7 +52,7 @@ class VentilationSystem:
             ventilation.add_part(channel)
             
         # Canales horizontales de conexión / Horizontal connecting channels
-        connection_levels = int(self.height / 10)  # Cada 10m / Every 10m
+        connection_levels = int(self.height / CONNECTION_LEVEL_HEIGHT)
         for level in range(connection_levels):
             connections = self._create_connection_level(level)
             ventilation.add_part(connections)
@@ -119,7 +122,7 @@ class VentilationSystem:
         """
         connections = CompositePart(name=f"connections_level_{level}")
         
-        y = level * 10  # Cada 10m / Every 10m
+        y = level * CONNECTION_LEVEL_HEIGHT  # Usar constante / Use constant
         connection_count = 8
         
         for i in range(connection_count):
