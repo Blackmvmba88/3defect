@@ -23,9 +23,9 @@ def print_available_scales():
     print("\n" + "="*60)
     print("ESCALAS DISPONIBLES / AVAILABLE SCALES")
     print("="*60)
-    
+
     scales = get_all_scales()
-    
+
     for key, (name_es, name_en, height_range) in scales.items():
         print(f"\n{key} — {name_es}")
         print(f"    {name_en}")
@@ -36,7 +36,7 @@ def create_biomimetic_building(scale: BuildingScale, output_dir: str = "output")
     """
     Crea un edificio biomimético completo.
     Creates a complete biomimetic building.
-    
+
     Args:
         scale: Escala del edificio / Building scale
         output_dir: Directorio de salida / Output directory
@@ -45,44 +45,44 @@ def create_biomimetic_building(scale: BuildingScale, output_dir: str = "output")
     print(f"Creando edificio biomimético / Creating biomimetic building")
     print(f"Escala / Scale: {scale.value}")
     print(f"{'='*60}\n")
-    
+
     # Crear directorio de salida / Create output directory
     os.makedirs(output_dir, exist_ok=True)
-    
+
     # 1. Generar malla maestra / Generate master mesh
     print("1. Generando malla maestra / Generating master mesh...")
     building = BiomimeticMesh(scale)
     mesh = building.get_mesh()
-    
+
     # Mostrar especificaciones / Show specifications
     specs = building.get_specifications()
     print("\nEspecificaciones / Specifications:")
     for key, value in specs.items():
         print(f"  {key}: {value}")
-    
+
     # 2. Exportar a formatos 3D / Export to 3D formats
     print("\n2. Exportando a formatos 3D / Exporting to 3D formats...")
-    
+
     # OBJ
     obj_path = os.path.join(output_dir, f"biomimetic_{scale.value}.obj")
     export_mesh(mesh, obj_path, format="obj", include_materials=True)
     print(f"   ✓ OBJ: {obj_path}")
-    
+
     # FBX
     fbx_path = os.path.join(output_dir, f"biomimetic_{scale.value}.fbx")
     export_mesh(mesh, fbx_path, format="fbx")
     print(f"   ✓ FBX: {fbx_path}")
-    
+
     # GLB
     glb_path = os.path.join(output_dir, f"biomimetic_{scale.value}.glb")
     export_mesh(mesh, glb_path, format="glb")
     print(f"   ✓ GLB/glTF: {glb_path}")
-    
+
     # 3. Generar archivo Blender / Generate Blender file
     print("\n3. Generando archivo Blender / Generating Blender file...")
     config = get_scale_config(scale)
     blender_exporter = BlenderBiomimeticExporter(mesh, config)
-    
+
     blend_path = os.path.join(output_dir, f"biomimetic_{scale.value}.py")
     blender_exporter.export(
         blend_path,
@@ -92,7 +92,7 @@ def create_biomimetic_building(scale: BuildingScale, output_dir: str = "output")
     print(f"   ✓ Blender script: {blend_path}")
     print(f"     Para usar / To use: Abre Blender > Scripting > Abre el archivo > Ejecuta")
     print(f"                        Open Blender > Scripting > Open file > Run")
-    
+
     # 4. Generar LODs / Generate LODs
     print("\n4. Generando niveles de detalle / Generating LOD levels...")
     for lod in ["LOD0", "LOD1", "LOD2"]:
@@ -100,12 +100,12 @@ def create_biomimetic_building(scale: BuildingScale, output_dir: str = "output")
         lod_path = os.path.join(output_dir, f"biomimetic_{scale.value}_{lod}.obj")
         export_mesh(lod_mesh, lod_path, format="obj")
         print(f"   ✓ {lod}: {lod_path}")
-    
+
     print(f"\n{'='*60}")
     print(f"✓ Edificio completado / Building completed: {scale.value}")
     print(f"  Archivos en / Files in: {output_dir}/")
     print(f"{'='*60}\n")
-    
+
     return building
 
 
@@ -117,13 +117,13 @@ def main():
     print("GENERADOR DE ARQUITECTURA BIOMIMÉTICA")
     print("BIOMIMETIC ARCHITECTURE GENERATOR")
     print("="*60)
-    
+
     # Mostrar escalas disponibles / Show available scales
     print_available_scales()
-    
+
     # Crear ejemplos de cada escala / Create examples of each scale
     print("\n\nCreando edificios de ejemplo / Creating example buildings...")
-    
+
     examples = [
         (BuildingScale.S, "output/pavilion"),
         (BuildingScale.M, "output/cultural_center"),
@@ -132,14 +132,14 @@ def main():
         # (BuildingScale.L, "output/tower"),
         # (BuildingScale.XL, "output/megastructure"),
     ]
-    
+
     for scale, output_dir in examples:
         try:
             building = create_biomimetic_building(scale, output_dir)
             print(f"✓ Éxito / Success: {scale.value}\n")
         except Exception as e:
             print(f"✗ Error en / Error in {scale.value}: {e}\n")
-    
+
     print("\n" + "="*60)
     print("RESUMEN / SUMMARY")
     print("="*60)

@@ -2,12 +2,14 @@ from setuptools import setup, find_packages
 
 setup(
     name="3defect",
-    version="0.1.0",
+    version="0.2.0",
     description="A 3D modeling system with Blender integration for creating vehicles and mechanical systems",
     author="3defect Team",
     packages=find_packages(),
     install_requires=[
         'numpy>=1.24.0',
+        'scipy>=1.10.0',
+        'mathutils>=3.3.0',
     ],
     python_requires='>=3.8',
     classifiers=[
