@@ -550,6 +550,6 @@ def my_function(
 ## See Also
 
 - [README.md](../README.md) - Project overview
-- [PHASES.md](../PHASES.md) - Phase implementation guide
-- [USAGE.md](../USAGE.md) - Comprehensive usage guide
+- [PHASES.md](PHASES.md) - Phase implementation guide
+- [USAGE.md](USAGE.md) - Comprehensive usage guide
 - [examples/](../examples/) - Working examples

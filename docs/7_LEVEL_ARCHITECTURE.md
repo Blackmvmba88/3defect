@@ -386,8 +386,8 @@ A **physics that sings**
 ## 📖 Ver También / See Also
 
 - [README.md](../README.md) - Introducción general / General introduction
-- [PHASES.md](../PHASES.md) - Fases de implementación / Implementation phases
-- [USAGE.md](../USAGE.md) - Guía de uso / Usage guide
+- [PHASES.md](PHASES.md) - Fases de implementación / Implementation phases
+- [USAGE.md](USAGE.md) - Guía de uso / Usage guide
 
 ---
 

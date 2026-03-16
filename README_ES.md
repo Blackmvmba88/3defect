@@ -190,7 +190,7 @@ estados = sim.simulate(duration=2.0)
 Documentación completa disponible en:
 
 - [Documentación Completa](docs/README.md) (inglés/español)
-- [Guía de Uso](USAGE.md) (bilingüe)
+- [Guía de Uso](docs/USAGE.md) (bilingüe)
 - Referencia de API
 - Ejemplos de Uso Avanzado
 
@@ -241,7 +241,7 @@ python validate_and_fix.py --fix
 - ✅ 9.87/10 puntuación pylint (¡Excelente!)
 - ✅ 0 Problemas de seguridad
 
-**📚 Para guía detallada:** Ver [VALIDATION.md](VALIDATION.md) y [QUICKSTART_VALIDATION.md](QUICKSTART_VALIDATION.md)
+**📚 Para guía detallada:** Ver [docs/VALIDATION.md](docs/VALIDATION.md) y [docs/QUICKSTART_VALIDATION.md](docs/QUICKSTART_VALIDATION.md)
 
 ## 🤝 Contribuir
 
