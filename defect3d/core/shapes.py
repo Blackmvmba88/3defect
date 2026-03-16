@@ -5,6 +5,7 @@ This module provides fundamental 3D geometric shapes that can be used
 to build more complex objects and mechanical systems.
 """
 
+import math
 import numpy as np
 from typing import Tuple
 
@@ -27,7 +28,13 @@ class Shape3D:
         self.rotation = np.array(rotation, dtype=float)
         self.scale = np.array(scale, dtype=float)
         self.name = ""
+        self.tags = []  # Etiquetas semánticas para IA / Semantic tags for AI
         self.material = {"color": (0.8, 0.8, 0.8, 1.0)}  # Gris por defecto / Default gray
+
+    def add_tag(self, tag: str):
+        """Add a semantic tag to the shape."""
+        if tag not in self.tags:
+            self.tags.append(tag)
 
     def translate(self, dx: float, dy: float, dz: float):
         """Move the shape by the given offset."""
@@ -45,6 +52,11 @@ class Shape3D:
         """Set the color of the shape (RGBA values 0-1)."""
         self.material["color"] = (r, g, b, a)
 
+    def volume(self) -> float:
+        """Calculate the volume of the shape."""
+        # Default implementation, override in subclasses
+        return 0.0
+
     def get_bounds(self) -> Tuple[np.ndarray, np.ndarray]:
         """Get the bounding box of the shape."""
         # Implementación por defecto, sobrescribir en subclases / Default implementation, override in subclasses
@@ -58,6 +70,7 @@ class Shape3D:
             "rotation": self.rotation.tolist(),
             "scale": self.scale.tolist(),
             "name": self.name,
+            "tags": self.tags,
             "material": self.material
         }
 
@@ -76,6 +89,9 @@ class Cube(Shape3D):
         super().__init__(**kwargs)
         self.size = size
         self.name = "Cube"
+
+    def volume(self) -> float:
+        return self.size**3
 
     def get_bounds(self) -> Tuple[np.ndarray, np.ndarray]:
         half_size = (self.size * self.scale) / 2
@@ -96,6 +112,9 @@ class Sphere(Shape3D):
         super().__init__(**kwargs)
         self.radius = radius
         self.name = "Sphere"
+
+    def volume(self) -> float:
+        return (4 / 3) * math.pi * (self.radius**3)
 
     def get_bounds(self) -> Tuple[np.ndarray, np.ndarray]:
         scaled_radius = self.radius * self.scale
@@ -118,6 +137,9 @@ class Cylinder(Shape3D):
         self.radius = radius
         self.height = height
         self.name = "Cylinder"
+
+    def volume(self) -> float:
+        return math.pi * (self.radius**2) * self.height
 
     def get_bounds(self) -> Tuple[np.ndarray, np.ndarray]:
         scaled_radius = self.radius * self.scale[0]
@@ -145,6 +167,9 @@ class Cone(Shape3D):
         self.radius = radius
         self.height = height
         self.name = "Cone"
+
+    def volume(self) -> float:
+        return (1 / 3) * math.pi * (self.radius**2) * self.height
 
     def get_bounds(self) -> Tuple[np.ndarray, np.ndarray]:
         scaled_radius = self.radius * self.scale[0]
@@ -176,3 +201,7 @@ class Torus(Shape3D):
         self.major_radius = major_radius
         self.minor_radius = minor_radius
         self.name = "Torus"
+
+    def volume(self) -> float:
+        # V = (πr²)(2πR) = 2π²Rr²
+        return 2 * (math.pi**2) * self.major_radius * (self.minor_radius**2)

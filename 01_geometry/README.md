@@ -176,4 +176,4 @@ class Shape3D:
 - **Ejemplos / Examples:** `01_geometry/example_basic.py`
 - **Ejemplo Blender / Blender Example:** `01_geometry/example_blender.py`
 - **Test Físico / Physics Test:** `01_geometry/example_physics.py`
-- **Nivel 2 / Level 2:** `02_clock_mechanisms/` - Usar estos átomos para crear engranajes / Use these atoms to create gears
+- **Nivel 2 / Level 2:** [02_clock_mechanisms/](../02_clock_mechanisms/) - Usar estos átomos para crear engranajes / Use these atoms to create gears

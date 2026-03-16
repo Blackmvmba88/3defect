@@ -178,7 +178,7 @@ renderer.render(car, "coche.png", resolution=(1920, 1080), samples=128)
 
 ---
 
-### 🔽 NIVEL 7 — EVOLUCIÓN (tu cereza)
+### 🔽 NIVEL 7 — EVOLUCIÓN
 
 **Organismos que aprenden / Organisms that learn**
 
@@ -211,6 +211,29 @@ print(f"Período / Period: {best.period:.4f} s")
 
 ---
 
+### 🔽 NIVEL 8 — ASISTENCIA DE IA (la nueva frontera)
+
+**Diseño semántico y lenguaje natural / Semantic design and natural language**
+
+```python
+from defect3d.ai import AIArchitect
+
+architect = AIArchitect()
+# Crear mediante concepto semántico / Create via semantic concept
+arm = architect.design("mechanical arm", segments=4)
+```
+
+**Capacidades / Capabilities:**
+- Diseño basado en conceptos / Concept-based design
+- Etiquetas semánticas / Semantic tagging
+- Búsqueda funcional / Functional search
+- Blueprints complejos / Complex blueprints
+- Puente IA-API / AI-API Bridge
+
+**📂 Directorio / Directory:** `docs/AI_ASSISTANCE.md`
+
+---
+
 ## 🎯 Cómo se Conecta Todo / How Everything Connects
 
 ### De Abajo Hacia Arriba / Bottom-Up
@@ -221,7 +244,8 @@ print(f"Período / Period: {best.period:.4f} s")
 4. **Motores** crean vehículos / create vehicles
 5. **Vehículos** crean simulación / create simulation
 6. **Simulación** crea cine mecánico / creates mechanical cinema
-7. **Evolución** crea conocimiento / creates knowledge
+7. **Evolución** crea optimización / creates optimization
+8. **IA** crea diseño semántico / creates semantic design
 
 ### Ecosistema Fractal / Fractal Ecosystem
 
@@ -284,6 +308,11 @@ python 06_blender_visualization/example_basic.py
 ### Nivel 7: Evolucionar diseños / Evolve designs
 ```bash
 python 07_evolutionary_design/example_basic.py
+```
+
+### Nivel 8: Asistencia de IA / AI Assistance
+```bash
+python examples/ai_assisted_design.py
 ```
 
 ---
@@ -386,8 +415,8 @@ A **physics that sings**
 ## 📖 Ver También / See Also
 
 - [README.md](../README.md) - Introducción general / General introduction
-- [PHASES.md](../PHASES.md) - Fases de implementación / Implementation phases
-- [USAGE.md](../USAGE.md) - Guía de uso / Usage guide
+- [PHASES.md](PHASES.md) - Fases de implementación / Implementation phases
+- [USAGE.md](USAGE.md) - Guía de uso / Usage guide
 
 ---
 
