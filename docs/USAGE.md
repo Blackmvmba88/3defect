@@ -275,7 +275,7 @@ pip install numpy
 
 ## Recursos Adicionales / Additional Resources
 
-- [Documentación completa](docs/README.md) / [Full documentation](docs/README.md)
+- [Documentación completa](README.md) / [Full documentation](README.md)
 - [Ejemplos](examples/) / [Examples](examples/)
 - [Blender Documentation](https://docs.blender.org)
 
