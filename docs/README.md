@@ -7,10 +7,10 @@
 ## 📚 Documentation Index
 
 - **[API Reference](API_REFERENCE.md)** - Complete API documentation for all modules
-- **[Phase Guide](../PHASES.md)** - Detailed phased architecture implementation
+- **[Phase Guide](PHASES.md)** - Detailed phased architecture implementation
 - **[Language Support](LANGUAGE_SUPPORT.md)** - Internationalization guide
 - **[Rendering Guide](RENDERING.md)** - Blender integration and rendering
-- **[Usage Guide](../USAGE.md)** - Comprehensive usage examples
+- **[Usage Guide](USAGE.md)** - Comprehensive usage examples
 
 ## Features
 

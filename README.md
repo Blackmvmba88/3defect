@@ -140,6 +140,9 @@ python examples/custom_vehicle.py
 
 # Complete example in Spanish / Ejemplo completo en español
 python examples/ejemplo_español.py
+
+# Run all levels demo
+python examples/demo_7_levels.py
 ```
 
 ## 🎯 What You Can Build
@@ -220,7 +223,7 @@ python validate_and_fix.py --fix
 - ✅ 9.87/10 pylint score (Excellent!)
 - ✅ 0 Security issues
 
-**📚 For detailed guide:** See [VALIDATION.md](VALIDATION.md) and [QUICKSTART_VALIDATION.md](QUICKSTART_VALIDATION.md)
+**📚 For detailed guide:** See [VALIDATION.md](docs/VALIDATION.md) and [QUICKSTART_VALIDATION.md](docs/QUICKSTART_VALIDATION.md)
 
 ## 🤝 Contributing
 

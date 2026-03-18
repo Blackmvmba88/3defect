@@ -25,12 +25,12 @@ from defect3d.core.transformations import (
 
 def main():
     print("3defect - Transformation Utilities Example\n")
-    
+
     # Create a cube
     cube = Cube(size=1.0, position=(0, 0, 0))
     cube.name = "TransformCube"
     print(f"Initial cube position: {cube.position}")
-    
+
     # Example 1: Translation matrix
     print("\n1. Translation Matrix Example")
     trans_matrix = create_translation_matrix(5, 3, 2)
@@ -38,7 +38,7 @@ def main():
     original_point = (0, 0, 0)
     transformed_point = transform_point(original_point, trans_matrix)
     print(f"Point {original_point} transformed to {transformed_point}")
-    
+
     # Example 2: Rotation matrix
     print("\n2. Rotation Matrix Example")
     rot_matrix = create_rotation_matrix_z(90)  # 90 degrees around Z axis
@@ -46,7 +46,7 @@ def main():
     point = (1, 0, 0)
     rotated_point = transform_point(point, rot_matrix)
     print(f"Point {point} rotated to {rotated_point}")
-    
+
     # Example 3: Scale matrix
     print("\n3. Scale Matrix Example")
     scale_matrix = create_scale_matrix(2, 2, 2)
@@ -54,7 +54,7 @@ def main():
     point = (1, 1, 1)
     scaled_point = transform_point(point, scale_matrix)
     print(f"Point {point} scaled to {scaled_point}")
-    
+
     # Example 4: Combined transformation
     print("\n4. Combined Transformation Example")
     position = (3, 2, 1)
@@ -65,28 +65,28 @@ def main():
     print(f"  Position: {position}")
     print(f"  Rotation: {rotation}")
     print(f"  Scale: {scale}")
-    
+
     # Example 5: Interpolation
     print("\n5. Position Interpolation Example")
     start = (0, 0, 0)
     end = (10, 5, 3)
     print(f"Interpolating from {start} to {end}")
-    
+
     for t in [0.0, 0.25, 0.5, 0.75, 1.0]:
         interpolated = interpolate_transform(start, end, t)
         print(f"  t={t:.2f}: {interpolated}")
-    
+
     # Example 6: Apply transformations to cube
     print("\n6. Applying Transformations to Cube")
     cube.translate(5, 3, 2)
     print(f"After translation: {cube.position}")
-    
+
     cube.rotate(0, 0, 45)
     print(f"After rotation: rotation = {cube.rotation}")
-    
+
     cube.set_scale(2, 2, 2)
     print(f"After scaling: scale = {cube.scale}")
-    
+
     print("\n✅ Transformation utilities example completed!")
 
 

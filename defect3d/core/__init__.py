@@ -1,7 +1,6 @@
 """Core 3D modeling functionality."""
 
 from .shapes import Cube, Sphere, Cylinder, Cone, Torus, Shape3D
-from .primitives import Cube, Sphere, Cylinder, Cone, Torus, Shape3D
 from .composite import CompositePart
 from .transformations import (
     create_translation_matrix,
