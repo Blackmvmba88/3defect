@@ -268,18 +268,9 @@ states = sim.simulate(duration=2.0)
 
 ---
 
-## 🧠 FASE 6 — IA GEOMÉTRICA & DISEÑO SEMÁNTICO
+## 🧠 FASE 6 — IA GEOMÉTRICA (OPTIONAL FUTURE)
 
-**Meta:** Sugerencias inteligentes y asistencia de diseño.
-
-### ✅ Implemented Features (Level 8)
-- **`ai/architect.py`**: Semantic bridge
-  - `AIArchitect`: Bridge between language concepts and Low-level API
-- **`ai/blueprints.py`**: Component recipes
-  - High-level recipes for robotic arms, thrusters, etc.
-- **Semantic Tagging**:
-  - `add_tag()` in `Shape3D` and `CompositePart`
-  - Tag-based filtering and search
+**Meta:** Sugerencias inteligentes.
 
 ### Future Vision
 - Natural language vehicle generation
