@@ -61,10 +61,31 @@ class CompositePart:
 
     def rotate(self, rx: float, ry: float, rz: float):
         """Rotate the entire composite part."""
+        from .transformations import apply_transform, transform_point
+
+        # Incrementar rotación / Increment rotation
         self.rotation += np.array([rx, ry, rz])
-        # TODO: Implementar rotación adecuada de partes hijas alrededor del centro compuesto
-        # TODO: Implement proper rotation of child parts around composite center
+
+        # Crear matriz de rotación alrededor del centro (0,0,0 relativo al compuesto)
+        # Create rotation matrix around center (0,0,0 relative to composite)
+        # Usamos apply_transform con posición cero porque queremos rotar ALREDEDOR del pivote
+        transform = apply_transform((0, 0, 0), (rx, ry, rz), (1, 1, 1))
+
         for part in self.parts:
+            # 1. Obtener posición relativa al centro del compuesto
+            # 1. Get position relative to composite center
+            rel_pos = part.position - self.position
+
+            # 2. Rotar el vector de posición relativa
+            # 2. Rotate the relative position vector
+            new_rel_pos = transform_point(rel_pos, transform)
+
+            # 3. Establecer nueva posición absoluta
+            # 3. Set new absolute position
+            part.position = self.position + new_rel_pos
+
+            # 4. Rotar la parte sobre su propio eje
+            # 4. Rotate the part on its own axis
             part.rotate(rx, ry, rz)
 
     def connect(

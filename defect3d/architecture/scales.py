@@ -23,10 +23,10 @@ def get_scale_config(scale: BuildingScale) -> Dict:
     """
     Obtiene la configuración para una escala específica.
     Gets the configuration for a specific scale.
-    
+
     Args:
         scale: BuildingScale enum value
-        
+
     Returns:
         Dict con configuración de dimensiones, LODs, y parámetros
         Dict with dimension, LOD, and parameter configuration
@@ -117,7 +117,7 @@ def get_scale_config(scale: BuildingScale) -> Dict:
             },
         },
     }
-    
+
     return configs[scale]
 
 
@@ -125,7 +125,7 @@ def get_all_scales() -> Dict[str, Tuple[str, str]]:
     """
     Obtiene información de todas las escalas disponibles.
     Gets information about all available scales.
-    
+
     Returns:
         Dict mapeando escala a (nombre_es, nombre_en, rango_altura)
         Dict mapping scale to (name_es, name_en, height_range)
