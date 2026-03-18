@@ -28,7 +28,13 @@ class Shape3D:
         self.rotation = np.array(rotation, dtype=float)
         self.scale = np.array(scale, dtype=float)
         self.name = ""
+        self.tags = []  # Etiquetas semánticas para IA / Semantic tags for AI
         self.material = {"color": (0.8, 0.8, 0.8, 1.0)}  # Gris por defecto / Default gray
+
+    def add_tag(self, tag: str):
+        """Add a semantic tag to the shape."""
+        if tag not in self.tags:
+            self.tags.append(tag)
 
     def translate(self, dx: float, dy: float, dz: float):
         """Move the shape by the given offset."""
@@ -64,6 +70,7 @@ class Shape3D:
             "rotation": self.rotation.tolist(),
             "scale": self.scale.tolist(),
             "name": self.name,
+            "tags": self.tags,
             "material": self.material
         }
 

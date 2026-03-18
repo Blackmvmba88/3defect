@@ -27,6 +27,7 @@ class CompositePart:
         """
         self.name = name
         self.parts: List[Shape3D] = []
+        self.tags = []  # Etiquetas semánticas para IA / Semantic tags for AI
         self.position = np.array([0.0, 0.0, 0.0])
         self.rotation = np.array([0.0, 0.0, 0.0])
         self.connections: List[Dict] = []  # Para conexiones mecánicas / For mechanical connections
@@ -107,6 +108,11 @@ class CompositePart:
             "type": connection_type
         })
 
+    def add_tag(self, tag: str):
+        """Add a semantic tag to the composite part."""
+        if tag not in self.tags:
+            self.tags.append(tag)
+
     def set_property(self, key: str, value):
         """Set a custom property for this composite."""
         self.properties[key] = value
@@ -151,6 +157,7 @@ class CompositePart:
             "name": self.name,
             "position": pos,
             "rotation": rot,
+            "tags": self.tags,
             "properties": self.properties,
             "parts": [part.to_dict() for part in self.parts],
             "connections": [
