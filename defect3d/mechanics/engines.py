@@ -28,6 +28,8 @@ class Engine(CompositePart):
         # Engine block (main body)
         block = Cube(size=0.5, position=position)
         block.name = "EngineBlock"
+        block.add_tag("block")
+        block.add_tag("structural")
         block.set_color(0.3, 0.3, 0.3)  # Dark gray
         block.set_scale(1.2, 0.8, 0.6)
         self.add_part(block)
@@ -45,6 +47,8 @@ class Engine(CompositePart):
                     position[2] +
                     0.4))
             cylinder.name = f"Cylinder_{i + 1}"
+            cylinder.add_tag("cylinder")
+            cylinder.add_tag("combustion")
             cylinder.set_color(0.4, 0.4, 0.4)
             self.add_part(cylinder)
 

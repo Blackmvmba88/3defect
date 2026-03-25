@@ -31,6 +31,8 @@ class Wheel(CompositePart):
         tire = Cylinder(radius=radius, height=width,
                         position=position, rotation=(0, 90, 0))
         tire.name = "Tire"
+        tire.add_tag("rubber")
+        tire.add_tag("traction")
         tire.set_color(0.1, 0.1, 0.1)  # Black rubber
         self.add_part(tire)
 
@@ -38,6 +40,8 @@ class Wheel(CompositePart):
         rim = Cylinder(radius=radius * 0.7, height=width * 0.8,
                        position=position, rotation=(0, 90, 0))
         rim.name = "Rim"
+        rim.add_tag("metallic")
+        rim.add_tag("structural")
         rim.set_color(0.7, 0.7, 0.8)  # Metallic
         self.add_part(rim)
 

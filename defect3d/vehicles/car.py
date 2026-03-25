@@ -62,6 +62,8 @@ class Car(CompositePart):
         chassis_pos = (position[0], position[1], position[2] + wheel_radius)
         self.chassis = Chassis(length=length, width=width, height=0.3,
                                position=chassis_pos)
+        self.chassis.add_tag("structural")
+        self.chassis.add_tag("chassis")
         self.add_part(self.chassis)
 
         # Crear motor / Create engine
@@ -71,6 +73,8 @@ class Car(CompositePart):
             chassis_pos[2] + 0.3)
         cylinders = 4 if car_type == "sedan" else 6 if car_type == "sports" else 6
         self.engine = Engine(cylinders=cylinders, position=engine_pos)
+        self.engine.add_tag("propulsion")
+        self.engine.add_tag("engine")
         self.add_part(self.engine)
 
         # Crear ruedas / Create wheels
@@ -89,6 +93,8 @@ class Car(CompositePart):
         for i, wheel_pos in enumerate(wheel_positions):
             wheel = Wheel(radius=wheel_radius, width=0.25, position=wheel_pos)
             wheel.name = f"Wheel_{i + 1}"
+            wheel.add_tag("locomotion")
+            wheel.add_tag("wheel")
             self.wheels.append(wheel)
             self.add_part(wheel)
 
@@ -96,6 +102,8 @@ class Car(CompositePart):
         body_pos = (position[0], position[1], chassis_pos[2] + 0.5)
         body_style = car_type if car_type in ["sedan", "sports"] else "sedan"
         self.body = Body(style=body_style, position=body_pos)
+        self.body.add_tag("aesthetic")
+        self.body.add_tag("bodywork")
 
         # Aplicar color personalizado si se proporciona / Apply custom color if provided
         if color:

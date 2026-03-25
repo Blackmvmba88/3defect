@@ -5,9 +5,10 @@ This module allows combining multiple 3D shapes into mechanical assemblies
 like engines, wheels, chassis, etc.
 """
 
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any
 import numpy as np
 from .shapes import Shape3D
+from .transformations import apply_transform, transform_point
 
 
 class CompositePart:
@@ -62,8 +63,6 @@ class CompositePart:
 
     def rotate(self, rx: float, ry: float, rz: float):
         """Rotate the entire composite part."""
-        from .transformations import apply_transform, transform_point
-
         # Incrementar rotación / Increment rotation
         self.rotation += np.array([rx, ry, rz])
 

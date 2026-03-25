@@ -70,6 +70,8 @@ class Motorcycle(CompositePart):
         cylinders = 2 if bike_type == "cruiser" else 4
         self.engine = Engine(cylinders=cylinders, position=engine_pos)
         self.engine.name = "MotorcycleEngine"
+        self.engine.add_tag("propulsion")
+        self.engine.add_tag("engine")
         # Reducir tamaño del motor para motocicleta / Scale down engine for motorcycle
         for part in self.engine.parts:
             part.set_scale(0.6, 0.6, 0.6)
@@ -87,6 +89,8 @@ class Motorcycle(CompositePart):
         for i, wheel_pos in enumerate(wheel_positions):
             wheel = Wheel(radius=wheel_radius, width=0.12, position=wheel_pos)
             wheel.name = f"Wheel_{i + 1}"
+            wheel.add_tag("locomotion")
+            wheel.add_tag("wheel")
             self.wheels.append(wheel)
             self.add_part(wheel)
 
@@ -112,6 +116,8 @@ class Motorcycle(CompositePart):
         main_frame = Cylinder(radius=0.03, height=length * 0.8,
                               position=position, rotation=(0, 90, 0))
         main_frame.name = "MainFrame"
+        main_frame.add_tag("structural")
+        main_frame.add_tag("frame")
         main_frame.set_color(0.2, 0.2, 0.2)  # Gris oscuro / Dark gray
         self.add_part(main_frame)
 
@@ -121,6 +127,7 @@ class Motorcycle(CompositePart):
                                              position[2] + 0.2))
         subframe.set_scale(length * 0.4, width * 0.5, 0.4)
         subframe.name = "Subframe"
+        subframe.add_tag("structural")
         subframe.set_color(0.2, 0.2, 0.2)
         self.add_part(subframe)
 
@@ -134,6 +141,8 @@ class Motorcycle(CompositePart):
                                         position[2] + 0.3))
         tank.set_scale(0.8, 0.5, 0.4)
         tank.name = "FuelTank"
+        tank.add_tag("storage")
+        tank.add_tag("fuel")
         if color:
             tank.set_color(color[0], color[1], color[2])
         else:
@@ -146,6 +155,8 @@ class Motorcycle(CompositePart):
                                         position[2] + 0.3))
         seat.set_scale(0.6, 0.4, 0.2)
         seat.name = "Seat"
+        seat.add_tag("ergonomics")
+        seat.add_tag("seat")
         seat.set_color(0.1, 0.1, 0.1)  # Negro / Black
         self.add_part(seat)
 
@@ -156,6 +167,8 @@ class Motorcycle(CompositePart):
                                        position[2] + 0.5),
                              rotation=(0, 90, 0))
         handlebar.name = "Handlebar"
+        handlebar.add_tag("control")
+        handlebar.add_tag("steering")
         handlebar.set_color(0.3, 0.3, 0.3)
         self.add_part(handlebar)
 

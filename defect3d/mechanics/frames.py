@@ -36,6 +36,8 @@ class Chassis(CompositePart):
         # Main chassis body
         body = Cube(size=1.0, position=position)
         body.name = "ChassisBody"
+        body.add_tag("structural")
+        body.add_tag("base")
         body.set_scale(length, width, height)
         body.set_color(0.5, 0.5, 0.6)  # Light gray metal
         self.add_part(body)
@@ -48,6 +50,8 @@ class Chassis(CompositePart):
                                             position[2]))
             rail.set_scale(length * 0.9, 0.1, rail_height)
             rail.name = f"Rail_{side}"
+            rail.add_tag("structural")
+            rail.add_tag("rail")
             rail.set_color(0.3, 0.3, 0.3)
             self.add_part(rail)
 
@@ -75,6 +79,8 @@ class Body(CompositePart):
             lower = Cube(size=1.0, position=position)
             lower.set_scale(2.0, 1.2, 0.5)
             lower.name = "LowerBody"
+            lower.add_tag("aesthetic")
+            lower.add_tag("exterior")
             lower.set_color(0.8, 0.2, 0.2)  # Red
             self.add_part(lower)
 
@@ -88,6 +94,8 @@ class Body(CompositePart):
                     0.6))
             cabin.set_scale(1.2, 1.0, 0.6)
             cabin.name = "Cabin"
+            cabin.add_tag("interior")
+            cabin.add_tag("cabin")
             cabin.set_color(0.7, 0.7, 0.8)  # Windows
             self.add_part(cabin)
 
@@ -96,6 +104,8 @@ class Body(CompositePart):
             lower = Cube(size=1.0, position=position)
             lower.set_scale(2.2, 1.3, 0.4)
             lower.name = "LowerBody"
+            lower.add_tag("aesthetic")
+            lower.add_tag("exterior")
             lower.set_color(0.9, 0.7, 0.1)  # Yellow
             self.add_part(lower)
 
@@ -108,6 +118,8 @@ class Body(CompositePart):
                     0.4))
             cabin.set_scale(1.0, 1.1, 0.4)
             cabin.name = "Cabin"
+            cabin.add_tag("interior")
+            cabin.add_tag("cabin")
             cabin.set_color(0.2, 0.2, 0.2)
             self.add_part(cabin)
 
