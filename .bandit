@@ -1,0 +1,39 @@
+# Bandit configuration for security testing
+# ref: https://bandit.readthedocs.io/en/latest/config.html
+
+[bandit]
+exclude_dirs = ['.venv', 'venv', '.git', 'build', 'dist']
+skips = []
+tests = [
+    'B101',  # assert_used
+    'B601',  # paramiko_calls  
+    'B607',  # partial_paramiko_calls
+]
+
+# Test IDs to run
+# B201: flask_debug_true
+# B301: pickle, marshal, subprocess with shell=True
+# B302: tempfile.mktemp_q
+# B303: use_of_assert_detected
+# B304: call_with_shell_equals_true
+# B305: request_with_no_cert_validation
+# B306: mktemp_q
+# B307: eval
+# B308: mark_safe
+# B309: httpsconnection
+# B310: url_open_use
+# B311: random
+# B312: telnet
+# B313: xml_bad_etree
+# B314: xml_bad_expat
+# B315: xml_bad_sax
+# B316: xml_bad_pulldom
+# B317: xml_bad_etree_parse
+# B318: xml_bad_etree_parse_string
+# B319: xml_bad_etree_parse_lxml
+# B320: xml_bad_etree_parse_lxml_string
+# B321: ftplib
+# B322: unverified_context
+# B323: unverified_context_use
+# B324: hashlib
+# B325: tempfile_q_use

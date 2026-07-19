@@ -1,0 +1,52 @@
+# Pylint configuration for 3defect
+# Run with: pylint --rcfile=.pylintrc defect3d/
+
+[MASTER]
+# Add <package>.tests directories to the list of the source roots
+pythonpath=.
+jobs=4
+persistent=yes
+suggestion-mode=yes
+
+[MESSAGES CONTROL]
+disable=
+    C0111,  # missing-docstring
+    C0103,  # invalid-name
+    R0913,  # too-many-arguments
+    R0914,  # too-many-locals
+    W0102,  # dangerous-default-value
+    R0903,  # too-few-public-methods
+    C0302,  # too-many-lines
+    R0801,  # duplicate-code
+    W0640,  # cell-var-from-loop
+
+[FORMAT]
+max-line-length = 100
+indent-string = '    '
+
+[DESIGN]
+max-args = 7
+max-locals = 20
+max-attributes = 10
+max-parents = 5
+
+[LOGGING]
+logging-format-style = new
+
+[REPORTS]
+output-format = colorized
+reports = yes
+score = yes
+
+[VARIABLES]
+init-import = no
+callbacks =
+    cb_,
+    _cb
+
+[CLASSES]
+valid-metaclass-classmethod-first-arg = mcs
+
+[EXCEPTIONS]
+overgeneral-exceptions =
+    Exception
