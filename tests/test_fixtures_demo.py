@@ -5,7 +5,6 @@ These tests show how to use the reusable fixtures from conftest.py
 to write simpler, more maintainable tests.
 """
 
-import pytest
 import numpy as np
 from defect3d.core.serializer import save_to_json, load_from_json
 import tempfile

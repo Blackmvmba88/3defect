@@ -9,7 +9,6 @@ This module allows rendering 3D models directly without manually opening Blender
 import os
 import subprocess
 import tempfile
-import warnings
 from typing import Optional, Tuple
 from .exporter import BlenderExporter
 from ._blender_check import is_blender_available, warn_blender_unavailable

@@ -2,7 +2,6 @@
 
 import json
 import numpy as np
-import pytest
 
 from defect3d.core.shapes import Cube, Sphere, Cylinder
 from defect3d.core.composite import CompositePart

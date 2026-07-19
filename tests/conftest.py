@@ -230,7 +230,7 @@ def car_model():
     wheel_positions = [(-1, -1.2, 0), (1, -1.2, 0), (-1, 1.2, 0), (1, 1.2, 0)]
     for i, pos in enumerate(wheel_positions):
         wheel = Sphere(radius=0.4, position=pos)
-        wheel.name = f"wheel_{i+1}"
+        wheel.name = f"wheel_{i + 1}"
         wheel.add_tag("wheel")
         wheel.set_color(0.1, 0.1, 0.1, 1.0)  # Black
         car.add_part(wheel)
@@ -256,7 +256,7 @@ def motorcycle_model():
     wheel_positions = [(-0.75, 0, 0), (0.75, 0, 0)]
     for i, pos in enumerate(wheel_positions):
         wheel = Sphere(radius=0.3, position=pos)
-        wheel.name = f"wheel_{i+1}"
+        wheel.name = f"wheel_{i + 1}"
         wheel.add_tag("wheel")
         wheel.set_color(0.1, 0.1, 0.1, 1.0)  # Black
         bike.add_part(wheel)
