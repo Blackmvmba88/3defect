@@ -9,8 +9,10 @@ This module allows rendering 3D models directly without manually opening Blender
 import os
 import subprocess
 import tempfile
+import warnings
 from typing import Optional, Tuple
 from .exporter import BlenderExporter
+from ._blender_check import is_blender_available, warn_blender_unavailable
 
 
 class BlenderRenderer:
@@ -201,7 +203,14 @@ print(f"Renderizado guardado en / Render saved to: {{output_path}}")
 
         Returns:
             True si tuvo éxito / True if successful
+            
+        Raises:
+            RuntimeError: If Blender executable is not found
         """
+        if not is_blender_available():
+            warn_blender_unavailable("Rendering")
+            return False
+            
         if not self.blender_path:
             raise RuntimeError(
                 "Blender no encontrado. Instala Blender o proporciona la ruta.\n"

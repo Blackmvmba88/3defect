@@ -1,8 +1,13 @@
-# Core dependencies for 3D modeling and Blender integration
-bpy>=3.6.0  # Blender Python API
+# Core dependencies for 3D modeling
 numpy>=1.24.0
 mathutils>=3.3.0
 
 # Optional dependencies for enhanced functionality
 scipy>=1.10.0  # For physics calculations
 matplotlib>=3.7.0  # For visualization and debugging
+
+# Optional: Blender integration
+# Install with: pip install bpy>=3.6.0
+# Or install the 'blender' extra: pip install defect3d[blender]
+# Graceful degradation is enabled if bpy is not available
+# bpy>=3.6.0  # Blender Python API (optional)
