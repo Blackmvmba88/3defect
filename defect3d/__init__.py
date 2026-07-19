@@ -70,16 +70,52 @@ __all__ = [
 ]
 
 
-def describe():
-    """Imprime una descripción completa del programa en español e inglés.
+def _check_module(module_path: str) -> bool:
+    """Intenta importar un sub-módulo y devuelve True si tiene éxito.
 
-    Prints a full bilingual (Spanish/English) description of the program.
+    Tries to import a sub-module and returns True on success.
     """
+    import importlib
+    try:
+        importlib.import_module(module_path)
+        return True
+    except Exception:  # noqa: BLE001
+        return False
+
+
+def describe():
+    """Imprime una descripción completa y dinámica del programa en español e inglés.
+
+    Prints a full bilingual (Spanish/English) description of the program,
+    including a live status check of each sub-module.
+    """
+    # --- live module status -------------------------------------------
+    _modules = [
+        ("defect3d.core",               "Nivel 1  Geometría      / Level 1  Geometry"),
+        ("defect3d.clock_mechanisms",   "Nivel 2  Mecanismos     / Level 2  Mechanisms"),
+        ("defect3d.mechanics",          "Nivel 3  Motores        / Level 3  Engines"),
+        ("defect3d.vehicles",           "Nivel 4  Vehículos      / Level 4  Vehicles"),
+        ("defect3d.physics",            "Nivel 5  Simulación     / Level 5  Simulation"),
+        ("defect3d.blender_integration","Nivel 6  Exportación    / Level 6  Artistic Export"),
+        ("defect3d.evolutionary",       "Nivel 7  Evolución      / Level 7  Evolution"),
+    ]
+    status_lines = "\n".join(
+        f"  {'✓' if _check_module(mod) else '✗'} {label}"
+        for mod, label in _modules
+    )
+
+    # --- optional dependency status -----------------------------------
+    _deps = [("numpy", "numpy"), ("scipy", "scipy"), ("mathutils", "mathutils (Blender)")]
+    dep_lines = "\n".join(
+        f"  {'✓' if _check_module(dep) else '✗  (opcional / optional)'} {label}"
+        for dep, label in _deps
+    )
+
     info = f"""
-{'='*60}
+{'='*62}
   3defect — Sistema de Modelado 3D  /  3D Modeling System
   Versión / Version: {__version__}
-{'='*60}
+{'='*62}
 
 ¿QUÉ ES ESTE PROGRAMA? / WHAT IS THIS PROGRAM?
 -----------------------------------------------
@@ -90,27 +126,11 @@ directa con Blender.
 3defect is a 7-level scalable Python 3D modeling system designed to
 create vehicles and mechanical systems with direct Blender integration.
 
-NIVELES / LEVELS:
-  Nivel 1 — Geometría      : Formas básicas (Cubo, Esfera, Cilindro, Cono, Toroide)
-  Level 1 — Geometry       : Basic shapes (Cube, Sphere, Cylinder, Cone, Torus)
+ESTADO DE MÓDULOS / MODULE STATUS:
+{status_lines}
 
-  Nivel 2 — Mecanismos     : Engranajes, escape, péndulo, resortes
-  Level 2 — Mechanisms     : Gears, escapement, pendulum, springs
-
-  Nivel 3 — Motores        : Motores de combustión interna
-  Level 3 — Engines        : Internal combustion engines
-
-  Nivel 4 — Vehículos      : Automóviles y motocicletas completos
-  Level 4 — Vehicles       : Complete cars and motorcycles
-
-  Nivel 5 — Simulación     : Física realista (gravedad, fuerzas, energía)
-  Level 5 — Simulation     : Realistic physics (gravity, forces, energy)
-
-  Nivel 6 — Exportación    : Integración con Blender, renderizado fotorrealista
-  Level 6 — Artistic Export: Blender integration, photorealistic rendering
-
-  Nivel 7 — Evolución      : Optimización automática con algoritmos evolutivos
-  Level 7 — Evolution      : Automatic optimization using evolutionary algorithms
+DEPENDENCIAS / DEPENDENCIES:
+{dep_lines}
 
 CARACTERÍSTICAS PRINCIPALES / KEY FEATURES:
   ✓ Formas 3D primitivas / 3D primitive shapes
@@ -130,9 +150,14 @@ USO RÁPIDO / QUICK START:
   moto = Motorcycle(bike_type="sport")
   moto.simulate_movement(distance=10.0)
 
+LÍNEA DE COMANDOS / COMMAND LINE:
+  python -m defect3d              → esta pantalla / this screen
+  python -m defect3d --version    → sólo la versión / version only
+  python -m defect3d --list       → lista de clases disponibles / available classes
+
 DOCUMENTACIÓN / DOCUMENTATION:
   README.md, README_ES.md, docs/
 
-{'='*60}
+{'='*62}
 """
     print(info)
