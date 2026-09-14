@@ -1,5 +1,6 @@
 """Integration registry and adapter boundary for the BlackMamba 3D ecosystem."""
 
+from .adapter import AdapterResult, IntegrationAdapter, adapter_supports
 from .registry import (
     PROVIDERS,
     Provider,
@@ -12,8 +13,11 @@ from .registry import (
 )
 
 __all__ = [
+    "AdapterResult",
+    "IntegrationAdapter",
     "PROVIDERS",
     "Provider",
+    "adapter_supports",
     "all_capabilities",
     "capability_matrix",
     "ecosystem_summary",
