@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blackmamba.local/schemas/mamba3d-asset.schema.json",
+  "title": "BlackMamba 3D Asset Contract",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "asset_id",
+    "revision",
+    "stage",
+    "units",
+    "blueprint",
+    "parts",
+    "validation",
+    "manufacturing"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "asset_id": {"type": "string", "minLength": 1},
+    "revision": {"type": "string", "minLength": 1},
+    "stage": {
+      "type": "string",
+      "enum": [
+        "concept",
+        "prototype",
+        "engineering_design",
+        "validated",
+        "manufacturing_ready"
+      ]
+    },
+    "units": {
+      "type": "string",
+      "enum": ["mm", "cm", "m", "in"]
+    },
+    "blueprint": {
+      "type": "object",
+      "required": ["id", "revision"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "minLength": 1},
+        "source": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "parts": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/part"}
+    },
+    "validation": {
+      "type": "object",
+      "required": ["dimensions", "interfaces", "assembly"],
+      "properties": {
+        "dimensions": {"$ref": "#/$defs/checkStatus"},
+        "interfaces": {"$ref": "#/$defs/checkStatus"},
+        "closed_geometry": {"$ref": "#/$defs/checkStatus"},
+        "assembly": {"$ref": "#/$defs/checkStatus"},
+        "render": {"$ref": "#/$defs/checkStatus"}
+      },
+      "additionalProperties": true
+    },
+    "exports": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["blend", "glb", "gltf", "fbx", "obj", "stl", "png", "jpg", "exr", "json"]
+      },
+      "uniqueItems": true
+    },
+    "manufacturing": {
+      "type": "object",
+      "required": ["ready", "process"],
+      "properties": {
+        "ready": {"type": "boolean"},
+        "process": {"type": ["string", "null"]},
+        "material_spec": {"type": ["string", "null"]},
+        "evidence": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"ready": {"const": true}},
+            "required": ["ready"]
+          },
+          "then": {
+            "properties": {
+              "process": {"type": "string", "minLength": 1},
+              "material_spec": {"type": "string", "minLength": 1},
+              "evidence": {"type": "array", "minItems": 1}
+            },
+            "required": ["process", "material_spec", "evidence"]
+          }
+        }
+      ],
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "checkStatus": {
+      "type": "string",
+      "enum": ["pass", "fail", "unknown", "not_applicable"]
+    },
+    "dimension": {
+      "type": "object",
+      "required": ["target", "tolerance"],
+      "properties": {
+        "target": {"type": "number"},
+        "tolerance": {"type": "number", "minimum": 0},
+        "measured": {"type": ["number", "null"]},
+        "status": {"$ref": "#/$defs/checkStatus"}
+      },
+      "additionalProperties": false
+    },
+    "interface": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "mate": {"type": ["string", "null"]},
+        "position_tolerance": {"type": ["number", "null"], "minimum": 0},
+        "angle_tolerance_deg": {"type": ["number", "null"], "minimum": 0},
+        "status": {"$ref": "#/$defs/checkStatus"}
+      },
+      "additionalProperties": true
+    },
+    "part": {
+      "type": "object",
+      "required": ["part_id", "name", "status", "dimensions", "interfaces"],
+      "properties": {
+        "part_id": {"type": "string", "minLength": 1},
+        "name": {"type": "string", "minLength": 1},
+        "revision": {"type": ["string", "null"]},
+        "status": {
+          "type": "string",
+          "enum": ["pending", "in_progress", "validated", "failed", "assembled"]
+        },
+        "material": {"type": ["string", "null"]},
+        "source": {
+          "type": "string",
+          "enum": ["generated", "modeled", "imported", "scanned", "unknown"]
+        },
+        "dimensions": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/$defs/dimension"}
+        },
+        "interfaces": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/interface"}
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
