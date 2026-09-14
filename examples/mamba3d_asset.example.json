@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "asset_id": "BM-DEMO-001",
+  "revision": "A",
+  "stage": "engineering_design",
+  "units": "mm",
+  "blueprint": {
+    "id": "BP-BM-DEMO-001",
+    "revision": "A",
+    "source": "docs/blueprints/BM-DEMO-001-A"
+  },
+  "parts": [
+    {
+      "part_id": "P001",
+      "name": "demo_body",
+      "revision": "A",
+      "status": "validated",
+      "material": "aluminum_6061",
+      "source": "generated",
+      "dimensions": {
+        "length": {
+          "target": 120.0,
+          "tolerance": 0.2,
+          "measured": 120.08,
+          "status": "pass"
+        },
+        "width": {
+          "target": 40.0,
+          "tolerance": 0.2,
+          "measured": 40.04,
+          "status": "pass"
+        },
+        "height": {
+          "target": 12.0,
+          "tolerance": 0.1,
+          "measured": 12.02,
+          "status": "pass"
+        }
+      },
+      "interfaces": [
+        {
+          "id": "IFACE_A",
+          "mate": "IFACE_B",
+          "position_tolerance": 0.1,
+          "angle_tolerance_deg": 0.25,
+          "status": "pass"
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "dimensions": "pass",
+    "interfaces": "pass",
+    "closed_geometry": "unknown",
+    "assembly": "pass",
+    "render": "unknown"
+  },
+  "exports": ["glb", "png"],
+  "manufacturing": {
+    "ready": false,
+    "process": null,
+    "material_spec": null,
+    "evidence": []
+  }
+}
