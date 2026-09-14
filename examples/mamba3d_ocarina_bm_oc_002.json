@@ -1,0 +1,162 @@
+{
+  "schema_version": "1.0",
+  "asset_id": "BM-OC-002",
+  "revision": "BM-OC-002",
+  "stage": "engineering_design",
+  "units": "mm",
+  "blueprint": {
+    "id": "BlackMamba Ocarina acoustic_design_v2",
+    "revision": "BM-OC-002",
+    "source": "Blackmvmba88/ocarine:hardware/ocarina-acoustic-v2/acoustic_design_v2.json"
+  },
+  "parts": [
+    {
+      "part_id": "SHELL",
+      "name": "BM_OCARINA_SHELL_V2",
+      "revision": "BM-OC-002",
+      "status": "in_progress",
+      "material": "PETG or tough resin (prototype target)",
+      "source": "generated",
+      "dimensions": {
+        "overall_length": {
+          "target": 180.0,
+          "tolerance": 2.0,
+          "measured": null,
+          "status": "unknown"
+        }
+      },
+      "interfaces": [
+        {
+          "id": "H1",
+          "mate": null,
+          "position_tolerance": null,
+          "angle_tolerance_deg": null,
+          "status": "unknown",
+          "center_mm": [74.9189, 9.7297, 19.4595],
+          "note": "D5",
+          "target_diameter_mm": 3.856,
+          "pilot_diameter_mm": 3.456
+        },
+        {
+          "id": "H2",
+          "mate": null,
+          "position_tolerance": null,
+          "angle_tolerance_deg": null,
+          "status": "unknown",
+          "center_mm": [90.4865, -1.9459, 21.7946],
+          "note": "E5",
+          "target_diameter_mm": 4.518,
+          "pilot_diameter_mm": 4.118
+        },
+        {
+          "id": "H3",
+          "mate": null,
+          "position_tolerance": null,
+          "angle_tolerance_deg": null,
+          "status": "unknown",
+          "center_mm": [108.0, 7.7838, 22.573],
+          "note": "F5",
+          "target_diameter_mm": 3.178,
+          "pilot_diameter_mm": 2.778
+        },
+        {
+          "id": "H4",
+          "mate": null,
+          "position_tolerance": null,
+          "angle_tolerance_deg": null,
+          "status": "unknown",
+          "center_mm": [125.5135, -3.8919, 21.7946],
+          "note": "G5",
+          "target_diameter_mm": 5.778,
+          "pilot_diameter_mm": 5.378
+        },
+        {
+          "id": "H5",
+          "mate": null,
+          "position_tolerance": null,
+          "angle_tolerance_deg": null,
+          "status": "unknown",
+          "center_mm": [141.0811, 7.7838, 19.4595],
+          "note": "A5",
+          "target_diameter_mm": 6.848,
+          "pilot_diameter_mm": 6.448
+        },
+        {
+          "id": "H6",
+          "mate": null,
+          "position_tolerance": null,
+          "angle_tolerance_deg": null,
+          "status": "unknown",
+          "center_mm": [152.7568, -3.8919, 17.1243],
+          "note": "B5",
+          "target_diameter_mm": 8.157,
+          "pilot_diameter_mm": 7.757
+        },
+        {
+          "id": "WINDWAY",
+          "mate": null,
+          "position_tolerance": null,
+          "angle_tolerance_deg": null,
+          "status": "unknown",
+          "width_mm": 9.5,
+          "height_mm": 1.4,
+          "start_mm": [1.5, 0.0, 0.0],
+          "end_mm": [73.5, 0.0, -16.0]
+        },
+        {
+          "id": "VOICE_WINDOW",
+          "mate": "LABIUM",
+          "position_tolerance": null,
+          "angle_tolerance_deg": null,
+          "status": "unknown",
+          "length_mm": 14.0,
+          "width_mm": 8.0,
+          "center_mm": [79.0, 0.0, -16.0]
+        }
+      ]
+    },
+    {
+      "part_id": "LABIUM",
+      "name": "BM_LABIUM_BLADE_V2",
+      "revision": "BM-OC-002",
+      "status": "pending",
+      "material": "prototype material",
+      "source": "generated",
+      "dimensions": {},
+      "interfaces": [
+        {
+          "id": "LABIUM",
+          "mate": "VOICE_WINDOW",
+          "position_tolerance": null,
+          "angle_tolerance_deg": null,
+          "status": "unknown",
+          "tip_x_mm": 84.8,
+          "tip_thickness_mm": 0.45,
+          "angle_deg": 35.0
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "dimensions": "unknown",
+    "interfaces": "unknown",
+    "closed_geometry": "unknown",
+    "assembly": "unknown",
+    "render": "unknown"
+  },
+  "exports": ["blend", "glb", "png", "json"],
+  "manufacturing": {
+    "ready": false,
+    "process": null,
+    "material_spec": null,
+    "evidence": []
+  },
+  "integration": {
+    "source_repository": "Blackmvmba88/ocarine",
+    "source_design": "hardware/ocarina-acoustic-v2/acoustic_design_v2.json",
+    "source_acoustic_report": "hardware/ocarina-acoustic-v2/acoustic_report_v2.json",
+    "source_geometry_validator": "hardware/ocarina-acoustic-v2/validate_ocarina_acoustic_v2.py",
+    "expected_generated_validation": "hardware/ocarina-acoustic-v2/geometry_validation_v2.json",
+    "note": "No committed generated geometry_validation_v2.json was found, so measured geometry remains unknown and no validation pass is claimed."
+  }
+}
