@@ -11,6 +11,7 @@ from .registry import (
     missing_capabilities,
     providers_for,
 )
+from .workspace import missing_repositories, repository_folder, scan_workspace
 
 __all__ = [
     "AdapterResult",
@@ -23,5 +24,8 @@ __all__ = [
     "ecosystem_summary",
     "get_provider",
     "missing_capabilities",
+    "missing_repositories",
     "providers_for",
+    "repository_folder",
+    "scan_workspace",
 ]
