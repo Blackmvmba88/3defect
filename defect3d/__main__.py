@@ -6,6 +6,7 @@ Uso / Usage:
   python -m defect3d --version               # versión
   python -m defect3d --list                  # clases públicas
   python -m defect3d --ecosystem             # proveedores/capacidades 3D
+  python -m defect3d --workspace-scan DIR    # detecta repos anexados localmente
   python -m defect3d --validate-asset FILE   # valida contrato Mamba3D
   python -m defect3d --plan-asset FILE       # plan integrado cross-repo
 """
@@ -41,6 +42,11 @@ def _build_parser() -> argparse.ArgumentParser:
         "--ecosystem",
         action="store_true",
         help="Muestra el registro integrado de repositorios/capacidades Mamba3D",
+    )
+    parser.add_argument(
+        "--workspace-scan",
+        metavar="DIR",
+        help="Escanea una carpeta padre y reporta qué repos del ecosistema están clonados",
     )
     parser.add_argument(
         "--validate-asset",
@@ -100,6 +106,20 @@ def main() -> None:
         from defect3d.integrations import ecosystem_summary
 
         _print_json(ecosystem_summary())
+        sys.exit(0)
+
+    if args.workspace_scan:
+        from defect3d.integrations import scan_workspace
+
+        mounts = scan_workspace(args.workspace_scan)
+        _print_json(
+            {
+                "workspace": str(Path(args.workspace_scan).expanduser().resolve()),
+                "repositories": mounts,
+                "present": sum(1 for item in mounts if item["present"]),
+                "missing": sum(1 for item in mounts if not item["present"]),
+            }
+        )
         sys.exit(0)
 
     if args.validate_asset:
