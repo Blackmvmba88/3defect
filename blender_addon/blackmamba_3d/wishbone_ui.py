@@ -3,6 +3,8 @@ from __future__ import annotations
 import bpy
 from bpy.props import FloatProperty, IntProperty
 
+from .brake_ui import register as register_brake_ui
+from .brake_ui import unregister as unregister_brake_ui
 from .double_wishbone_math import DoubleWishboneSpec
 from .mechanics import create_double_wishbone, create_wishbone_travel_path
 
@@ -202,8 +204,12 @@ def register():
         max=101,
     )
 
+    register_brake_ui()
+
 
 def unregister():
+    unregister_brake_ui()
+
     for attr in _PROPERTIES:
         if hasattr(bpy.types.Scene, attr):
             delattr(bpy.types.Scene, attr)
