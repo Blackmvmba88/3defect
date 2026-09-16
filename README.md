@@ -6,6 +6,20 @@ A 3D modeling system based on basic geometric shapes, using Blender as an artist
 
 > 🌍 **¡Ahora en Español! / Now in Spanish!** - El sistema detecta automáticamente tu idioma y se adapta completamente. [Ver README en Español](README_ES.md)
 
+## 🐍 BlackMamba 3D Blender add-on
+
+This branch includes the first installable BlackMamba modular authoring slice under `blender_addon/blackmamba_3d`.
+
+Current runtime buttons:
+
+- Create: Cube, Sphere, Cylinder
+- Material: Metallic, Pearlescent, Iridescent, Transparent
+- Form: Bevel, Smooth, Subdivision
+- Automatic Material Preview after applying a material
+
+Install notes: [`blender_addon/README.md`](blender_addon/README.md)  
+Architecture: [`docs/BLACKMAMBA_BLENDER_MODULES.md`](docs/BLACKMAMBA_BLENDER_MODULES.md)
+
 ## ✨ Features
 
 - **🌍 Automatic Language Detection**: Detects your system language and adapts completely (Spanish/English)
