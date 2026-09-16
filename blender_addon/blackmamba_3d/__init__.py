@@ -1,7 +1,7 @@
 bl_info = {
     "name": "BlackMamba 3D",
     "author": "BlackMamba RECORDS / Iyari Gomez",
-    "version": (0, 4, 0),
+    "version": (0, 5, 0),
     "blender": (3, 6, 0),
     "location": "View3D > Sidebar > BLACKMAMBA",
     "description": "Modular BlackMamba 3D authoring layer",
@@ -16,6 +16,8 @@ from .damper_math import DamperSpec
 from .materials import PRESETS, apply_preset
 from .mechanics import create_control_arm, create_damper, create_spring
 from .spring_math import SpringSpec
+from .wishbone_ui import register as register_wishbone_ui
+from .wishbone_ui import unregister as unregister_wishbone_ui
 
 
 class BM_OT_add_primitive(bpy.types.Operator):
@@ -343,8 +345,12 @@ def register():
     bpy.types.Scene.bm_control_arm_tube_diameter = _length_property("Tube Diameter", 0.025, 0.002, 0.10)
     bpy.types.Scene.bm_control_arm_joint_diameter = _length_property("Joint Diameter", 0.038, 0.003, 0.15)
 
+    register_wishbone_ui()
+
 
 def unregister():
+    unregister_wishbone_ui()
+
     for attr in (
         "bm_bevel_width",
         "bm_bevel_segments",
