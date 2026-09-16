@@ -1,7 +1,7 @@
 bl_info = {
     "name": "BlackMamba 3D",
     "author": "BlackMamba RECORDS / Iyari Gomez",
-    "version": (0, 1, 0),
+    "version": (0, 2, 0),
     "blender": (3, 6, 0),
     "location": "View3D > Sidebar > BLACKMAMBA",
     "description": "Modular BlackMamba 3D authoring layer",
@@ -12,6 +12,8 @@ import bpy
 from bpy.props import EnumProperty, FloatProperty, IntProperty
 
 from .materials import PRESETS, apply_preset
+from .mechanics import create_spring
+from .spring_math import SpringSpec
 
 
 class BM_OT_add_primitive(bpy.types.Operator):
@@ -108,6 +110,35 @@ class BM_OT_form_action(bpy.types.Operator):
         return {"FINISHED"}
 
 
+class BM_OT_add_spring(bpy.types.Operator):
+    bl_idname = "blackmamba.add_spring"
+    bl_label = "Add BlackMamba Spring"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        scene = context.scene
+        spec = SpringSpec(
+            wire_diameter=scene.bm_spring_wire_diameter,
+            coil_diameter=scene.bm_spring_coil_diameter,
+            free_length=scene.bm_spring_free_length,
+            turns=scene.bm_spring_turns,
+        )
+        try:
+            obj = create_spring(context, spec)
+        except ValueError as exc:
+            self.report({"ERROR"}, str(exc))
+            return {"CANCELLED"}
+
+        self.report(
+            {"INFO"},
+            (
+                f"Created {obj.name}: OD {spec.outer_diameter:.4f}, "
+                f"free length {spec.free_length:.4f}"
+            ),
+        )
+        return {"FINISHED"}
+
+
 class BM_PT_main(bpy.types.Panel):
     bl_label = "BlackMamba 3D"
     bl_idname = "BM_PT_main"
@@ -152,14 +183,20 @@ class BM_PT_main(bpy.types.Panel):
 
         mechanics = layout.box()
         mechanics.label(text="Mechanics", icon="PHYSICS")
-        mechanics.label(text="Suspension contract ready")
-        mechanics.label(text="Spring + damper runtime: next slice")
+        suspension = mechanics.box()
+        suspension.label(text="Suspension > Spring", icon="CURVE_DATA")
+        suspension.prop(context.scene, "bm_spring_wire_diameter")
+        suspension.prop(context.scene, "bm_spring_coil_diameter")
+        suspension.prop(context.scene, "bm_spring_free_length")
+        suspension.prop(context.scene, "bm_spring_turns")
+        suspension.operator("blackmamba.add_spring", text="Add Spring", icon="ADD")
 
 
 _CLASSES = (
     BM_OT_add_primitive,
     BM_OT_apply_material,
     BM_OT_form_action,
+    BM_OT_add_spring,
     BM_PT_main,
 )
 
@@ -187,10 +224,51 @@ def register():
         min=0,
         max=4,
     )
+    bpy.types.Scene.bm_spring_wire_diameter = FloatProperty(
+        name="Wire Diameter",
+        default=0.012,
+        min=0.0005,
+        soft_max=0.05,
+        precision=4,
+        subtype="DISTANCE",
+        unit="LENGTH",
+    )
+    bpy.types.Scene.bm_spring_coil_diameter = FloatProperty(
+        name="Coil Diameter",
+        default=0.080,
+        min=0.002,
+        soft_max=0.50,
+        precision=4,
+        subtype="DISTANCE",
+        unit="LENGTH",
+    )
+    bpy.types.Scene.bm_spring_free_length = FloatProperty(
+        name="Free Length",
+        default=0.180,
+        min=0.002,
+        soft_max=1.0,
+        precision=4,
+        subtype="DISTANCE",
+        unit="LENGTH",
+    )
+    bpy.types.Scene.bm_spring_turns = IntProperty(
+        name="Turns",
+        default=8,
+        min=1,
+        max=64,
+    )
 
 
 def unregister():
-    for attr in ("bm_bevel_width", "bm_bevel_segments", "bm_subdivision_levels"):
+    for attr in (
+        "bm_bevel_width",
+        "bm_bevel_segments",
+        "bm_subdivision_levels",
+        "bm_spring_wire_diameter",
+        "bm_spring_coil_diameter",
+        "bm_spring_free_length",
+        "bm_spring_turns",
+    ):
         if hasattr(bpy.types.Scene, attr):
             delattr(bpy.types.Scene, attr)
 
