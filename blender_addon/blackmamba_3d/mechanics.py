@@ -3,7 +3,9 @@ from __future__ import annotations
 from math import pi
 
 import bpy
+from mathutils import Vector
 
+from .control_arm_math import ControlArmSpec
 from .damper_math import DamperSpec
 from .spring_math import SpringSpec
 
@@ -11,6 +13,7 @@ from .spring_math import SpringSpec
 SPRING_OBJECT_NAME = "BM_Spring"
 SPRING_CURVE_NAME = "BM_SpringCurve"
 DAMPER_ROOT_NAME = "BM_Damper"
+CONTROL_ARM_ROOT_NAME = "BM_ControlArm"
 
 
 def _activate(context, obj):
@@ -77,8 +80,6 @@ def _add_mount_eye(name: str, spec: DamperSpec, location):
     obj = bpy.context.active_object
     obj.name = name
 
-    # The torus hole axis is local Y after rotation.  Scale only that axis so
-    # the visible concept mount respects the requested axial mount width.
     natural_width = 2.0 * spec.mount_minor_radius
     if natural_width > 0:
         obj.scale.y = spec.mount_width / natural_width
@@ -135,6 +136,102 @@ def create_damper(context, spec: DamperSpec):
     root["bm_mount_outer_diameter"] = spec.mount_outer_diameter
     root["bm_mount_bore_diameter"] = spec.mount_bore_diameter
     root["bm_mount_width"] = spec.mount_width
+    root["bm_maturity"] = "concept"
+
+    _activate(context, root)
+    return root
+
+
+def _add_strut(name: str, start, end, radius: float):
+    start_v = Vector(start)
+    end_v = Vector(end)
+    direction = end_v - start_v
+    length = direction.length
+    if length <= 0:
+        raise ValueError("control-arm strut endpoints must be distinct")
+
+    midpoint = (start_v + end_v) / 2.0
+    bpy.ops.mesh.primitive_cylinder_add(
+        vertices=48,
+        radius=radius,
+        depth=length,
+        location=midpoint,
+    )
+    obj = bpy.context.active_object
+    obj.name = name
+    obj.rotation_euler = direction.to_track_quat("Z", "Y").to_euler()
+    return obj
+
+
+def _add_joint(name: str, location, radius: float):
+    bpy.ops.mesh.primitive_uv_sphere_add(
+        segments=48,
+        ring_count=24,
+        radius=radius,
+        location=location,
+    )
+    obj = bpy.context.active_object
+    obj.name = name
+    return obj
+
+
+def create_control_arm(context, spec: ControlArmSpec):
+    """Create a dimensioned A-arm from two chassis pivots and one upright joint."""
+
+    geometry = spec.geometry()
+    front = geometry["front_pivot"]
+    rear = geometry["rear_pivot"]
+    upright = geometry["upright_joint"]
+
+    root = bpy.data.objects.new(CONTROL_ARM_ROOT_NAME, None)
+    context.collection.objects.link(root)
+    root.empty_display_type = "PLAIN_AXES"
+
+    front_leg = _add_strut(
+        "BM_ControlArm_FrontLeg",
+        front,
+        upright,
+        geometry["tube_radius"],
+    )
+    rear_leg = _add_strut(
+        "BM_ControlArm_RearLeg",
+        rear,
+        upright,
+        geometry["tube_radius"],
+    )
+    front_joint = _add_joint(
+        "BM_ControlArm_FrontPivot",
+        front,
+        geometry["joint_radius"],
+    )
+    rear_joint = _add_joint(
+        "BM_ControlArm_RearPivot",
+        rear,
+        geometry["joint_radius"],
+    )
+    upright_joint = _add_joint(
+        "BM_ControlArm_UprightJoint",
+        upright,
+        geometry["joint_radius"],
+    )
+
+    for child in (front_leg, rear_leg, front_joint, rear_joint, upright_joint):
+        child.parent = root
+        child["bm_component_parent"] = "control_arm"
+
+    root.location = context.scene.cursor.location
+    root["bm_module_id"] = "mechanics.suspension"
+    root["bm_component"] = "control_arm"
+    root["bm_arm_length"] = spec.arm_length
+    root["bm_pivot_spacing"] = spec.pivot_spacing
+    root["bm_upright_z"] = spec.upright_z
+    root["bm_tube_diameter"] = spec.tube_diameter
+    root["bm_joint_diameter"] = spec.joint_diameter
+    root["bm_front_leg_length"] = spec.front_leg_length
+    root["bm_rear_leg_length"] = spec.rear_leg_length
+    root["bm_interface_front_pivot"] = list(spec.front_pivot)
+    root["bm_interface_rear_pivot"] = list(spec.rear_pivot)
+    root["bm_interface_upright_joint"] = list(spec.upright_joint)
     root["bm_maturity"] = "concept"
 
     _activate(context, root)
