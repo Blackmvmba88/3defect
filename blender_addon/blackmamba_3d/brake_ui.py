@@ -5,7 +5,18 @@ from bpy.props import FloatProperty
 
 from .brake_rig_math import BrakeRigSpec, simulate_braking_run
 from .double_wishbone_math import DoubleWishboneSpec
-from .wishbone_ui import spec_from_scene
+
+
+def _suspension_from_scene(scene) -> DoubleWishboneSpec:
+    return DoubleWishboneSpec(
+        lower_arm_length=scene.bm_wishbone_lower_arm_length,
+        upper_arm_length=scene.bm_wishbone_upper_arm_length,
+        chassis_vertical_separation=scene.bm_wishbone_chassis_vertical_separation,
+        lower_pivot_spacing=scene.bm_wishbone_lower_pivot_spacing,
+        upper_pivot_spacing=scene.bm_wishbone_upper_pivot_spacing,
+        tube_diameter=scene.bm_wishbone_tube_diameter,
+        joint_diameter=scene.bm_wishbone_joint_diameter,
+    )
 
 
 class BM_OT_brake_dive_test(bpy.types.Operator):
@@ -15,7 +26,7 @@ class BM_OT_brake_dive_test(bpy.types.Operator):
 
     def execute(self, context):
         scene = context.scene
-        suspension: DoubleWishboneSpec = spec_from_scene(scene)
+        suspension = _suspension_from_scene(scene)
         rig = BrakeRigSpec(
             vehicle_mass_kg=scene.bm_brake_vehicle_mass_kg,
             wheelbase_m=scene.bm_brake_wheelbase_m,
