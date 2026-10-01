@@ -7,6 +7,7 @@ Este directorio reúne los modelos del estudio; `apps/` contiene las experiencia
 | F-18 | [Blender](f18/F18_continuado.blend) | [GLB](f18/F18_continuado.glb), [render](f18/F18_preview.png) | Modelo continuado con reportes de validación |
 | F-18 rosa | [Blender](f18/F18_rosa_serigrafiado.blend) | [Render](f18/F18_rosa_serigrafiado.png), GLB de juego en `apps/pink-flight/public/models/` | Serigrafía editable |
 | Expedition Rover | [Blender](expedition-rover/Expedition_Rover.blend) | [GLB](expedition-rover/Expedition_Rover.glb), [render](expedition-rover/Expedition_Rover.png) | Primera base; pendiente refinar formas, desgaste y calcomanías |
+| Turquoise Microcar | [Blender](turquoise-microcar/Turquoise_Microcar.blend) | [GLB](turquoise-microcar/Turquoise_Microcar.glb), [render](turquoise-microcar/Turquoise_Microcar.png) | Carrocería curva, interior, vidrio transmisivo, emisión y bloom |
 | Pink Flight | [Aplicación y documentación](../apps/pink-flight/README.md) | Three.js / Vite | Prototipo de vuelo y editor de parámetros |
 
 ![Expedition Rover](expedition-rover/Expedition_Rover.png)
@@ -15,6 +16,7 @@ Este directorio reúne los modelos del estudio; `apps/` contiene las experiencia
 
 - `f18/`: modelos, imágenes de proceso, datos paramétricos y reportes históricos. Los scripts `verify_f18.py` y `verify_pink.py` comprueban geometría y preservación de la versión original.
 - `expedition-rover/`: modelo, exportación, render y generador `build_rover.py`.
+- `turquoise-microcar/`: microauto turquesa detallado, generador, render y materiales ópticos; [documentación](turquoise-microcar/README.md).
 - `../apps/pink-flight/`: aplicación, pruebas y exportador del avión para el juego.
 
 ## Blender

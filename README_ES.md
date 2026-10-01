@@ -2,7 +2,7 @@
 
 ## Modelos y aplicaciones del estudio
 
-El [catálogo del estudio](projects/README.md) reúne el F-18 original y rosa, el todoterreno de expedición y [Pink Flight](apps/pink-flight/README.md). Incluye archivos Blender editables, exportaciones GLB, renders y scripts.
+El [catálogo del estudio](projects/README.md) reúne el F-18 original y rosa, el todoterreno de expedición, el microauto turquesa detallado y [Pink Flight](apps/pink-flight/README.md). Incluye archivos Blender editables, exportaciones GLB, renders y scripts.
 
 Un sistema de modelado 3D para crear vehículos y sistemas mecánicos con detección automática de idioma.
 

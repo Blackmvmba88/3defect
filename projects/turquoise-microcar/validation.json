@@ -1,0 +1,18 @@
+{
+  "components": 344,
+  "mesh_objects": 80,
+  "curve_objects": 263,
+  "finite_geometry": true,
+  "reference_packed": true,
+  "features": [
+    "curved body with boolean wheel openings",
+    "glass thickness and transmission",
+    "window seals and chrome trim",
+    "front seats and rear bench",
+    "dashboard gauges and steering wheel",
+    "tread siping and valve stems",
+    "headlight lens fluting",
+    "door seams and handles",
+    "wipers and license plate"
+  ]
+}
