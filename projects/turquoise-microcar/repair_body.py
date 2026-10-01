@@ -6,7 +6,8 @@ sys.path.insert(0,str(ROOT))
 from integrate_body import integrate_shell
 bpy.ops.wm.open_mainfile(filepath=str(ROOT/'Turquoise_Microcar.blend'))
 if bpy.context.object and bpy.context.object.mode!='OBJECT':bpy.ops.object.mode_set(mode='OBJECT')
-report=integrate_shell();collection=bpy.data.collections['MICROCAR • editable components']
+from complete_skirts import complete_skirts
+report=integrate_shell();report.update(complete_skirts());collection=bpy.data.collections['MICROCAR • editable components']
 report.update({'components':len(collection.objects),'finite_geometry':all(math.isfinite(c) for o in collection.objects if o.type=='MESH' for v in o.data.vertices for c in v.co),'user_source_preserved':True})
 assert report['finite_geometry'];(ROOT/'validation.json').write_text(json.dumps(report,indent=2))
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'Turquoise_Microcar.blend'))

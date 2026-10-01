@@ -12,7 +12,7 @@ Microauto estilizado inspirado en la referencia del estudio. Modelado con carroc
 
 ## Carrocería integrada
 
-El chasis superior es una sola malla conectada: techo y pilares forman una carcasa con seis huecos de ventana, anillos de inset y asientos rebajados para el vidrio. Las juntas y el cromado son accesorios separados. La falda editada por el usuario se conserva; la malla superior de prueba y la falda originales están en la colección oculta `USER_EDITS • preserved`.
+El chasis superior es una sola malla conectada: techo y pilares forman una carcasa con seis huecos de ventana, anillos de inset y asientos rebajados para el vidrio. Las juntas y el cromado son accesorios separados. El conjunto inferior incluye dos faldas laterales y faldones delantero y trasero. La falda editada por el usuario se conserva como fuente en el respaldo; la malla superior de prueba y la falda originales están en la colección oculta `USER_EDITS • preserved`.
 
 Para aplicar la corrección sobre el archivo guardado, conservando las ediciones manuales:
 
@@ -25,6 +25,14 @@ blender --background --python projects/turquoise-microcar/repair_body.py
 ## Detalle
 
 Ventanas con espesor, juntas de goma y molduras cromadas; asientos con costuras y cinturones, banca trasera, volante, instrumentos y pedales; faros convexos con estrías, intermitentes, limpiaparabrisas, juntas del capó y puertas, manijas, espejos, válvulas de neumáticos y matrícula.
+
+## Faldas completas
+
+`complete_skirts.py` agrega cuatro paneles de espesor real: laterales izquierdo y derecho, faldón delantero y trasero. El generador y la reparación del chasis incluyen este paso. Para actualizar únicamente los faldones:
+
+```sh
+blender --background --python projects/turquoise-microcar/complete_skirts.py
+```
 
 ## Materiales y efectos
 

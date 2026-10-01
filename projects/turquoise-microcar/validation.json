@@ -4,7 +4,17 @@
   "upper_shell_vertices": 1530,
   "upper_shell_boundary_edges_before_thickness": 480,
   "user_skirt_retained": true,
-  "components": 337,
+  "components": 340,
   "finite_geometry": true,
-  "user_source_preserved": true
+  "user_source_preserved": true,
+  "lower_skirts": [
+    "Skirt \u2022 left rocker",
+    "Skirt \u2022 right rocker",
+    "Skirt \u2022 front valance",
+    "Skirt \u2022 rear valance"
+  ],
+  "skirt_count": 4,
+  "bilateral_rockers": true,
+  "front_and_rear_valances": true,
+  "sampled_skirt_tire_clearance": 0.050642
 }

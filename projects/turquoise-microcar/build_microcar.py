@@ -174,6 +174,8 @@ import sys
 sys.path.insert(0,str(ROOT))
 from integrate_body import integrate_shell
 shell_report=integrate_shell()
+from complete_skirts import complete_skirts
+shell_report.update(complete_skirts())
 report={'components':len(CAR.objects),'mesh_objects':sum(o.type=='MESH' for o in CAR.objects),'curve_objects':sum(o.type=='CURVE' for o in CAR.objects),'finite_geometry':all(math.isfinite(c) for o in CAR.objects if o.type=='MESH' for v in o.data.vertices for c in v.co),'reference_packed':any(i.packed_file for i in bpy.data.images),'features':['curved body with boolean wheel openings','glass thickness and transmission','window seals and chrome trim','front seats and rear bench','dashboard gauges and steering wheel','tread siping and valve stems','headlight lens fluting','door seams and handles','wipers and license plate']}
 report.update(shell_report)
 assert report['finite_geometry'];(ROOT/'validation.json').write_text(json.dumps(report,indent=2))
