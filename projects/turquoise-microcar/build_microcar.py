@@ -170,7 +170,12 @@ comp.links.new(render.outputs['Image'],glow.inputs['Image']);comp.links.new(glow
 # Pack the source reference when available; it never becomes vehicle geometry.
 ref=Path('/Users/blackmamba/Downloads/0967272d218cf4c725ec25e4d061dee0.jpg')
 if ref.exists(): im=bpy.data.images.load(str(ref));im.name='Design reference';im.pack()
+import sys
+sys.path.insert(0,str(ROOT))
+from integrate_body import integrate_shell
+shell_report=integrate_shell()
 report={'components':len(CAR.objects),'mesh_objects':sum(o.type=='MESH' for o in CAR.objects),'curve_objects':sum(o.type=='CURVE' for o in CAR.objects),'finite_geometry':all(math.isfinite(c) for o in CAR.objects if o.type=='MESH' for v in o.data.vertices for c in v.co),'reference_packed':any(i.packed_file for i in bpy.data.images),'features':['curved body with boolean wheel openings','glass thickness and transmission','window seals and chrome trim','front seats and rear bench','dashboard gauges and steering wheel','tread siping and valve stems','headlight lens fluting','door seams and handles','wipers and license plate']}
+report.update(shell_report)
 assert report['finite_geometry'];(ROOT/'validation.json').write_text(json.dumps(report,indent=2))
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'Turquoise_Microcar.blend'))
 bpy.ops.object.select_all(action='DESELECT')

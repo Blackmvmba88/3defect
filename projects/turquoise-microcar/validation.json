@@ -1,18 +1,10 @@
 {
-  "components": 344,
-  "mesh_objects": 80,
-  "curve_objects": 263,
+  "upper_shell_connected_components": 1,
+  "inset_windows": 6,
+  "upper_shell_vertices": 1530,
+  "upper_shell_boundary_edges_before_thickness": 480,
+  "user_skirt_retained": true,
+  "components": 337,
   "finite_geometry": true,
-  "reference_packed": true,
-  "features": [
-    "curved body with boolean wheel openings",
-    "glass thickness and transmission",
-    "window seals and chrome trim",
-    "front seats and rear bench",
-    "dashboard gauges and steering wheel",
-    "tread siping and valve stems",
-    "headlight lens fluting",
-    "door seams and handles",
-    "wipers and license plate"
-  ]
+  "user_source_preserved": true
 }

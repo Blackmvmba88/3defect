@@ -7,7 +7,7 @@ Este directorio reúne los modelos del estudio; `apps/` contiene las experiencia
 | F-18 | [Blender](f18/F18_continuado.blend) | [GLB](f18/F18_continuado.glb), [render](f18/F18_preview.png) | Modelo continuado con reportes de validación |
 | F-18 rosa | [Blender](f18/F18_rosa_serigrafiado.blend) | [Render](f18/F18_rosa_serigrafiado.png), GLB de juego en `apps/pink-flight/public/models/` | Serigrafía editable |
 | Expedition Rover | [Blender](expedition-rover/Expedition_Rover.blend) | [GLB](expedition-rover/Expedition_Rover.glb), [render](expedition-rover/Expedition_Rover.png) | Primera base; pendiente refinar formas, desgaste y calcomanías |
-| Turquoise Microcar | [Blender](turquoise-microcar/Turquoise_Microcar.blend) | [GLB](turquoise-microcar/Turquoise_Microcar.glb), [render](turquoise-microcar/Turquoise_Microcar.png) | Carrocería curva, interior, vidrio transmisivo, emisión y bloom |
+| Turquoise Microcar | [Blender](turquoise-microcar/Turquoise_Microcar.blend) | [GLB](turquoise-microcar/Turquoise_Microcar.glb), [render](turquoise-microcar/Turquoise_Microcar.png) | Carcasa superior de una pieza con inset, falda editada, interior, transmisión, emisión y bloom |
 | Pink Flight | [Aplicación y documentación](../apps/pink-flight/README.md) | Three.js / Vite | Prototipo de vuelo y editor de parámetros |
 
 ![Expedition Rover](expedition-rover/Expedition_Rover.png)

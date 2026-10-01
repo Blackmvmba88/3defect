@@ -10,6 +10,18 @@ Microauto estilizado inspirado en la referencia del estudio. Modelado con carroc
 
 ![Render](Turquoise_Microcar.png)
 
+## Carrocería integrada
+
+El chasis superior es una sola malla conectada: techo y pilares forman una carcasa con seis huecos de ventana, anillos de inset y asientos rebajados para el vidrio. Las juntas y el cromado son accesorios separados. La falda editada por el usuario se conserva; la malla superior de prueba y la falda originales están en la colección oculta `USER_EDITS • preserved`.
+
+Para aplicar la corrección sobre el archivo guardado, conservando las ediciones manuales:
+
+```sh
+blender --background --python projects/turquoise-microcar/repair_body.py
+```
+
+`integrate_body.py` contiene la construcción y comprobación de conectividad de la carcasa. El generador desde cero también utiliza esta construcción, pero no reproduce las ediciones manuales de la falda.
+
 ## Detalle
 
 Ventanas con espesor, juntas de goma y molduras cromadas; asientos con costuras y cinturones, banca trasera, volante, instrumentos y pedales; faros convexos con estrías, intermitentes, limpiaparabrisas, juntas del capó y puertas, manijas, espejos, válvulas de neumáticos y matrícula.
