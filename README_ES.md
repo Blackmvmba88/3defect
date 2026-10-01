@@ -1,5 +1,9 @@
 # 3defect
 
+## Modelos y aplicaciones del estudio
+
+El [catálogo del estudio](projects/README.md) reúne el F-18 original y rosa, el todoterreno de expedición y [Pink Flight](apps/pink-flight/README.md). Incluye archivos Blender editables, exportaciones GLB, renders y scripts.
+
 Un sistema de modelado 3D para crear vehículos y sistemas mecánicos con detección automática de idioma.
 
 **A 3D modeling system for creating vehicles and mechanical systems with automatic language detection.**

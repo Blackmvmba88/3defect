@@ -1,0 +1,22 @@
+{
+  "original_meshes_and_transforms_unchanged": 2,
+  "changed_original_objects": [
+    "Canopy",
+    "Engine_fairing_L",
+    "Engine_fairing_R",
+    "Exhaust_dark_L",
+    "Exhaust_dark_R",
+    "Fuselage_continued",
+    "Nozzle_L",
+    "Nozzle_R",
+    "Stabilator_L",
+    "Stabilator_R",
+    "Vertical_tail_L",
+    "Vertical_tail_R",
+    "Wings_and_LEX_from_original"
+  ],
+  "original_preservation_passed": false,
+  "screenprinted_elements": 66,
+  "finite_geometry": true,
+  "file_reopened": true
+}

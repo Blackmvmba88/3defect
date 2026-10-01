@@ -1,0 +1,13 @@
+{
+  "meshes": 13,
+  "vertices": 1746,
+  "new_closed_meshes": {
+    "Canopy": true,
+    "Engine_fairing_L": true,
+    "Engine_fairing_R": true,
+    "Fuselage_continued": true
+  },
+  "original_backup": true,
+  "reference_packed": true,
+  "glb_bytes": 172764
+}
