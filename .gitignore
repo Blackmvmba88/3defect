@@ -66,3 +66,12 @@ Thumbs.db
 *.tmp
 *.bak
 output/
+
+# Curated editable project sources
+!projects/**/*.blend
+**/node_modules/
+*.blend2
+*.log
+.env
+.env.*
+!.env.example

@@ -1,0 +1,10 @@
+{
+  "upper_shell_connected_components": 1,
+  "inset_windows": 6,
+  "upper_shell_vertices": 1530,
+  "upper_shell_boundary_edges_before_thickness": 480,
+  "user_skirt_retained": true,
+  "components": 337,
+  "finite_geometry": true,
+  "user_source_preserved": true
+}

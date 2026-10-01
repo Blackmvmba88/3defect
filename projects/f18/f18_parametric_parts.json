@@ -1,0 +1,240 @@
+{
+  "repo": "/Users/blackmamba/weaponassambly",
+  "source": "/Users/blackmamba/Desktop/Untitled.blend",
+  "parts": [
+    {
+      "id": "Nozzle_R",
+      "family": "axial_body",
+      "semantic": "aircraft_visual_component",
+      "parameters": {
+        "height": 0.72,
+        "radius_top": 0.45,
+        "radius_bottom": 0.36,
+        "wall": 0.035,
+        "segments": 48,
+        "cap_top": false,
+        "cap_bottom": false
+      },
+      "connectors": [
+        {
+          "name": "SOCKET_Nozzle_R",
+          "location": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "material": "Nozzle \u2022 titanium"
+        }
+      ],
+      "placement": {
+        "location": [
+          -5.13,
+          -0.69,
+          4.57
+        ],
+        "rotation": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      }
+    },
+    {
+      "id": "Exhaust_dark_R",
+      "family": "axial_body",
+      "semantic": "aircraft_visual_component",
+      "parameters": {
+        "height": 0.018,
+        "radius_top": 0.345,
+        "radius_bottom": 0.345,
+        "segments": 48
+      },
+      "connectors": [
+        {
+          "name": "SOCKET_Exhaust_dark_R",
+          "location": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "material": "Intake \u2022 charcoal"
+        }
+      ],
+      "placement": {
+        "location": [
+          -5.35,
+          -0.69,
+          4.57
+        ],
+        "rotation": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      }
+    },
+    {
+      "id": "Wingtip_rail_R",
+      "family": "box_body",
+      "semantic": "aircraft_visual_component",
+      "parameters": {
+        "width": 1.45,
+        "height": 0.1,
+        "depth": 0.1,
+        "chamfer": 0.018
+      },
+      "connectors": [
+        {
+          "name": "SOCKET_Wingtip_rail_R",
+          "location": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "material": "Nozzle \u2022 titanium"
+        }
+      ],
+      "placement": {
+        "location": [
+          -2.05,
+          -4.04,
+          4.87
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "Nozzle_L",
+      "family": "axial_body",
+      "semantic": "aircraft_visual_component",
+      "parameters": {
+        "height": 0.72,
+        "radius_top": 0.45,
+        "radius_bottom": 0.36,
+        "wall": 0.035,
+        "segments": 48,
+        "cap_top": false,
+        "cap_bottom": false
+      },
+      "connectors": [
+        {
+          "name": "SOCKET_Nozzle_L",
+          "location": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "material": "Nozzle \u2022 titanium"
+        }
+      ],
+      "placement": {
+        "location": [
+          -5.13,
+          0.69,
+          4.57
+        ],
+        "rotation": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      }
+    },
+    {
+      "id": "Exhaust_dark_L",
+      "family": "axial_body",
+      "semantic": "aircraft_visual_component",
+      "parameters": {
+        "height": 0.018,
+        "radius_top": 0.345,
+        "radius_bottom": 0.345,
+        "segments": 48
+      },
+      "connectors": [
+        {
+          "name": "SOCKET_Exhaust_dark_L",
+          "location": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "material": "Intake \u2022 charcoal"
+        }
+      ],
+      "placement": {
+        "location": [
+          -5.35,
+          0.69,
+          4.57
+        ],
+        "rotation": [
+          0,
+          1.5707963267948966,
+          0
+        ]
+      }
+    },
+    {
+      "id": "Wingtip_rail_L",
+      "family": "box_body",
+      "semantic": "aircraft_visual_component",
+      "parameters": {
+        "width": 1.45,
+        "height": 0.1,
+        "depth": 0.1,
+        "chamfer": 0.018
+      },
+      "connectors": [
+        {
+          "name": "SOCKET_Wingtip_rail_L",
+          "location": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "materials": [
+        {
+          "material": "Nozzle \u2022 titanium"
+        }
+      ],
+      "placement": {
+        "location": [
+          -2.05,
+          4.04,
+          4.87
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  ]
+}

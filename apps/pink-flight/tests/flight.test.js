@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';import{hitsGate,nextGate,speedFor,stepPlayer}from'../src/flight.js';
+test('safe opening, solid frame, and swept collision',()=>{const g={x:0,y:4,halfW:2.25,halfH:2.05};assert.equal(hitsGate({x:0,y:4},g,-2,2),false);assert.equal(hitsGate({x:2,y:4},g,-4,4),true);assert.equal(hitsGate({x:0,y:6},g,-.5,.5),true);assert.equal(hitsGate({x:5,y:4},g,-20,-18),false)});
+test('movement stays bounded and diagonal speed is normalized',()=>{assert.equal(stepPlayer({x:5,y:8},{x:1,y:1},1).x,5.4);const p=stepPlayer({x:0,y:4},{x:1,y:1},.1);assert.ok(Math.abs(Math.hypot(p.x,p.y-4)-.8)<1e-8)});
+test('opening remains reachable and speed is capped',()=>{for(let i=0;i<100;i++){const g=nextGate(i,()=>i/100);assert.ok(g.x>=-2.7&&g.x<=2.7);assert.ok(g.y>=2.8&&g.y<=6.6)}assert.equal(speedFor(0),25);assert.equal(speedFor(1e6),56)});
+import {validateSettings,parseProject,defaults}from'../src/settings.js';
+test('editor rejects invalid imports and fills missing values',()=>{assert.throws(()=>validateSettings({speed:Infinity}));assert.throws(()=>validateSettings({lightColor:'url(bad)'}));assert.throws(()=>parseProject('{"version":2}'));assert.equal(validateSettings({angle:40}).speed,1);assert.deepEqual(parseProject(JSON.stringify({version:1,type:'pink-flight-scene',settings:defaults})),defaults)});
