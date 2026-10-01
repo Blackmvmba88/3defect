@@ -1,7 +1,7 @@
 bl_info = {
     "name": "BlackMamba 3D",
     "author": "BlackMamba RECORDS / Iyari Gomez",
-    "version": (0, 2, 0),
+    "version": (0, 3, 0),
     "blender": (3, 6, 0),
     "location": "View3D > Sidebar > BLACKMAMBA",
     "description": "Modular BlackMamba 3D authoring layer",
@@ -11,8 +11,9 @@ bl_info = {
 import bpy
 from bpy.props import EnumProperty, FloatProperty, IntProperty
 
+from .damper_math import DamperSpec
 from .materials import PRESETS, apply_preset
-from .mechanics import create_spring
+from .mechanics import create_damper, create_spring
 from .spring_math import SpringSpec
 
 
@@ -131,9 +132,39 @@ class BM_OT_add_spring(bpy.types.Operator):
 
         self.report(
             {"INFO"},
+            f"Created {obj.name}: OD {spec.outer_diameter:.4f}, free length {spec.free_length:.4f}",
+        )
+        return {"FINISHED"}
+
+
+class BM_OT_add_damper(bpy.types.Operator):
+    bl_idname = "blackmamba.add_damper"
+    bl_label = "Add BlackMamba Damper"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        scene = context.scene
+        spec = DamperSpec(
+            body_diameter=scene.bm_damper_body_diameter,
+            body_length=scene.bm_damper_body_length,
+            rod_diameter=scene.bm_damper_rod_diameter,
+            stroke=scene.bm_damper_stroke,
+            mount_outer_diameter=scene.bm_damper_mount_outer_diameter,
+            mount_bore_diameter=scene.bm_damper_mount_bore_diameter,
+            mount_width=scene.bm_damper_mount_width,
+            extension_fraction=scene.bm_damper_extension_fraction,
+        )
+        try:
+            obj = create_damper(context, spec)
+        except ValueError as exc:
+            self.report({"ERROR"}, str(exc))
+            return {"CANCELLED"}
+
+        self.report(
+            {"INFO"},
             (
-                f"Created {obj.name}: OD {spec.outer_diameter:.4f}, "
-                f"free length {spec.free_length:.4f}"
+                f"Created {obj.name}: {spec.current_center_distance:.4f} eye-to-eye, "
+                f"{spec.extension_fraction:.0%} extension"
             ),
         )
         return {"FINISHED"}
@@ -183,13 +214,26 @@ class BM_PT_main(bpy.types.Panel):
 
         mechanics = layout.box()
         mechanics.label(text="Mechanics", icon="PHYSICS")
-        suspension = mechanics.box()
-        suspension.label(text="Suspension > Spring", icon="CURVE_DATA")
-        suspension.prop(context.scene, "bm_spring_wire_diameter")
-        suspension.prop(context.scene, "bm_spring_coil_diameter")
-        suspension.prop(context.scene, "bm_spring_free_length")
-        suspension.prop(context.scene, "bm_spring_turns")
-        suspension.operator("blackmamba.add_spring", text="Add Spring", icon="ADD")
+
+        spring = mechanics.box()
+        spring.label(text="Suspension > Spring", icon="CURVE_DATA")
+        spring.prop(context.scene, "bm_spring_wire_diameter")
+        spring.prop(context.scene, "bm_spring_coil_diameter")
+        spring.prop(context.scene, "bm_spring_free_length")
+        spring.prop(context.scene, "bm_spring_turns")
+        spring.operator("blackmamba.add_spring", text="Add Spring", icon="ADD")
+
+        damper = mechanics.box()
+        damper.label(text="Suspension > Damper", icon="CONSTRAINT_BONE")
+        damper.prop(context.scene, "bm_damper_body_diameter")
+        damper.prop(context.scene, "bm_damper_body_length")
+        damper.prop(context.scene, "bm_damper_rod_diameter")
+        damper.prop(context.scene, "bm_damper_stroke")
+        damper.prop(context.scene, "bm_damper_mount_outer_diameter")
+        damper.prop(context.scene, "bm_damper_mount_bore_diameter")
+        damper.prop(context.scene, "bm_damper_mount_width")
+        damper.prop(context.scene, "bm_damper_extension_fraction", slider=True)
+        damper.operator("blackmamba.add_damper", text="Add Damper", icon="ADD")
 
 
 _CLASSES = (
@@ -197,6 +241,7 @@ _CLASSES = (
     BM_OT_apply_material,
     BM_OT_form_action,
     BM_OT_add_spring,
+    BM_OT_add_damper,
     BM_PT_main,
 )
 
@@ -257,6 +302,77 @@ def register():
         min=1,
         max=64,
     )
+    bpy.types.Scene.bm_damper_body_diameter = FloatProperty(
+        name="Body Diameter",
+        default=0.045,
+        min=0.002,
+        soft_max=0.30,
+        precision=4,
+        subtype="DISTANCE",
+        unit="LENGTH",
+    )
+    bpy.types.Scene.bm_damper_body_length = FloatProperty(
+        name="Body Length",
+        default=0.120,
+        min=0.005,
+        soft_max=1.0,
+        precision=4,
+        subtype="DISTANCE",
+        unit="LENGTH",
+    )
+    bpy.types.Scene.bm_damper_rod_diameter = FloatProperty(
+        name="Rod Diameter",
+        default=0.012,
+        min=0.001,
+        soft_max=0.10,
+        precision=4,
+        subtype="DISTANCE",
+        unit="LENGTH",
+    )
+    bpy.types.Scene.bm_damper_stroke = FloatProperty(
+        name="Stroke",
+        default=0.080,
+        min=0.001,
+        soft_max=0.50,
+        precision=4,
+        subtype="DISTANCE",
+        unit="LENGTH",
+    )
+    bpy.types.Scene.bm_damper_mount_outer_diameter = FloatProperty(
+        name="Mount OD",
+        default=0.030,
+        min=0.002,
+        soft_max=0.20,
+        precision=4,
+        subtype="DISTANCE",
+        unit="LENGTH",
+    )
+    bpy.types.Scene.bm_damper_mount_bore_diameter = FloatProperty(
+        name="Mount Bore",
+        default=0.014,
+        min=0.001,
+        soft_max=0.10,
+        precision=4,
+        subtype="DISTANCE",
+        unit="LENGTH",
+    )
+    bpy.types.Scene.bm_damper_mount_width = FloatProperty(
+        name="Mount Width",
+        default=0.018,
+        min=0.001,
+        soft_max=0.10,
+        precision=4,
+        subtype="DISTANCE",
+        unit="LENGTH",
+    )
+    bpy.types.Scene.bm_damper_extension_fraction = FloatProperty(
+        name="Extension",
+        default=0.50,
+        min=0.0,
+        max=1.0,
+        precision=3,
+        subtype="FACTOR",
+    )
 
 
 def unregister():
@@ -268,6 +384,14 @@ def unregister():
         "bm_spring_coil_diameter",
         "bm_spring_free_length",
         "bm_spring_turns",
+        "bm_damper_body_diameter",
+        "bm_damper_body_length",
+        "bm_damper_rod_diameter",
+        "bm_damper_stroke",
+        "bm_damper_mount_outer_diameter",
+        "bm_damper_mount_bore_diameter",
+        "bm_damper_mount_width",
+        "bm_damper_extension_fraction",
     ):
         if hasattr(bpy.types.Scene, attr):
             delattr(bpy.types.Scene, attr)
