@@ -23,3 +23,13 @@ def test_generated_script_is_self_contained():
     assert "import mathutils" in script
     assert "def build():" in script
     assert 'if __name__ == "__main__":' in script
+
+
+def test_generated_script_builds_loft_body_and_front_openings():
+    script = generate_p911_reference_script(P911Reference())
+
+    assert "SECTIONS = DATA[\"body_sections\"]" in script
+    assert "def add_loft_body" in script
+    assert "BodySubdivision" in script
+    assert "FRONT_center_intake" in script
+    assert "FRONT_brake_duct" in script
