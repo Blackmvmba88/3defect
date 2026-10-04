@@ -22,6 +22,8 @@ except (ImportError, RuntimeError):
     BlenderRenderer = None
     render_to_image = None
 
+from .reference_vehicle import generate_p911_reference_script
+
 __all__ = [
     'is_blender_available',
     'get_blender_error',
@@ -30,5 +32,6 @@ __all__ = [
     'BlenderExporter',
     'export_to_blender',
     'BlenderRenderer',
-    'render_to_image'
+    'render_to_image',
+    'generate_p911_reference_script'
 ]
