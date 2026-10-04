@@ -154,6 +154,41 @@ class P911Reference:
             "RR": (x_rear, -r["rear_track"] / 2.0, z_rear),
         }
 
+    def body_sections(self):
+        """Return longitudinal loft stations for the reference silhouette.
+
+        Each station is (x, half_width, z_bottom, z_top). Values are derived
+        from the resolved master dimensions and intentionally emphasize the
+        low nose, compact cabin and broad rear haunches visible in the source.
+        """
+        r = self.resolved()
+        length = r["length"]
+        width = r["width"]
+        height = r["height"]
+        gc = r["ground_clearance"]
+
+        raw = [
+            (-0.50, 0.34, 0.18, 0.42),
+            (-0.43, 0.49, 0.16, 0.50),
+            (-0.31, 0.51, 0.14, 0.58),
+            (-0.18, 0.47, 0.14, 0.84),
+            (-0.05, 0.40, 0.15, 1.00),
+            (0.10, 0.38, 0.15, 0.98),
+            (0.23, 0.43, 0.14, 0.72),
+            (0.34, 0.50, 0.13, 0.55),
+            (0.44, 0.48, 0.12, 0.46),
+            (0.50, 0.36, 0.12, 0.39),
+        ]
+        return [
+            (
+                x * length,
+                half_w * width,
+                gc + z0 * height,
+                gc + z1 * height,
+            )
+            for x, half_w, z0, z1 in raw
+        ]
+
     def part_graph(self) -> Dict[str, object]:
         return {
             "BODY": [
@@ -178,5 +213,6 @@ class P911Reference:
             "reference_ratios": asdict(self.ratios),
             "resolved": self.resolved(),
             "wheel_centers": self.wheel_centers(),
+            "body_sections": self.body_sections(),
             "part_graph": self.part_graph(),
         }
