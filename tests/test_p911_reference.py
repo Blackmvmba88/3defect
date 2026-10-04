@@ -26,3 +26,16 @@ def test_wheel_centers_are_symmetric():
 def test_reference_match_is_bounded():
     with pytest.raises(ValueError):
         P911Reference(P911ReferenceParams(reference_match=1.1))
+
+
+def test_body_sections_span_full_length_and_are_ordered():
+    car = P911Reference()
+    sections = car.body_sections()
+    resolved = car.resolved()
+
+    assert len(sections) >= 8
+    assert sections[0][0] == pytest.approx(-resolved["length"] * 0.50)
+    assert sections[-1][0] == pytest.approx(resolved["length"] * 0.50)
+    assert [section[0] for section in sections] == sorted(section[0] for section in sections)
+    assert all(section[1] > 0 for section in sections)
+    assert all(section[3] > section[2] for section in sections)
