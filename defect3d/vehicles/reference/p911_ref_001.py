@@ -9,7 +9,7 @@ X = longitudinal, Y = lateral, Z = vertical.
 """
 
 from dataclasses import asdict, dataclass
-from typing import Dict, Tuple
+from typing import Dict, Optional, Tuple, Union
 
 
 @dataclass(frozen=True)
@@ -98,7 +98,7 @@ class P911Reference:
 
     model_id = "P911_REF_001"
 
-    def __init__(self, params: P911ReferenceParams | None = None):
+    def __init__(self, params: Optional[P911ReferenceParams] = None):
         self.params = params or P911ReferenceParams()
         self.params.validate()
         self.ratios = ReferenceRatios()
@@ -107,7 +107,7 @@ class P911Reference:
     def _lerp(realistic: float, reference: float, amount: float) -> float:
         return realistic + ((reference - realistic) * amount)
 
-    def resolved(self) -> Dict[str, float | Tuple[float, float, float]]:
+    def resolved(self) -> Dict[str, Union[float, Tuple[float, float, float]]]:
         p = self.params
         m = p.reference_match
 
