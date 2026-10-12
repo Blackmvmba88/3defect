@@ -129,53 +129,28 @@ class BlenderExporter:
             return tuple(float(x) for x in arr)
 
         # Crear la primitiva / Create the primitive
-        if shape_type == "Cube":
-            lines.append(
-                f"bpy.ops.mesh.primitive_cube_add(size={
-                    float(
-                        shape.size)}, " f"location={
-                    to_tuple(
-                        shape.position)})")
+        if shape_type == "ClockMesh":
+            lines.extend([
+                f"mesh_{obj_id} = bpy.data.meshes.new('ClockMesh')",
+                f"mesh_{obj_id}.from_pydata({shape.vertices!r}, [], {shape.faces!r})",
+                f"mesh_{obj_id}.update()",
+                f"obj = bpy.data.objects.new('ClockMesh', mesh_{obj_id})",
+                "bpy.context.collection.objects.link(obj)",
+                "bpy.context.view_layer.objects.active = obj",
+                f"obj.location = {to_tuple(shape.position)}",
+            ])
+        elif shape_type == "Cube":
+            lines.append(f"bpy.ops.mesh.primitive_cube_add(size={float(shape.size)}, location={to_tuple(shape.position)})")
         elif shape_type == "Sphere":
-            lines.append(
-                f"bpy.ops.mesh.primitive_uv_sphere_add(radius={
-                    float(
-                        shape.radius)}, " f"location={
-                    to_tuple(
-                        shape.position)})")
+            lines.append(f"bpy.ops.mesh.primitive_uv_sphere_add(radius={float(shape.radius)}, location={to_tuple(shape.position)})")
         elif shape_type == "Cylinder":
-            lines.append(
-                f"bpy.ops.mesh.primitive_cylinder_add(radius={
-                    float(
-                        shape.radius)}, " f"depth={
-                    float(
-                        shape.height)}, location={
-                    to_tuple(
-                        shape.position)})")
+            lines.append(f"bpy.ops.mesh.primitive_cylinder_add(radius={float(shape.radius)}, depth={float(shape.height)}, location={to_tuple(shape.position)})")
         elif shape_type == "Cone":
-            lines.append(
-                f"bpy.ops.mesh.primitive_cone_add(radius1={
-                    float(
-                        shape.radius)}, " f"depth={
-                    float(
-                        shape.height)}, location={
-                    to_tuple(
-                        shape.position)})")
+            lines.append(f"bpy.ops.mesh.primitive_cone_add(radius1={float(shape.radius)}, depth={float(shape.height)}, location={to_tuple(shape.position)})")
         elif shape_type == "Torus":
-            lines.append(
-                f"bpy.ops.mesh.primitive_torus_add(major_radius={
-                    float(
-                        shape.major_radius)}, " f"minor_radius={
-                    float(
-                        shape.minor_radius)}, location={
-                    to_tuple(
-                        shape.position)})")
+            lines.append(f"bpy.ops.mesh.primitive_torus_add(major_radius={float(shape.major_radius)}, minor_radius={float(shape.minor_radius)}, location={to_tuple(shape.position)})")
         else:
-            # Por defecto usar cubo / Default to cube
-            lines.append(
-                f"bpy.ops.mesh.primitive_cube_add(location={
-                    to_tuple(
-                        shape.position)})")
+            lines.append(f"bpy.ops.mesh.primitive_cube_add(location={to_tuple(shape.position)})")
 
         lines.append(f"obj_{obj_id} = bpy.context.object")
         lines.append(f"obj_{obj_id}.name = '{shape.name}_{obj_id}'")

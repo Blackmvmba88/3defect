@@ -188,7 +188,7 @@ class EvolutionaryOptimizer:
 
 
 class ClockOptimizer:
-    """Optimizador especializado para relojes / Specialized optimizer for clocks"""
+    """Ideal pendulum-period search, not a validation of clock precision."""
 
     @staticmethod
     def optimize_for_precision(clock_creator, target_period=1.0, generations=30):
@@ -200,16 +200,25 @@ class ClockOptimizer:
             target_period: Período objetivo en segundos / Target period in seconds
             generations: Generaciones a evolucionar / Generations to evolve
         """
+        import math
+        if not math.isfinite(target_period) or target_period <= 0:
+            raise ValueError("target_period must be positive and finite")
+        if not isinstance(generations, int) or generations < 1:
+            raise ValueError("generations must be a positive integer")
+
+        def rebuild(candidate):
+            return clock_creator(length=candidate.length, mass=candidate.mass)
+
         def fitness(pendulum):
-            # Mejor fitness = más cerca del período objetivo
-            # Better fitness = closer to target period
-            error = abs(pendulum.period - target_period)
-            return 1.0 / (1.0 + error)  # Invertir error / Invert error
+            # Generic crossover mutates attributes; evaluate a rebuilt design.
+            error = abs(rebuild(pendulum).period - target_period)
+            return 1.0 / (1.0 + error)
 
         optimizer = EvolutionaryOptimizer(population_size=20, mutation_rate=0.15)
 
         param_ranges = {
-            'length': (0.5, 2.0),
+            'length': (0.25 * 9.81 * (target_period / (2 * math.pi))**2,
+                       4 * 9.81 * (target_period / (2 * math.pi))**2),
             'mass': (0.1, 2.0)
         }
 
@@ -221,7 +230,7 @@ class ClockOptimizer:
             verbose=True
         )
 
-        return best, fitness_val, history
+        return rebuild(best), fitness_val, history
 
 
 class EngineOptimizer:

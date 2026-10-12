@@ -30,6 +30,10 @@ def serialize_shape(shape: Shape3D) -> Dict[str, Any]:
         "material": shape.material
     }
 
+    if hasattr(shape, "vertices") and hasattr(shape, "faces"):
+        data["vertices"] = shape.vertices
+        data["faces"] = shape.faces
+
     # Add shape-specific properties
     if hasattr(shape, 'size'):
         data['size'] = shape.size

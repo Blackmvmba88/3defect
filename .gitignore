@@ -75,3 +75,6 @@ output/
 .env
 .env.*
 !.env.example
+
+# Watch Designer demo outputs
+/watch-output/

@@ -265,3 +265,10 @@ Built with passion and support from:
 ---
 
 **Made with ❤️ for the 3D modeling community**
+
+## BlackMamba Watch Designer
+
+Incremental mechanical design MVP: sampled involute gears, continuous helical wire,
+validated ideal gear ratios, basic kinematic simulation and automated tests.
+See [scope, usage and physical limits](projects/blackmamba-watch-designer/README.md).
+Physical precision and manufacturability have not been validated.
