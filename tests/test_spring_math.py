@@ -1,4 +1,5 @@
 import importlib.util
+import sys
 from math import isclose, hypot
 from pathlib import Path
 
@@ -14,6 +15,7 @@ MODULE_PATH = (
 SPEC = importlib.util.spec_from_file_location("blackmamba_spring_math", MODULE_PATH)
 assert SPEC is not None and SPEC.loader is not None
 spring_math = importlib.util.module_from_spec(SPEC)
+sys.modules[SPEC.name] = spring_math
 SPEC.loader.exec_module(spring_math)
 SpringSpec = spring_math.SpringSpec
 

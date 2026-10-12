@@ -7,6 +7,7 @@ This module implements the fundamental clockwork components.
 
 import math
 from defect3d import Cylinder, Torus, Sphere, CompositePart
+from .geometry import positive, integer, position3, gear_mesh, spring_mesh
 
 
 class Gear:
@@ -17,7 +18,8 @@ class Gear:
     A wheel with teeth that transmits rotational movement.
     """
 
-    def __init__(self, teeth=20, module=1.0, thickness=0.5, position=(0, 0, 0)):
+    def __init__(self, teeth=20, module=1.0, thickness=0.5, position=(0, 0, 0),
+                 *, pressure_angle=20.0, profile_samples=8):
         """
         Crear un engranaje / Create a gear
 
@@ -27,6 +29,18 @@ class Gear:
             thickness: Grosor del engranaje / Gear thickness
             position: Posición 3D / 3D position
         """
+        integer(teeth, "teeth", 4)
+        integer(profile_samples, "profile_samples", 2)
+        for value, name in ((module, "module"), (thickness, "thickness")):
+            positive(value, name)
+        position3(position)
+        if not math.isfinite(pressure_angle) or not 10 <= pressure_angle <= 35:
+            raise ValueError("pressure_angle must be between 10 and 35 degrees")
+        self.pressure_angle = pressure_angle
+        self.root_radius = module * (teeth / 2 - 1.25)
+        self.addendum_radius = module * (teeth / 2 + 1)
+        self.base_radius = module * teeth / 2 * math.cos(math.radians(pressure_angle))
+        self.undercut_risk = teeth < 2 / math.sin(math.radians(pressure_angle))**2
         self.teeth = teeth
         self.module = module
         self.thickness = thickness
@@ -39,20 +53,21 @@ class Gear:
         # Crear geometría / Create geometry
         self.part = CompositePart(name=f"gear_{teeth}t")
 
-        # Disco principal / Main disc
-        disc = Cylinder(radius=self.pitch_radius, height=thickness, position=position)
-        disc.set_color(0.7, 0.7, 0.8, 1.0)
-        self.part.add_part(disc)
+        self.mesh, self._volume = gear_mesh(teeth, module, thickness,
+                                           pressure_angle, profile_samples, position)
+        self.part.add_part(self.mesh)
 
-        # Eje central / Central shaft
-        shaft_radius = self.pitch_radius * 0.15
-        shaft = Cylinder(radius=shaft_radius, height=thickness * 1.2, position=position)
-        shaft.set_color(0.5, 0.5, 0.6, 1.0)
-        self.part.add_part(shaft)
+    def mesh_validation(self, other):
+        """Parameter compatibility; does not certify physical tooth contact."""
+        if not math.isclose(self.module, other.module, rel_tol=1e-9):
+            raise ValueError("meshing gears need equal modules")
+        if not math.isclose(self.pressure_angle, other.pressure_angle):
+            raise ValueError("meshing gears need equal pressure angles")
+        return self.pitch_radius + other.pitch_radius
 
     def volume(self):
         """Volumen aproximado / Approximate volume"""
-        return math.pi * self.pitch_radius**2 * self.thickness
+        return self._volume
 
     def gear_ratio(self, other_gear):
         """
@@ -73,6 +88,8 @@ class Gear:
             "teeth": self.teeth,
             "module": self.module,
             "pitch_diameter": self.pitch_diameter,
+            "pressure_angle": self.pressure_angle,
+            "undercut_risk": self.undercut_risk,
             "thickness": self.thickness,
             "position": self.position
         }
@@ -190,7 +207,7 @@ class Spring:
     """
 
     def __init__(self, coils=10, wire_diameter=0.05, coil_diameter=0.5,
-                 free_length=1.0, stiffness=100.0, position=(0, 0, 0)):
+                 free_length=1.0, stiffness=100.0, position=(0, 0, 0), *, samples_per_coil=32):
         """
         Crear un resorte / Create a spring
 
@@ -202,6 +219,14 @@ class Spring:
             stiffness: Rigidez (N/m) / Stiffness (N/m)
             position: Posición 3D / 3D position
         """
+        for value, name in ((coils, "coils"), (wire_diameter, "wire_diameter"),
+                            (coil_diameter, "coil_diameter"), (free_length, "free_length"),
+                            (stiffness, "stiffness")):
+            positive(value, name)
+        integer(samples_per_coil, "samples_per_coil", 8)
+        position3(position)
+        if wire_diameter >= coil_diameter:
+            raise ValueError("wire must be thinner than mean coil diameter")
         self.coils = coils
         self.wire_diameter = wire_diameter
         self.coil_diameter = coil_diameter
@@ -215,17 +240,10 @@ class Spring:
         # Crear geometría simplificada / Create simplified geometry
         self.part = CompositePart(name="spring")
 
-        # Representar con toros apilados / Represent with stacked tori
-        coil_radius = coil_diameter / 2.0
-        spacing = free_length / (coils + 1)
-
-        for i in range(coils):
-            z_pos = position[2] + spacing * (i + 1)
-            torus_pos = (position[0], position[1], z_pos)
-            torus = Torus(major_radius=coil_radius, minor_radius=wire_diameter/2,
-                         position=torus_pos)
-            torus.set_color(0.6, 0.6, 0.7, 1.0)
-            self.part.add_part(torus)
+        self.mesh, self.centerline = spring_mesh(coils, wire_diameter, coil_diameter,
+                                                free_length, samples_per_coil, position)
+        self.part.add_part(self.mesh)
+        self.coil_overlap_risk = free_length / coils <= wire_diameter
 
     def energy(self, compression):
         """
@@ -237,6 +255,8 @@ class Spring:
         Returns:
             Energía en Joules / Energy in Joules
         """
+        if not math.isfinite(compression):
+            raise ValueError("compression must be finite")
         return 0.5 * self.stiffness * compression**2
 
     def force(self, compression):
@@ -249,6 +269,8 @@ class Spring:
         Returns:
             Fuerza en Newtons / Force in Newtons
         """
+        if not math.isfinite(compression):
+            raise ValueError("compression must be finite")
         return self.stiffness * compression
 
     def to_dict(self):
@@ -286,6 +308,15 @@ class GearTrain:
             gear: Engranaje a agregar / Gear to add
             connects_to: Índice del engranaje con el que conecta / Index of gear it connects to
         """
+        if not isinstance(gear, Gear):
+            raise TypeError("gear must be a Gear")
+        if connects_to is None and self.gears:
+            connects_to = len(self.gears) - 1
+        if connects_to is not None:
+            integer(connects_to, "connects_to", 0)
+            if connects_to >= len(self.gears):
+                raise ValueError("connection must reference an existing gear")
+            self.gears[connects_to]["gear"].mesh_validation(gear)
         self.gears.append({
             "gear": gear,
             "connects_to": connects_to
@@ -302,13 +333,30 @@ class GearTrain:
         if len(self.gears) < 2:
             return 1.0
 
-        ratio = 1.0
-        for i in range(1, len(self.gears)):
-            current = self.gears[i]["gear"]
-            previous = self.gears[i-1]["gear"]
-            ratio *= current.gear_ratio(previous)
+        return 1.0 / abs(self.speed_factors()[-1])
 
-        return ratio
+    def speed_factors(self):
+        """Signed output/input angular speed for each external mesh."""
+        factors = []
+        for entry in self.gears:
+            parent = entry['connects_to']
+            factors.append(1.0 if parent is None else
+                           -factors[parent] * self.gears[parent]['gear'].teeth / entry['gear'].teeth)
+        return factors
+
+    def signed_output_speed(self, input_speed):
+        return input_speed * (self.speed_factors()[-1] if self.gears else 1.0)
+
+    def simulate(self, duration, input_speed=1.0, dt=0.01):
+        """Ideal constant-speed snapshots. Speed in rad/s; angles in radians."""
+        positive(dt, 'dt')
+        if not math.isfinite(duration) or duration < 0 or not math.isfinite(input_speed):
+            raise ValueError('duration must be nonnegative and speed finite')
+        factors = self.speed_factors()
+        count = math.ceil(duration / dt)
+        times = [min(i * dt, duration) for i in range(count + 1)]
+        return [{'time': t, 'angles': [t*input_speed*f for f in factors],
+                 'angular_velocities': [input_speed*f for f in factors]} for t in times]
 
     def output_speed(self, input_speed):
         """
@@ -328,7 +376,8 @@ class GearTrain:
             "type": "GearTrain",
             "name": self.name,
             "gears": [g["gear"].to_dict() for g in self.gears],
-            "total_ratio": self.total_ratio()
+            "total_ratio": self.total_ratio(),
+            "connections": [g["connects_to"] for g in self.gears]
         }
 
 

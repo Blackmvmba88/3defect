@@ -32,13 +32,13 @@ def main():
     print(f"   ω movido / ω driven: {omega_driven:.2f} rad/s")
 
     # Torque (asumiendo potencia constante) / Torque (assuming constant power)
-    # P = T × ω → T_driven = T_drive × ratio
+    # P = T × ω → T_driven = T_drive / ratio
     torque_drive = 10.0  # N⋅m
-    torque_driven = torque_drive * ratio
+    torque_driven = torque_drive / ratio
 
     print(f"\n   Torque motor / Driver torque: {torque_drive:.2f} N⋅m")
     print(f"   Torque movido / Driven torque: {torque_driven:.2f} N⋅m")
-    print(f"   → Velocidad reducida, torque aumentado / Speed reduced, torque increased")
+    print(f"   → Velocidad aumentada, torque reducido / Speed increased, torque reduced")
 
     # 2. Péndulo: Ley del péndulo simple / Pendulum: Simple pendulum law
     print("\n2. Física del Péndulo / Pendulum Physics")
@@ -156,8 +156,8 @@ def main():
     print(f"   → Both are harmonic oscillators")
 
     print("\n✅ Test físico completado / Physics test completed!")
-    print("   Los mecanismos de reloj siguen leyes físicas precisas.")
-    print("   Clock mechanisms follow precise physical laws.")
+    print("   Demostración de modelos ideales; precisión física no validada.")
+    print("   Ideal model demonstration; physical precision has not been validated.")
 
 
 if __name__ == "__main__":
